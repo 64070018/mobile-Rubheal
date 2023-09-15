@@ -1,17 +1,19 @@
+
 import product from "../model/product";
 import comment from "../model/comment";
 
 export const PRODUCT = [
-  new product("c1", "Italian", "#f5428d", 500, 5),
-  new product("c2", "Quick & Easy", "#f54242", 100, 5),
-  new product("c3", "Hamburgers", "#f5a442", 100, 5),
-  new product("c4", "German", "#f5d142", 100, 5),
-  new product("c5", "Light & Lovely", "#368dff", 100, 5),
-  new product("c6", "Exotic", "#41d95d", 100, 5),
-  new product("c7", "Breakfast", "#9eecff", 100, 5),
-  new product("c8", "Asian", "#b9ffb0", 100, 5),
-  new product("c9", "French", "#ffc7ff", 100, 5),
-  new product("c10", "Summer", "#47fced", 100, 5),
+  new product("c0", "title", "price", "detail", "amount", "rating", "policy", "https://picsum.photos/850"),
+  new product("c1", "pop corn major", 50, "POP CORN MAJOR CHEAPER THAN WALK-IN", 30, 5, "นัดรับเท่านั้น จ่ายมัดจำก่อน ครึ่งหนึ่งของราคา สั่งแล้วยกเลิกไม่คืนมัดจำทุกกรณี", "https://picsum.photos/630"),
+  new product("c2", "รองเท้า treasure baoji", 4000, "ครั้งแรก! ของศิลปิน TREASURE ที่ร่วมออกแบบรองเท้าโดยใช้ความเป็นเอกลักษณ์ของแต่ละคนมารวมกันไว้ในรองเท้าสุด Exclusive โดยใช้วัสดุที่มีคุณภาพเกรดพรีเมี่ยมและผลิตมาในจำนวนจำกัด", 5, 5, "นัดรับเท่านั้น จ่ายมัดจำก่อน ครึ่งหนึ่งของราคา สั่งแล้วยกเลิกไม่คืนมัดจำทุกกรณี", "https://picsum.photos/720"),
+  new product("c3", "pop corn major", 50, "POP CORN MAJOR CHEAPER THAN WALK-IN", 30, 5, "นัดรับเท่านั้น จ่ายมัดจำก่อน ครึ่งหนึ่งของราคา สั่งแล้วยกเลิกไม่คืนมัดจำทุกกรณี", "https://picsum.photos/300"),
+  new product("c4", "pop corn major", 50, "POP CORN MAJOR CHEAPER THAN WALK-IN", 30, 5, "นัดรับเท่านั้น จ่ายมัดจำก่อน ครึ่งหนึ่งของราคา สั่งแล้วยกเลิกไม่คืนมัดจำทุกกรณี", "https://picsum.photos/200"),
+  new product("c5", "pop corn major", 50, "POP CORN MAJOR CHEAPER THAN WALK-IN", 30, 5, "นัดรับเท่านั้น จ่ายมัดจำก่อน ครึ่งหนึ่งของราคา สั่งแล้วยกเลิกไม่คืนมัดจำทุกกรณี", "https://picsum.photos/500"),
+  new product("c6", "pop corn major", 50, "POP CORN MAJOR CHEAPER THAN WALK-IN", 30, 5, "นัดรับเท่านั้น จ่ายมัดจำก่อน ครึ่งหนึ่งของราคา สั่งแล้วยกเลิกไม่คืนมัดจำทุกกรณี", "https://picsum.photos/700"),
+  new product("c7", "pop corn major", 50, "POP CORN MAJOR CHEAPER THAN WALK-IN", 30, 5, "นัดรับเท่านั้น จ่ายมัดจำก่อน ครึ่งหนึ่งของราคา สั่งแล้วยกเลิกไม่คืนมัดจำทุกกรณี", "https://picsum.photos/600"),
+  new product("c8","pop corn major", 50, "POP CORN MAJOR CHEAPER THAN WALK-IN", 30, 5, "นัดรับเท่านั้น จ่ายมัดจำก่อน ครึ่งหนึ่งของราคา สั่งแล้วยกเลิกไม่คืนมัดจำทุกกรณี", "https://picsum.photos/800"),
+  new product("c9", "pop corn major", 50, "POP CORN MAJOR CHEAPER THAN WALK-IN", 30, 5, "นัดรับเท่านั้น จ่ายมัดจำก่อน ครึ่งหนึ่งของราคา สั่งแล้วยกเลิกไม่คืนมัดจำทุกกรณี", "https://picsum.photos/450"),
+  new product("c10", "pop corn major", 50, "POP CORN MAJOR CHEAPER THAN WALK-IN", 30, 5, "นัดรับเท่านั้น จ่ายมัดจำก่อน ครึ่งหนึ่งของราคา สั่งแล้วยกเลิกไม่คืนมัดจำทุกกรณี", "https://picsum.photos/550"),
 ];
 export const COMMENT = [
   new comment("c1", "ACCOUNT 1", "Lorem ipsum dolor sit amet.", 5, '1-Jan-2023 09:00'),

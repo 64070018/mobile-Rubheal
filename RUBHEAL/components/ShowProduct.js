@@ -1,3 +1,4 @@
+
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { AntDesign } from "@expo/vector-icons";
 import { responsiveHeight } from "react-native-responsive-dimensions";
@@ -6,8 +7,8 @@ const showProduct = (props) => {
         // <View style={{ width: '50%' }}>
 
         <ScrollView>
-            <TouchableOpacity style={{ height: 400,}}>
-                <Image source={{ uri: 'https://reactjs.org/logo-og.png' }} style={styles.product} />
+            <TouchableOpacity style={{ height: 400, }}>
+                <Image source={{ uri: props.item.pic }} style={styles.product} />
                 <View>
                     <Text style={styles.catTitle} numberOfLines={1}>{props.item.title}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 5, }}>
