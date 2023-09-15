@@ -27,7 +27,7 @@ const CartScreen = (props) => {
     return (
 
         <SafeAreaView style={styles.container}>
-            <View style={{paddingHorizontal:10}}>
+            <View style={{paddingHorizontal:10, paddingTop:10}}>
                 <FlatList data={products} keyExtractor={(item) => item.id} renderItem={({ item }) => {
                     return (
                         <View style={styles.product}>
@@ -35,7 +35,7 @@ const CartScreen = (props) => {
                                 source={require("../assets/crocs.png")} resizeMode="contain"
                             />
                             <View style={{ marginLeft: 15 }}>
-                                <Text style={{ fontSize: 18, fontFamily:'Josefin-Sans' }}>{item.name}{'\n'}x{item.price} บาท</Text>
+                                <Text style={{ fontSize: 20, fontFamily:'Josefin-Sans' }}>{item.name}{'\n'}x{item.price} บาท</Text>
                                 <View style={{ flexDirection: 'row' }}>
                                     <AntDesign name="minussquareo" size={30} color="black" />
                                     <Text style={{ marginHorizontal: 5, fontSize: 18 }}>1</Text>
@@ -50,34 +50,34 @@ const CartScreen = (props) => {
                 <View style={{ flexDirection: 'row', marginTop: 20 }}>
                     <Feather name="map-pin" size={24} color="black" />
                     <View style={{ marginLeft: 5 }}>
-                        <Text style={{ fontSize: 16, fontWeight: "bold", fontFamily: 'Anuphan' }}>ที่อยู่สำหรับการจัดส่ง</Text>
-                        <Text style={{ fontSize: 16, fontFamily: 'Anuphan' }}>ลาดกระบัง</Text>
-                        <Text style={{ fontSize: 16, fontFamily:'Josefin-Sans' }}>Aom 0949561292</Text>
+                        <Text style={{ fontSize: 18, fontWeight: "bold", fontFamily: 'Anuphan' }}>ที่อยู่สำหรับการจัดส่ง</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>ลาดกระบัง</Text>
+                        <Text style={{ fontSize: 18, fontFamily:'Josefin-Sans' }}>Aom 0949561292</Text>
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 20 }}>
                     <Feather name="truck" size={24} color="black" />
                     <View style={{ marginLeft: 5 }}>
-                        <Text style={{ fontSize: 16, fontWeight: "bold" }}>ขนส่ง</Text>
-                        <Text style={{ fontSize: 16, fontFamily:'Josefin-Sans' }}>Flash</Text>
+                        <Text style={{ fontSize: 18, fontWeight: "bold", fontFamily: 'Anuphan' }}>ขนส่ง</Text>
+                        <Text style={{ fontSize: 18, fontFamily:'Josefin-Sans' }}>Flash</Text>
                     </View>
                 </View>
                 <View style={{ marginTop: 20 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ fontSize: 16 }}>ราคา</Text>
-                        <Text style={{ fontSize: 16 }}>24 บาท</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>ราคา</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>24 บาท</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ fontSize: 16 }}>ค่าขนส่ง</Text>
-                        <Text style={{ fontSize: 16 }}>24 บาท</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>ค่าขนส่ง</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>24 บาท</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ fontFamily: '',fontWeight: 'bold', fontSize: 18 }}>ทั้งหมด</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 18 }}>24 บาท</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>ทั้งหมด</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>24 บาท</Text>
                     </View>
                 </View>
             </View>
-            <View style={{position:'absolute', bottom:0, width: '100%'}}>
+            <View style={{position:'absolute', bottom:30, width: '100%'}}>
                <Button title="สั่งซื้อ" color="#9276F2"></Button> 
             </View>
             
@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     product: {
         // flex: 1,
         flexDirection: 'row',
+        marginTop: 10
         // justifyContent: 'flex-start',
         // width: '90%',
         // borderColor: 'black', borderWidth: 1
