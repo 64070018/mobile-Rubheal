@@ -54,9 +54,9 @@ const chatScreen = () => {
               />
             </View>
 
-            <View>
-              <View style={styles.boxContent}>
-                <Text>
+            <View style={{flex : 4}}>
+              <View style={{flex: 1, borderRadius: 10, padding: 10}}>
+                {/* <Text>
                   This is a black to sdkfls sdklfsdl sdflk sdfsdf sdf
                   asdfsdfasdfasdf sdfasdfsdfsdsdsdsdsdsdsdsdsdsdsdsdsdsd
                 </Text>
@@ -71,7 +71,8 @@ const chatScreen = () => {
                 <Text>
                   This is a black to sdkfls sdklfsdl sdflk sdfsdf sdf
                   asdfsdfasdfasdf sdfasdfsdfsdsdsdsdsdsdsdsdsdsdsdsdsdsd
-                </Text>
+                </Text> */}
+                <Image source={require("../assets/vase.png")} style={{width : 250, height : 250}}/>
               </View>
               <View style={styles.boxTimeRight}>
                 <Text>16:04</Text>
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
     input: {
       height: 40,
       margin: 12,
-      borderWidth: 1,
+    //   borderWidth: 1,
       padding: 10,
       flex: 3,
     },

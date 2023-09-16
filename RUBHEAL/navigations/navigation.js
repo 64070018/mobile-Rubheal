@@ -6,12 +6,13 @@ import HomeScreen from "../screens/HomeScreen.js"
 import chatScreen from "../screens/chatScreen.js";
 import messageScreen from "../screens/messageScreen.js";
 import profile from "../screens/profile.js";
+import adminPage from "../screens/adminPage.js";
 
 const CartNavigator = createNativeStackNavigator();
 function Navigation() {
     return (
         <CartNavigator.Navigator>
-        <CartNavigator.Screen name="Message" component={profile} options={{headerShown : false}} />
+        <CartNavigator.Screen name="Message" component={adminPage}  />
         </CartNavigator.Navigator>
     )
 
