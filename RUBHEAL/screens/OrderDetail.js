@@ -27,7 +27,7 @@ const OrderDetail = (props) => {
     return (
 
         <SafeAreaView style={styles.container}>
-            <View style={{ paddingHorizontal: 10 }}>
+            <ScrollView style={{ paddingHorizontal: 10 }}>
                 <View style={{ marginTop: 20 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>หมายเลขคำสั่งซื้อ</Text>
@@ -81,10 +81,14 @@ const OrderDetail = (props) => {
                             </View>
                         </View>
                     )
-
                 }}>
                 </FlatList>
-            </View>
+                <View style={{paddingTop:10}}>
+                    <Button  title="กลับหน้าแรก" color="#9276F2" onPress={() => {
+                        navigation.navigate('Cart') //ต้องแก้ไปหน้าhome
+                    }}></Button>
+                </View>
+            </ScrollView>
 
         </SafeAreaView>
 
