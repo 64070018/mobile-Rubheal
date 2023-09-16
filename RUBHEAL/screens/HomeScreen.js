@@ -28,7 +28,7 @@ const HomeScreen = (props) => {
           </View>
           <View style={{ alignItems: 'center', marginRight: 10 }}>
             <Image source={{ uri: 'https://reactjs.org/logo-og.png' }} style={styles.catagory} />
-            <Text style={styles.catTitle}>อิเล็กทรอนิค</Text>
+            <Text style={styles.catTitle}>โมเดล</Text>
           </View>
         </View>
       </ScrollView>
