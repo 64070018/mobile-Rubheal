@@ -13,6 +13,7 @@ const messageScreen = () => {
   console.log(CHAT);
   const renderItem = (itemData) => {
     return (
+        <TouchableOpacity>
       <View style={styles.containerChat}>
         <View style={styles.picture}>
           <Image
@@ -31,16 +32,16 @@ const messageScreen = () => {
             <Text>{itemData.item.time} mins ago</Text>
             <View style={{ flexDirection: "row" }}>
               <Text>{itemData.item.countChat} mins ago</Text>
-              <TouchableOpacity>
+           
                 <Image
                   source={require("../assets/icons8-message-50.png")}
                   style={{ width: 20, height: 20, marginLeft: 5 }}
                 />
-              </TouchableOpacity>
             </View>
           </View>
         </View>
       </View>
+              </TouchableOpacity>
     );
   };
 
@@ -91,6 +92,8 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       margin: 10,
       borderRadius: 20,
+      borderBottomWidth : 1,
+      borderBottomColor : '#ccc'
     },
     picture: {
       flex: 1,
