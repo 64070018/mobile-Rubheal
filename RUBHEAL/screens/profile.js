@@ -1,6 +1,12 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native'
-import React from 'react'
-
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import React from "react";
 
 const profile = () => {
   return (
@@ -57,22 +63,113 @@ const profile = () => {
         </View>
 
         <ScrollView>
-          <View style={{ alignItems: "center" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              padding: 10,
+              margin: 10,
+            }}
+          >
             <Image
               source={require("../assets/vase.png")}
-              style={{ width: 300, height: 300 }}
+              style={{ width: 100, height: 100 }}
             />
-            <Text>Tên sản phẩm</Text>
-            <Text>500</Text>
+
+            <View style={{ flex: 1, padding: 10 }}>
+              <Text>ชื่อสินค้า : Tên sản phẩm</Text>
+              <Text>ราคาสินค้า : 500</Text>
+            </View>
           </View>
 
-          <View style={{ alignItems: "center" }}>
+          <View
+            style={{
+              flexDirection: "row",
+           
+              padding: 10,
+              margin: 10,
+            }}
+          >
             <Image
               source={require("../assets/Row.png")}
-              style={{ width: 300, height: 300 }}
+              style={{ width: 100, height: 100 }}
             />
-            <Text>Tên sản phẩm</Text>
-            <Text>500</Text>
+
+            <View style={{ flex: 1, padding: 10 }}>
+              <Text>ชื่อสินค้า : Tên sản phẩm</Text>
+              <Text>ราคาสินค้า : 500</Text>
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              padding: 10,
+              margin: 10,
+            }}
+          >
+            <Image
+              source={require("../assets/vase.png")}
+              style={{ width: 100, height: 100 }}
+            />
+
+            <View style={{ flex: 1, padding: 10 }}>
+              <Text>ชื่อสินค้า : Tên sản phẩm</Text>
+              <Text>ราคาสินค้า : 500</Text>
+            </View>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+           
+              padding: 10,
+              margin: 10,
+            }}
+          >
+            <Image
+              source={require("../assets/Row.png")}
+              style={{ width: 100, height: 100 }}
+            />
+
+            <View style={{ flex: 1, padding: 10 }}>
+              <Text>ชื่อสินค้า : Tên sản phẩm</Text>
+              <Text>ราคาสินค้า : 500</Text>
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              padding: 10,
+              margin: 10,
+            }}
+          >
+            <Image
+              source={require("../assets/vase.png")}
+              style={{ width: 100, height: 100 }}
+            />
+
+            <View style={{ flex: 1, padding: 10 }}>
+              <Text>ชื่อสินค้า : Tên sản phẩm</Text>
+              <Text>ราคาสินค้า : 500</Text>
+            </View>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+           
+              padding: 10,
+              margin: 10,
+            }}
+          >
+            <Image
+              source={require("../assets/Row.png")}
+              style={{ width: 100, height: 100 }}
+            />
+
+            <View style={{ flex: 1, padding: 10 }}>
+              <Text>ชื่อสินค้า : Tên sản phẩm</Text>
+              <Text>ราคาสินค้า : 500</Text>
+            </View>
           </View>
         </ScrollView>
 
@@ -106,41 +203,40 @@ const profile = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        // backgroundColor: "red",
-        alignItems: "center",
-        // justifyContent: "center",
-    },
+  container: {
+    flex: 1,
+    // backgroundColor: "red",
+    alignItems: "center",
+    // justifyContent: "center",
+  },
 
-    nav: {
-        flex: 1,
-        // backgroundColor: "blue",
-        justifyContent: "center",
-        width: "100%",
-        alignItems: "center",
-    },
-    navText: {
-        fontSize: 30,
-        fontWeight: "700",
-    },
+  nav: {
+    flex: 1,
+    // backgroundColor: "blue",
+    justifyContent: "center",
+    width: "100%",
+    alignItems: "center",
+  },
+  navText: {
+    fontSize: 30,
+    fontWeight: "700",
+  },
 
-    backgroundChat: {
-        flex: 6,
+  backgroundChat: {
+    flex: 6,
 
-        width: "100%",
-    },
+    width: "100%",
+  },
 
-    iconPicture:{
-        width: 40, height: 40
-    },
-    iconText : {
-        justifyContent: 'center', padding: 10 
-    }
-
-
+  iconPicture: {
+    width: 40,
+    height: 40,
+  },
+  iconText: {
+    justifyContent: "center",
+    padding: 10,
+  },
 });
 
 export default profile;
