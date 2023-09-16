@@ -118,8 +118,11 @@ const chatScreen = () => {
         <View style={{ margin: 15, flexDirection: "row" }}>
           <TextInput style={styles.input} placeholder="Text" />
           <View
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+            style={{ flex: 1, alignItems: "center", justifyContent: "center", flexDirection : 'row', justifyContent : 'space-around'}}
           >
+            <TouchableOpacity>
+                <Image source={require("../assets/send.png")} style={{width : 30, height : 30}}/>
+            </TouchableOpacity>
             <TouchableOpacity>
               <Image
                 source={require("../assets/image.png")}
@@ -166,13 +169,16 @@ const styles = StyleSheet.create({
     input: {
       height: 40,
       margin: 12,
-    //   borderWidth: 1,
+      borderBottomWidth: 1,
+      borderColor : '#ccc',
+      backgroundColor : '#eee',
+      borderRadius : 50,
       padding: 10,
       flex: 3,
     },
   
     boxContent: {
-      flex: 3, borderRadius: 10, padding: 10, backgroundColor: 'green'
+      flex: 3, borderRadius: 10, padding: 10, backgroundColor: '#6A988B'
     },
     boxTimeLeft: {
       alignItems: 'flex-start', padding: 10
