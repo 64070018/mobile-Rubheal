@@ -51,7 +51,6 @@ const CartScreen = ({route, navigation}) => {
                     <Feather name="map-pin" size={24} color="black" />
                     <View style={{ marginLeft: 5 }}>
                         <Text style={{ fontSize: 18, fontWeight: "bold", fontFamily: 'Anuphan' }}>ที่อยู่สำหรับการจัดส่ง</Text>
-                        <Text style={{ fontSize: 18, fontWeight: "bold", fontFamily: 'Anuphan' }}>ที่อยู่สำหรับการจัดส่ง2</Text>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>ลาดกระบัง</Text>
                         <Text style={{ fontSize: 18, fontFamily: 'Josefin-Sans' }}>Aom 0949561292</Text>
                     </View>

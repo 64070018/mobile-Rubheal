@@ -26,14 +26,17 @@ const Tab = createBottomTabNavigator();
 function TabNavigator(){
     
     return (
-        <Tab.Navigator initialRouteName="HomeScreen" style={{ backgroundColor: '#6A988B'}}>
+        <Tab.Navigator initialRouteName="HomeScreen" screenOptions={{
+            tabBarActiveTintColor: "darkblue",
+            tabBarStyle: { backgroundColor: "#6A988B" }
+          }}>
             <Tab.Screen name="HOME" component={HomeScreen} options={{ headerShown: false,
                 tabBarIcon: ({ color, size }) => {
                     return <AntDesign name="home" size={26} color={color} />;
                 }, }} />
             <Tab.Screen name="TOP 10" component={RankScreen} options={{ headerShown: false,
                 tabBarIcon: ({ color, size }) => {
-                    return <AntDesign name="faHotjar" size={26} color={color} />;
+                    return <AntDesign name="Trophy" size={26} color={color} />;
                 }, }} />
             <Tab.Screen name="Chat" component={messageScreen} options={{ headerShown: false,
                 tabBarIcon: ({ color, size }) => {
@@ -52,7 +55,7 @@ function TabNavigator(){
 function Navigation() {
     return (
         <CartNavigator.Navigator initialRouteName="Cart">
-            <CartNavigator.Screen name="Cart" component={pageProductForAdmin}  />
+            <CartNavigator.Screen name="Cart" component={CartScreen}  />
             <CartNavigator.Screen name="OrderDetail" component={OrderDetail}  />
             <CartNavigator.Screen name="customerBuy" component={customerBuyProduct} />
         </CartNavigator.Navigator>
