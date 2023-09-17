@@ -8,14 +8,17 @@ import messageScreen from "../screens/messageScreen.js";
 import profile from "../screens/profile.js";
 import adminPage from "../screens/adminPage.js";
 import OrderDetail from "../screens/OrderDetail.js";
+import pageProductForAdmin from "../screens/pageProductForAdmin.js";
+import customerBuyProduct from "../screens/customerBuyProduct.js";
 
 
 const CartNavigator = createNativeStackNavigator();
 function Navigation() {
     return (
         <CartNavigator.Navigator initialRouteName="Cart">
-            <CartNavigator.Screen name="Cart" component={CartScreen}  />
+            <CartNavigator.Screen name="Cart" component={pageProductForAdmin}  />
             <CartNavigator.Screen name="OrderDetail" component={OrderDetail}  />
+            <CartNavigator.Screen name="customerBuy" component={customerBuyProduct} />
         </CartNavigator.Navigator>
     )
 
