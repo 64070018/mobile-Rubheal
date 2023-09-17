@@ -15,13 +15,13 @@ import React from "react";
 
 
 const products = [
-    { id: 1, name : "Tên sản phẩm", image: require("../assets/vase.png"), price: 500 },
-    { id: 2, name : "Tên sản phẩm", image: require("../assets/vase.png"), price: 500 },
-    { id: 3, name : "Tên sản phẩm", image: require("../assets/vase.png"), price: 500 },
-    { id: 4, name : "Tên sản phẩm", image: require("../assets/vase.png"), price: 500 },
+    { id: 1, name : "Nike Killshot 2 ", image: {uri : 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/90fb28a6-8634-4dc3-88d1-9a7866e5ef17/%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%97%E0%B9%89%E0%B8%B2%E0%B8%9C%E0%B8%B9%E0%B9%89-killshot-2-leather-DqWZ4j.png'}, price: 3600 },
+    { id: 2, name : "นาฬิกา g shock", image: {uri : "https://casio-cmg.com/wp-content/uploads/2015/09/GA-110GB-1A_l.png"}, price: 4000 },
+    { id: 3, name : "โกโก้อาม่า", image: {uri : "https://i.ytimg.com/vi/NZ9hyMaAsLc/maxresdefault.jpg"}, price: 55 },
+    { id: 4, name : "BAOJIxTREASURE", image: {uri : "https://baoji.co.th/wp-content/uploads/2023/08/AW-OPEN-BOX-white_0-1.jpg"}, price: 4000 },
 ]
 
-const adminPage = (props) => {
+const AdminPage = ({navigation}) => {
 
     const renderItem = (itemData) => {
            return (
@@ -95,7 +95,9 @@ const adminPage = (props) => {
               </Text> */}
         </View>
         <View style={{ padding: 10 }}>
-          <Button title="Orders" />
+          <Button title="Orders" onPress={() => {
+            navigation.navigate('pageProductForAdmin')
+        }}/>
         </View>
         <View style={{ padding: 10 }}>
           <Button title="Create New product" color={"green"} />
@@ -157,4 +159,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default adminPage;
+export default AdminPage;

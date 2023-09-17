@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 
-const profile = () => {
+const Profile = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.nav}>
@@ -20,6 +20,15 @@ const profile = () => {
           style={{ width: "100%", height: 150 }}
         />
       </View>
+
+      <TouchableOpacity onPress={() => {
+            navigation.navigate('adminPage')
+        }}>
+        <Image
+          source={require("../assets/people.png")}
+          style={{ position: "absolute", right: -150, top: -80 }}
+        />
+      </TouchableOpacity>
       <View style={styles.backgroundChat}>
         {/* <FlatList data={CHAT} renderItem={renderItem} /> */}
         <View style={{ alignItems: "center" }}>
@@ -71,68 +80,36 @@ const profile = () => {
             }}
           >
             <Image
-              source={require("../assets/vase.png")}
+              source={{
+                uri: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/90fb28a6-8634-4dc3-88d1-9a7866e5ef17/%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%97%E0%B9%89%E0%B8%B2%E0%B8%9C%E0%B8%B9%E0%B9%89-killshot-2-leather-DqWZ4j.png",
+              }}
               style={{ width: 100, height: 100 }}
             />
 
             <View style={{ flex: 1, padding: 10 }}>
-              <Text>ชื่อสินค้า : Tên sản phẩm</Text>
-              <Text>ราคาสินค้า : 500</Text>
+              <Text>ชื่อสินค้า : Nike Killshot 2 Leather</Text>
+              <Text>ราคาสินค้า : 3600</Text>
             </View>
           </View>
 
           <View
             style={{
               flexDirection: "row",
-           
+
               padding: 10,
               margin: 10,
             }}
           >
             <Image
-              source={require("../assets/Row.png")}
+              source={{
+                uri: "https://casio-cmg.com/wp-content/uploads/2015/09/GA-110GB-1A_l.png",
+              }}
               style={{ width: 100, height: 100 }}
             />
 
             <View style={{ flex: 1, padding: 10 }}>
-              <Text>ชื่อสินค้า : Tên sản phẩm</Text>
-              <Text>ราคาสินค้า : 500</Text>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              padding: 10,
-              margin: 10,
-            }}
-          >
-            <Image
-              source={require("../assets/vase.png")}
-              style={{ width: 100, height: 100 }}
-            />
-
-            <View style={{ flex: 1, padding: 10 }}>
-              <Text>ชื่อสินค้า : Tên sản phẩm</Text>
-              <Text>ราคาสินค้า : 500</Text>
-            </View>
-          </View>
-
-          <View
-            style={{
-              flexDirection: "row",
-           
-              padding: 10,
-              margin: 10,
-            }}
-          >
-            <Image
-              source={require("../assets/Row.png")}
-              style={{ width: 100, height: 100 }}
-            />
-
-            <View style={{ flex: 1, padding: 10 }}>
-              <Text>ชื่อสินค้า : Tên sản phẩm</Text>
-              <Text>ราคาสินค้า : 500</Text>
+              <Text>ชื่อสินค้า : นาฬิกา g shock</Text>
+              <Text>ราคาสินค้า : 4000</Text>
             </View>
           </View>
           <View
@@ -143,32 +120,36 @@ const profile = () => {
             }}
           >
             <Image
-              source={require("../assets/vase.png")}
+              source={{
+                uri: "https://i.ytimg.com/vi/NZ9hyMaAsLc/maxresdefault.jpg",
+              }}
               style={{ width: 100, height: 100 }}
             />
 
             <View style={{ flex: 1, padding: 10 }}>
-              <Text>ชื่อสินค้า : Tên sản phẩm</Text>
-              <Text>ราคาสินค้า : 500</Text>
+              <Text>ชื่อสินค้า :โกโก้อาม่า </Text>
+              <Text>ราคาสินค้า : 55</Text>
             </View>
           </View>
 
           <View
             style={{
               flexDirection: "row",
-           
+
               padding: 10,
               margin: 10,
             }}
           >
             <Image
-              source={require("../assets/Row.png")}
+              source={{
+                uri: "https://baoji.co.th/wp-content/uploads/2023/08/AW-OPEN-BOX-white_0-1.jpg",
+              }}
               style={{ width: 100, height: 100 }}
             />
 
             <View style={{ flex: 1, padding: 10 }}>
-              <Text>ชื่อสินค้า : Tên sản phẩm</Text>
-              <Text>ราคาสินค้า : 500</Text>
+              <Text>ชื่อสินค้า : BAOJIxTREASURE</Text>
+              <Text>ราคาสินค้า : 4000</Text>
             </View>
           </View>
         </ScrollView>
@@ -239,4 +220,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default profile;
+export default Profile;

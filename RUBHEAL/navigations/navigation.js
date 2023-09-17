@@ -5,18 +5,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-
-
-import CartScreen from "../screens/cartScreen.js"
+import CartScreen from "../screens/CartScreen.js"
 import HomeScreen from "../screens/HomeScreen.js"
 import RankScreen from "../screens/RankScreen.js"
-import chatScreen from "../screens/chatScreen.js";
-import messageScreen from "../screens/messageScreen.js";
-import profile from "../screens/profile.js";
-import adminPage from "../screens/adminPage.js";
+import ChatScreen from "../screens/ChatScreen.js";
+import MessageScreen from "../screens/MessageScreen.js";
+import profile from "../screens/Profile.js";
+import AdminPage from "../screens/AdminPage.js";
 import OrderDetail from "../screens/OrderDetail.js";
-import pageProductForAdmin from "../screens/pageProductForAdmin.js";
-import customerBuyProduct from "../screens/customerBuyProduct.js";
+import PageProductForAdmin from "../screens/PageProductForAdmin.js";
+import CustomerBuyProduct from "../screens/CustomerBuyProduct.js";
 import DetailScreen from "../screens/DetailScreen.js";
 
 
@@ -24,30 +22,39 @@ import DetailScreen from "../screens/DetailScreen.js";
 
 const CartNavigator = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-function TabNavigator(){
-    
+function TabNavigator() {
+
     return (
         <Tab.Navigator initialRouteName="HomeScreen" screenOptions={{
             tabBarActiveTintColor: "darkblue",
             tabBarStyle: { backgroundColor: "#6A988B" },
             tabBarInactiveTintColor: "black"
-          }}>
-            <Tab.Screen name="HOME" component={Navigation} options={{ headerShown: false,
+        }}>
+            <Tab.Screen name="HOME" component={Navigation} options={{
+                headerShown: false,
                 tabBarIcon: ({ color, size }) => {
                     return <AntDesign name="home" size={26} color={color} />;
-                }, }} />
-            <Tab.Screen name="TOP 10" component={RankScreen} options={{ headerShown: false,
+                },
+            }} />
+            <Tab.Screen name="TOP 10" component={RankScreen} options={{
+                headerShown: false,
                 tabBarIcon: ({ color, size }) => {
                     return <AntDesign name="Trophy" size={26} color={color} />;
-                }, }} />
-            <Tab.Screen name="Chat" component={messageScreen} options={{ headerShown: false,
+                },
+            }} />
+            <Tab.Screen name="Chat" component={MessageScreen} options={{
+                headerShown: false,
                 tabBarIcon: ({ color, size }) => {
                     return <AntDesign name="wechat" size={26} color={color} />;
-                }, }} />
-            <Tab.Screen name="Me" component={profile} options={{ headerShown: false,
+                },
+            }} />
+            <Tab.Screen name="Profile" component={profile} options={{
+                headerShown: false,
+                title: "ME",
                 tabBarIcon: ({ color, size }) => {
                     return <AntDesign name="user" size={26} color={color} />;
-                },}} />
+                },
+            }} />
         </Tab.Navigator>
     )
 
@@ -57,11 +64,11 @@ function TabNavigator(){
 function Navigation() {
     return (
         <CartNavigator.Navigator initialRouteName="Home">
-            <CartNavigator.Screen name="Home" component={HomeScreen}  />
-            <CartNavigator.Screen name="Detail" component={DetailScreen}  />
-            <CartNavigator.Screen name="Cart" component={CartScreen}  />
-            <CartNavigator.Screen name="OrderDetail" component={OrderDetail}  />
-            <CartNavigator.Screen name="customerBuy" component={customerBuyProduct} />
+            <CartNavigator.Screen name="Home" component={HomeScreen} />
+            <CartNavigator.Screen name="Detail" component={DetailScreen} />
+            <CartNavigator.Screen name="Cart" component={CartScreen} />
+            <CartNavigator.Screen name="OrderDetail" component={OrderDetail} />
+            <CartNavigator.Screen name="customerBuy" component={CustomerBuyProduct} />
         </CartNavigator.Navigator>
     )
 

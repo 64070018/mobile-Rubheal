@@ -5,15 +5,19 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  SafeAreaView,
 } from "react-native";
 import React from "react";
 import { CHAT } from "../data/data.js";
 
-const messageScreen = () => {
+const MessageScreen = ({navigation}) => {
   console.log(CHAT);
   const renderItem = (itemData) => {
     return (
-        <TouchableOpacity>
+      
+        <TouchableOpacity onPress={() => {
+          navigation.navigate("chatScreen")
+      }}>
       <View style={styles.containerChat}>
         <View style={styles.picture}>
           <Image
@@ -50,6 +54,7 @@ const messageScreen = () => {
     //   <FlatList data={CHAT} renderItem={renderItem} />
     //   <Text>Folk</Text>
     // </View>
+    <SafeAreaView style={{flex : 1, marginTop : 20}}>
     <View style={styles.container}>
       {/* <View style={styles.nav}>
         <Text style={styles.navText}>Message</Text>
@@ -58,6 +63,8 @@ const messageScreen = () => {
         <FlatList data={CHAT} renderItem={renderItem} />
       </View>
     </View>
+
+    </SafeAreaView>
   );
 };
 
@@ -102,4 +109,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default messageScreen;
+export default MessageScreen;
