@@ -2,23 +2,26 @@
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { AntDesign } from "@expo/vector-icons";
 import { responsiveHeight } from "react-native-responsive-dimensions";
-const showProduct = (props) => {
+const ShowProduct = ({ route },props) => {
+    console.log(props)
+    // console.log
     return (
         <View style={{ maxWidth: '50%', minWidth: '50%' }}>
             <ScrollView>
-                <TouchableOpacity style={{ height: 400,}}>
-                    <Image source={{ uri: props.item.pic }} style={styles.product} />
+                {/* <TouchableOpacity style={{ height: 400, }}> */}
+                <TouchableOpacity style={{ height: 400, }} onPress={props.onSelectProduct}>
+                    <Image source={{ uri: props.pic }} style={styles.product} />
                     <View>
-                        <Text style={styles.catTitle} numberOfLines={1}>{props.item.title}</Text>
-                        <View style={{ flexDirection: 'row', marginTop: 5, }}>
+                        <Text style={styles.catTitle} numberOfLines={1}> {props.title}</Text>
+                        <View style={{ flexDirection: 'row', marginTop: 5 }}>
                             <AntDesign name="star" size={25} color='#E4A70A' />
                             <AntDesign name="star" size={25} color='#E4A70A' />
                             <AntDesign name="star" size={25} color='#E4A70A' />
                             <AntDesign name="star" size={25} color='#E4A70A' />
                             <AntDesign name="star" size={25} color='#E4A70A' />
-                            <Text style={{ fontSize: 16, bottom: 0 }}> {props.item.rate} (5.0) </Text>
+                            <Text style={{ fontSize: 16, bottom: 0 }}> {props.rate} (5.0) </Text>
                         </View>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: "red", }}> {props.item.price} บาท </Text>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: "red", }}> {props.price} บาท </Text>
                     </View>
                 </TouchableOpacity>
             </ScrollView>
@@ -48,4 +51,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default showProduct;
+export default ShowProduct;

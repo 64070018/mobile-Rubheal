@@ -1,10 +1,20 @@
-import { StyleSheet, Text, View, Image, TextInput, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, FlatList, ScrollView, Systrace } from 'react-native';
 
 
 import { PRODUCT } from "../data/dummy-data";
-import showProduct from '../components/ShowProduct';
+import ShowProduct from '../components/ShowProduct';
 
-const HomeScreen = (props) => {
+const HomeScreen = ({ navigation, route }, props) => {
+  console.log(props)
+  const renderItem = (itemData) => {
+    return (
+      <ShowProduct
+        onSelectProduct={(itemData) => {
+          navigation.navigate("Detail", { title: itemData.item.title, pic: itemData.item.pic, });
+        }}
+      />
+    );
+  }
   return (
     <View style={styles.container}>
       <TextInput style={styles.input} placeholder="ค้นหาสินค้าที่คุณต้องการ" />
@@ -39,14 +49,11 @@ const HomeScreen = (props) => {
         <Text style={styles.title}>recommend</Text>
 
 
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <FlatList
-            data={PRODUCT}
-            renderItem={showProduct}
-            numColumns={2}
-            keyExtractor={item => `${item.id}`}
-          />
-        </ScrollView>
+        <FlatList
+          data={PRODUCT}
+          renderItem={renderItem}
+          numColumns={2}
+        />
 
       </ScrollView>
     </View>
@@ -59,9 +66,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     // alignItems: 'center',
     // justifyContent: 'center',
-    margin: 5,
-    marginTop: '10%'
-  }, 
+    marginHorizontal: 5,
+  },
   input: {
     borderColor: "gray",
     width: "100%",

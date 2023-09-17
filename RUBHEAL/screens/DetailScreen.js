@@ -5,7 +5,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { COMMENT } from "../data/dummy-data";
 import comment from '../components/comment';
 
-const DetailScreen = (props) => {
+const DetailScreen = ({route} ,props) => {
     return (
         <ScrollView showsVerticalScrollIndicator={false} >
             <Image source={{ uri: 'https://picsum.photos/400' }} style={{ width: '100%', height: responsiveHeight(40) }} />

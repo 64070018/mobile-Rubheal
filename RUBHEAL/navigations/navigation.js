@@ -17,6 +17,7 @@ import adminPage from "../screens/adminPage.js";
 import OrderDetail from "../screens/OrderDetail.js";
 import pageProductForAdmin from "../screens/pageProductForAdmin.js";
 import customerBuyProduct from "../screens/customerBuyProduct.js";
+import DetailScreen from "../screens/DetailScreen.js";
 
 
 
@@ -31,7 +32,7 @@ function TabNavigator(){
             tabBarStyle: { backgroundColor: "#6A988B" },
             tabBarInactiveTintColor: "black"
           }}>
-            <Tab.Screen name="HOME" component={HomeScreen} options={{ headerShown: false,
+            <Tab.Screen name="HOME" component={Navigation} options={{ headerShown: false,
                 tabBarIcon: ({ color, size }) => {
                     return <AntDesign name="home" size={26} color={color} />;
                 }, }} />
@@ -55,8 +56,9 @@ function TabNavigator(){
 
 function Navigation() {
     return (
-        <CartNavigator.Navigator initialRouteName="Cart">
+        <CartNavigator.Navigator initialRouteName="Home">
             <CartNavigator.Screen name="Home" component={HomeScreen}  />
+            <CartNavigator.Screen name="Detail" component={DetailScreen}  />
             <CartNavigator.Screen name="Cart" component={CartScreen}  />
             <CartNavigator.Screen name="OrderDetail" component={OrderDetail}  />
             <CartNavigator.Screen name="customerBuy" component={customerBuyProduct} />
@@ -68,7 +70,7 @@ function Navigation() {
 export default function Mainavigation() {
     return (
         <NavigationContainer>
-            <Navigation />
+            <TabNavigator />
         </NavigationContainer>
     );
 }
