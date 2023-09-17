@@ -41,7 +41,7 @@ const UserBuy = [
 
 
 
-const customerBuyProduct = ({ route }) => {
+const CustomerBuyProduct = ({ route }) => {
   const { id } = route.params;
   const renderItem = (itemData) => {
 
@@ -83,4 +83,4 @@ const customerBuyProduct = ({ route }) => {
   );
 };
 
-export default customerBuyProduct;
+export default CustomerBuyProduct;

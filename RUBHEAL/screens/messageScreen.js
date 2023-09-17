@@ -9,7 +9,7 @@ import {
 import React from "react";
 import { CHAT } from "../data/data.js";
 
-const messageScreen = () => {
+const MessageScreen = () => {
   console.log(CHAT);
   const renderItem = (itemData) => {
     return (
@@ -102,4 +102,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default messageScreen;
+export default MessageScreen;

@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, ScrollView, TextInput, TouchableOpacity } from "react-native";
 import React from "react";
-const chatScreen = () => {
+const ChatScreen = () => {
   return (
     <View style={styles.container}>
       {/* <View style={styles.nav}>
@@ -195,4 +195,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default chatScreen;
+export default ChatScreen;

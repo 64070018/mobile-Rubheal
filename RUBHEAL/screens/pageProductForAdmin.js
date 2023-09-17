@@ -32,7 +32,7 @@ const productsAdmin = [
   },
 ];
 
-const pageProductForAdmin = ({navigation}) => {
+const PageProductForAdmin = ({navigation}) => {
   const renderItem = (itemData) => {
     return (
 
@@ -81,4 +81,4 @@ const pageProductForAdmin = ({navigation}) => {
   );
 };
 
-export default pageProductForAdmin;
+export default PageProductForAdmin;

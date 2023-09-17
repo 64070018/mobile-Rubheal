@@ -21,7 +21,7 @@ const products = [
     { id: 4, name : "Tên sản phẩm", image: require("../assets/vase.png"), price: 500 },
 ]
 
-const adminPage = (props) => {
+const AdminPage = (props) => {
 
     const renderItem = (itemData) => {
            return (
@@ -157,4 +157,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default adminPage;
+export default AdminPage;
