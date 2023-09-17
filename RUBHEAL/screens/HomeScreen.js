@@ -5,12 +5,16 @@ import { PRODUCT } from "../data/dummy-data";
 import ShowProduct from '../components/ShowProduct';
 
 const HomeScreen = ({ navigation, route }, props) => {
-  console.log(props)
-  const renderItem = (itemData) => {
+  // console.log(props)
+  // console.log(PRODUCT)
+  const renderedItem = (itemData) => {
+    // console.log(itemData.item.title)
     return (
       <ShowProduct
-        onSelectProduct={(itemData) => {
-          navigation.navigate("Detail", { title: itemData.item.title, pic: itemData.item.pic, });
+        title={itemData.item.title}
+        pic={itemData.item.pic}
+        onSelectProduct={() => {
+          navigation.navigate("Detail", { title: itemData.item.title, pic: itemData.item.pic });
         }}
       />
     );
@@ -51,7 +55,7 @@ const HomeScreen = ({ navigation, route }, props) => {
 
         <FlatList
           data={PRODUCT}
-          renderItem={renderItem}
+          renderItem={renderedItem}
           numColumns={2}
         />
 

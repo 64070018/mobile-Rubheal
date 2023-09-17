@@ -2,8 +2,9 @@
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { AntDesign } from "@expo/vector-icons";
 import { responsiveHeight } from "react-native-responsive-dimensions";
-const ShowProduct = ({ route },props) => {
+const ShowProduct = (props) => {
     console.log(props)
+    console.log('product')
     // console.log
     return (
         <View style={{ maxWidth: '50%', minWidth: '50%' }}>

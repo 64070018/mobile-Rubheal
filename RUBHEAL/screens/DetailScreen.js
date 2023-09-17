@@ -5,12 +5,17 @@ import { AntDesign } from "@expo/vector-icons";
 import { COMMENT } from "../data/dummy-data";
 import comment from '../components/comment';
 
-const DetailScreen = ({route} ,props) => {
+const DetailScreen = (props) => {
+    // const {title, pic} = route.params;
+    // console.log('test')
+    // console.log(title)
+    // console.log(route)
+    console.log(props)
     return (
         <ScrollView showsVerticalScrollIndicator={false} >
-            <Image source={{ uri: 'https://picsum.photos/400' }} style={{ width: '100%', height: responsiveHeight(40) }} />
+            <Image source={{ uri: props.route.params.pic }} style={{ width: '100%', height: responsiveHeight(40) }} />
             <View style={{ margin: 10 }}>
-                <Text style={styles.title}>Product name</Text>
+                <Text style={styles.title}>{props.route.params.title}</Text>
                 <View style={{ flexDirection: 'row', marginTop: 5, }}>
                     <AntDesign name="star" size={25} color='orange' />
                     <AntDesign name="star" size={25} color='orange' />
