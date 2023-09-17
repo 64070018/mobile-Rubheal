@@ -5,16 +5,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import CartScreen from "../screens/CartScreen.js"
+import ChatScreen from "../screens/chatScreen.js";
+import cartScreen from "../screens/cartScreen.js"
 import HomeScreen from "../screens/HomeScreen.js"
 import RankScreen from "../screens/RankScreen.js"
 import chatScreen from "../screens/chatScreen.js";
-import messageScreen from "../screens/MessageScreen.js";
-import profile from "../screens/Profile.js";
+import messageScreen from "../screens/messageScreen.js";
+import profile from "../screens/profile.js";
 import adminPage from "../screens/adminPage.js";
 import OrderDetail from "../screens/OrderDetail.js";
-import pageProductForAdmin from "../screens/PageProductForAdmin.js";
-import customerBuyProduct from "../screens/CustomerBuyProduct.js";
+import pageProductForAdmin from "../screens/pageProductForAdmin.js";
+import customerBuyProduct from "../screens/customerBuyProduct.js";
 import DetailScreen from "../screens/DetailScreen.js";
 
 
@@ -66,7 +67,7 @@ function Navigation() {
         <CartNavigator.Navigator initialRouteName="Home">
             <CartNavigator.Screen name="Home" component={HomeScreen} />
             <CartNavigator.Screen name="Detail" component={DetailScreen} />
-            <CartNavigator.Screen name="Cart" component={CartScreen} />
+            <CartNavigator.Screen name="Cart" component={cartScreen} />
             <CartNavigator.Screen name="OrderDetail" component={OrderDetail} />
             <CartNavigator.Screen name="customerBuy" component={customerBuyProduct} />
         </CartNavigator.Navigator>
