@@ -14,24 +14,24 @@ const HomeScreen = (props) => {
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ height: 200 }}>
           <View style={{ alignItems: 'center', flexDirection: 'row' }}>
             <View style={{ alignItems: 'center', marginRight: 10 }}>
-              <Image source={{ uri: 'https://reactjs.org/logo-og.png' }} style={[styles.catagory,]} />
+              <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2819/2819194.png' }} style={[styles.catagory,]} />
               <Text style={styles.catTitle}>อาหาร</Text>
             </View>
             <View style={{ alignItems: 'center', marginRight: 10 }}>
-              <Image source={{ uri: 'https://reactjs.org/logo-og.png' }} style={styles.catagory} />
+              <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3300/3300371.png' }} style={styles.catagory} />
               <Text style={styles.catTitle}>เสื้อผ้า</Text>
             </View>
             <View style={{ alignItems: 'center', marginRight: 10 }}>
-              <Image source={{ uri: 'https://reactjs.org/logo-og.png' }} style={styles.catagory} />
-              <Text style={styles.catTitle}>รองเท้า</Text>
+              <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/7695/7695930.png' }} style={styles.catagory} />
+              <Text style={styles.catTitle}>เครื่องประดับ</Text>
             </View>
             <View style={{ alignItems: 'center', marginRight: 10 }}>
-              <Image source={{ uri: 'https://reactjs.org/logo-og.png' }} style={styles.catagory} />
-              <Text style={styles.catTitle}>กระเป๋า</Text>
-            </View>
-            <View style={{ alignItems: 'center', marginRight: 10 }}>
-              <Image source={{ uri: 'https://reactjs.org/logo-og.png' }} style={styles.catagory} />
+              <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/6967/6967594.png' }} style={styles.catagory} />
               <Text style={styles.catTitle}>โมเดล</Text>
+            </View>
+            <View style={{ alignItems: 'center', marginRight: 10 }}>
+              <Image source={{ uri: 'https://icon-library.com/images/others-icon/others-icon-20.jpg' }} style={styles.catagory} />
+              <Text style={styles.catTitle}>เบ็ดเตล็ด</Text>
             </View>
           </View>
         </ScrollView>
