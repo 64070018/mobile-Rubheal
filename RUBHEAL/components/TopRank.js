@@ -2,9 +2,9 @@
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { AntDesign } from "@expo/vector-icons";
 import { responsiveHeight } from "react-native-responsive-dimensions";
-const showProduct = (props) => {
+const TopTank = (props) => {
     return (
-        <View style={{ maxWidth: '50%', minWidth: '50%' }}>
+        // <View style={{ maxWidth: '50%', minWidth: '50%' }}>
             <ScrollView>
                 <TouchableOpacity style={{ height: 400,}}>
                     <Image source={{ uri: props.item.pic }} style={styles.product} />
@@ -22,7 +22,7 @@ const showProduct = (props) => {
                     </View>
                 </TouchableOpacity>
             </ScrollView>
-        </View>
+        // </View>
     );
 };
 
@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default showProduct;
+export default TopTank;

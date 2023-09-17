@@ -1,18 +1,17 @@
 import { StyleSheet, Text, View, Image, TextInput, FlatList, ScrollView } from 'react-native';
 
 import { PRODUCT } from "../data/dummy-data";
-import showProduct from '../components/ShowProduct';
+// import showProduct from '../components/ShowProduct';
+import TopTank from '../components/TopRank';
 
 const RankScreen = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>TOP 10 NOW!! {'\n'}</Text>
-
-
       <ScrollView showsVerticalScrollIndicator={false}>
         <FlatList
           data={PRODUCT}
-          renderItem={showProduct}
+          renderItem={TopTank}
           numColumns={1}
           keyExtractor={item => `${item.id}`}
         />
