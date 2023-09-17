@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: 'center',
     margin: 5,
-  },
+    marginTop: '10%'
+  }, 
   input: {
     borderColor: "gray",
     width: "100%",

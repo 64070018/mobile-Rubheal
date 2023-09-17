@@ -26,7 +26,7 @@ const Tab = createBottomTabNavigator();
 function TabNavigator(){
     
     return (
-        <Tab.Navigator initialRouteName="HomeScreen">
+        <Tab.Navigator initialRouteName="HomeScreen" style={{ backgroundColor: '#6A988B'}}>
             <Tab.Screen name="HOME" component={HomeScreen} options={{ headerShown: false,
                 tabBarIcon: ({ color, size }) => {
                     return <AntDesign name="home" size={26} color={color} />;
