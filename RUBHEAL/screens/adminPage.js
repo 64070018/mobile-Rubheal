@@ -21,7 +21,7 @@ const products = [
     { id: 4, name : "BAOJIxTREASURE", image: {uri : "https://baoji.co.th/wp-content/uploads/2023/08/AW-OPEN-BOX-white_0-1.jpg"}, price: 4000 },
 ]
 
-const adminPage = ({navigation}) => {
+const AdminPage = ({navigation}) => {
 
     const renderItem = (itemData) => {
            return (
@@ -159,4 +159,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default adminPage;
+export default AdminPage;

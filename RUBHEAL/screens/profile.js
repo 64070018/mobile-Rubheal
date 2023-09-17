@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 
-const profile = ({navigation}) => {
+const Profile = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.nav}>
@@ -220,4 +220,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default profile;
+export default Profile;
