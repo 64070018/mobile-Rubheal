@@ -23,14 +23,14 @@ const CartScreen = ({route, navigation}) => {
         { id: 2, name: "Notebook", price: 10 },
         { id: 3, name: "Eraser", price: 2 },
         { id: 4, name: "Sharpener", price: 7 },
+        { id: 5, name: "Sharpener", price: 7 },
     ]
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView>
-            <View style={{ paddingHorizontal: 10, paddingTop: 10 }}>
-                <FlatList data={products} keyExtractor={(item) => item.id} renderItem={({ item }) => {
+            <ScrollView style={{ padding: 10, marginBottom:50 }}>
+                {products.map((item) => {
                     return (
-                        <View style={styles.product}>
+                        <View key={item.id} style={styles.product}>
                             <Image style={{ width: 90, height: 90, borderColor: 'black', borderWidth: 1, }}
                                 source={require("../assets/crocs.png")} resizeMode="contain"
                             />
@@ -45,8 +45,7 @@ const CartScreen = ({route, navigation}) => {
                         </View>
                     )
 
-                }}>
-                </FlatList>
+                })}
                 <View style={{ flexDirection: 'row', marginTop: 20 }}>
                     <Feather name="map-pin" size={24} color="black" />
                     <View style={{ marginLeft: 5 }}>
@@ -62,7 +61,7 @@ const CartScreen = ({route, navigation}) => {
                         <Text style={{ fontSize: 18, fontFamily: 'Josefin-Sans' }}>Flash</Text>
                     </View>
                 </View>
-                <View style={{ marginTop: 20 }}>
+                <View style={{ marginVertical: 20 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>ราคา</Text>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>24 บาท</Text>
@@ -76,13 +75,12 @@ const CartScreen = ({route, navigation}) => {
                         <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>24 บาท</Text>
                     </View>
                 </View>
-            </View>
+            </ScrollView>
             <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
                 <Button title="สั่งซื้อ" color="#9276F2" onPress={() => {
                     navigation.navigate('OrderDetail')
                 }}></Button>
             </View>
-            </ScrollView>
         </SafeAreaView>
 
 
