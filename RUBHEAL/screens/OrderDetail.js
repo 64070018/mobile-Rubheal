@@ -67,22 +67,24 @@ const OrderDetail = ({ route, navigate, navigation},props) => {
                         <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>24 บาท</Text>
                     </View>
                 </View>
-                <FlatList data={products} keyExtractor={(item) => item.id} renderItem={({ item }) => {
+                {products.map((item) => {
                     return (
-                        <View style={styles.product}>
+                        <View key={item.id} style={styles.product}>
                             <Image style={{ width: 90, height: 90, borderColor: 'black', borderWidth: 1, }}
                                 source={require("../assets/crocs.png")} resizeMode="contain"
                             />
                             <View style={{ marginLeft: 15 }}>
                                 <Text style={{ fontSize: 20, fontFamily: 'Josefin-Sans' }}>{item.name}{'\n'}x{item.price} บาท</Text>
                                 <View style={{ flexDirection: 'row' }}>
+                                    <AntDesign name="minussquareo" size={30} color="black" />
                                     <Text style={{ marginHorizontal: 5, fontSize: 18 }}>1</Text>
+                                    <AntDesign name="plussquareo" size={30} color="black" />
                                 </View>
                             </View>
                         </View>
                     )
-                }}>
-                </FlatList>
+
+                })}
                 <View style={{paddingTop:10}}>
                     <Button  title="กลับหน้าแรก" color="#9276F2" onPress={() => {
                         navigation.navigate('Home') //ต้องแก้ไปหน้าhome
