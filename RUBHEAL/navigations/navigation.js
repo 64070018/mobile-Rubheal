@@ -28,7 +28,8 @@ function TabNavigator(){
     return (
         <Tab.Navigator initialRouteName="HomeScreen" screenOptions={{
             tabBarActiveTintColor: "darkblue",
-            tabBarStyle: { backgroundColor: "#6A988B" }
+            tabBarStyle: { backgroundColor: "#6A988B" },
+            tabBarInactiveTintColor: "black"
           }}>
             <Tab.Screen name="HOME" component={HomeScreen} options={{ headerShown: false,
                 tabBarIcon: ({ color, size }) => {
