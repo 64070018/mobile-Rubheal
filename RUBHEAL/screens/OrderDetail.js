@@ -8,7 +8,7 @@ import * as SplashScreen from 'expo-splash-screen';
 
 // SplashScreen.preventAutoHideAsync();
 
-const OrderDetail = (props) => {
+const OrderDetail = ({ route, navigate, navigation},props) => {
     const [loaded] = useFonts({
         "Josefin-Sans": require("../assets/fonts/Josefin_Sans/static/JosefinSans-Medium.ttf"),
         Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
@@ -85,7 +85,7 @@ const OrderDetail = (props) => {
                 </FlatList>
                 <View style={{paddingTop:10}}>
                     <Button  title="กลับหน้าแรก" color="#9276F2" onPress={() => {
-                        navigation.navigate('Cart') //ต้องแก้ไปหน้าhome
+                        navigation.navigate('Home') //ต้องแก้ไปหน้าhome
                     }}></Button>
                 </View>
             </ScrollView>

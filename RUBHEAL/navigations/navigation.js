@@ -56,6 +56,7 @@ function TabNavigator(){
 function Navigation() {
     return (
         <CartNavigator.Navigator initialRouteName="Cart">
+            <CartNavigator.Screen name="Home" component={HomeScreen}  />
             <CartNavigator.Screen name="Cart" component={CartScreen}  />
             <CartNavigator.Screen name="OrderDetail" component={OrderDetail}  />
             <CartNavigator.Screen name="customerBuy" component={customerBuyProduct} />
@@ -67,7 +68,7 @@ function Navigation() {
 export default function Mainavigation() {
     return (
         <NavigationContainer>
-            <TabNavigator />
+            <Navigation />
         </NavigationContainer>
     );
 }
