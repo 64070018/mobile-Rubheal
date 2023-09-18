@@ -1,21 +1,22 @@
-import { StyleSheet, Text, View, Image, TextInput, FlatList, ScrollView, React } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, FlatList, ScrollView, React, TouchableOpacity } from 'react-native';
 import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
 import { AntDesign } from "@expo/vector-icons";
 
 import { COMMENT } from "../data/dummy-data";
 import comment from '../components/comment';
 
-const DetailScreen = (props) => {
+const DetailScreen = ({ navigation, route })=> {
     // const {title, pic} = route.params;
-    // console.log('test')
+    // console.log('params')
+    // console.log(route.params)
     // console.log(title)
     // console.log(route)
-    console.log(props)
+    // console.log(props)
     return (
         <ScrollView showsVerticalScrollIndicator={false} >
-            <Image source={{ uri: props.route.params.pic }} style={{ width: '100%', height: responsiveHeight(40) }} />
+            <Image source={{ uri: route.params.pic }} style={{ width: '100%', height: responsiveHeight(40) }} />
             <View style={{ margin: 10 }}>
-                <Text style={styles.title}>{props.route.params.title}</Text>
+                <Text style={styles.title}>{route.params.title}</Text>
                 <View style={{ flexDirection: 'row', marginTop: 5, }}>
                     <AntDesign name="star" size={25} color='orange' />
                     <AntDesign name="star" size={25} color='orange' />
@@ -26,6 +27,11 @@ const DetailScreen = (props) => {
                 </View>
                 <Text style={{ fontSize: 20, color: 'red', fontWeight: 'bold', marginTop: 5 }}> 999 บาท </Text>
 
+                <TouchableOpacity style={[styles.button]} onPress={() => {
+                    navigation.navigate('Cart')
+                }}>
+                    <Text style={styles.buttonText}>BUY</Text>
+                </TouchableOpacity>
 
                 {/* store account */}
                 <View style={{ borderBottomColor: '#aaa', borderBottomWidth: 1, paddingVertical: 7, flexDirection: 'row', alignItems: 'center', columnGap: 10, marginTop: 10 }}>
@@ -39,7 +45,17 @@ const DetailScreen = (props) => {
 
                 <View>
                     <Text style={styles.header}>Description Product</Text>
-                    <Text style={styles.content}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas porta blandit arcu nec porttitor. Fusce volutpat lectus vel lacus rhoncus efficitur. Phasellus a condimentum ex. Pellentesque non aliquet orci. Phasellus viverra mauris eget erat laoreet dignissim. Integer tellus magna, eleifend eu urna vel, ornare sollicitudin nibh. Maecenas eu efficitur quam, ut convallis dolor. Donec ut dignissim diam, et rutrum nunc. Mauris pulvinar, ipsum et viverra molestie, nibh dui condimentum sapien, non dapibus mauris neque ut velit. Morbi turpis libero, sodales vel enim id, placerat tristique diam. Fusce eu justo egestas, porttitor eros id, gravida sapien. Quisque id luctus dui, cursus gravida augue.</Text>
+                    <Text style={styles.content}>
+
+                        {route.params.detail}
+                    </Text>
+                </View>
+                <View style={{ borderTopWidth: 1, borderColor: 'gray', marginTop: 20 }}>
+                    <Text style={[styles.header, { color: 'red' }]}>Policy</Text>
+                    <Text style={[styles.content, { color: 'red' }]}>
+
+                        {route.params.policy}
+                    </Text>
                 </View>
 
 
@@ -72,6 +88,19 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         // justifyContent: 'center',
         // margin: 5,
+    },
+    button: {
+        marginTop: 20,
+        width: '100%',
+        backgroundColor: '#BBAEF5',
+        paddingVertical: 10
+    },
+    buttonText: {
+        fontSize: 30,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        color: '#fff'
+
     },
     input: {
         borderColor: "gray",

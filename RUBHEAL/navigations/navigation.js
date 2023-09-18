@@ -10,10 +10,9 @@ import HomeScreen from "../screens/HomeScreen.js"
 import RankScreen from "../screens/RankScreen.js"
 import ChatScreen from "../screens/ChatScreen.js";
 import MessageScreen from "../screens/MessageScreen.js";
-import profile from "../screens/Profile.js";
+import ProfileScreen from "../screens/Profile.js";
 import AdminPage from "../screens/AdminPage.js";
 import OrderDetail from "../screens/OrderDetail.js";
-import PageProductForAdmin from "../screens/PageProductForAdmin.js";
 import CustomerBuyProduct from "../screens/CustomerBuyProduct.js";
 import DetailScreen from "../screens/DetailScreen.js";
 
@@ -48,7 +47,7 @@ function TabNavigator() {
                     return <AntDesign name="wechat" size={26} color={color} />;
                 },
             }} />
-            <Tab.Screen name="Profile" component={profile} options={{
+            <Tab.Screen name="Profile" component={ProfileScreen} options={{
                 headerShown: false,
                 title: "ME",
                 tabBarIcon: ({ color, size }) => {

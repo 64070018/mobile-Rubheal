@@ -14,7 +14,7 @@ const HomeScreen = ({ navigation, route }, props) => {
         title={itemData.item.title}
         pic={itemData.item.pic}
         onSelectProduct={() => {
-          navigation.navigate("Detail", { title: itemData.item.title, pic: itemData.item.pic });
+          navigation.navigate("Detail", { title: itemData.item.title, pic: itemData.item.pic, detail: itemData.item.detail, policy: itemData.item.policy });
         }}
       />
     );
