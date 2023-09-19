@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'rea
 import { AntDesign } from "@expo/vector-icons";
 import { responsiveHeight } from "react-native-responsive-dimensions";
 const ShowProduct = (props) => {
+    console.log('product')
     console.log(props)
     console.log('product')
     // console.log

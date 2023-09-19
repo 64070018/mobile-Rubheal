@@ -5,7 +5,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { COMMENT } from "../data/dummy-data";
 import comment from '../components/comment';
 
-const DetailScreen = ({ navigation, route })=> {
+const DetailScreen = ({ navigation, route }) => {
     // const {title, pic} = route.params;
     // console.log('params')
     // console.log(route.params)
@@ -25,7 +25,7 @@ const DetailScreen = ({ navigation, route })=> {
                     <AntDesign name="star" size={25} color='orange' />
                     {/* <Text style={{ fontSize: 16, bottom: 0 }}> prop.item.rate (5.0) </Text> */}
                 </View>
-                <Text style={{ fontSize: 20, color: 'red', fontWeight: 'bold', marginTop: 5 }}> 999 บาท </Text>
+                <Text style={{ fontSize: 20, color: 'red', fontWeight: 'bold', marginTop: 5 }}> {route.params.price} บาท </Text>
 
                 <TouchableOpacity style={[styles.button]} onPress={() => {
                     navigation.navigate('Cart')
