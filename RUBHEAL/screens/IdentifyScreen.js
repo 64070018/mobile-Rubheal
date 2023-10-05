@@ -8,21 +8,25 @@ const IdentifyScreen = (props) => {
     return (
         <View style={styles.container}>
 
-            <Text style={styles.title}> อยากรวย {'\n'}</Text>
-            <Text style={styles.label}>Name</Text>
-            <TextInput style={styles.input} value='Full name' />
+            <Text style={styles.title}> Saler {'\n'}</Text>
+            {/* <Text style={styles.label}>Name</Text> */}
+            <TextInput style={styles.input} value='Full name' placeholder='Name' />
 
-            <Text style={styles.label}>ID Card</Text>
-            <TextInput style={styles.input} value='1234567890123' keyboardType='numeric' />
+            {/* <Text style={styles.label}>ID Card</Text> */}
+            <TextInput style={styles.input} value='1234567890123' keyboardType='numeric' placeholder='Phone Number' />
 
-            <Text style={styles.label}>Address</Text>
-            <TextInput style={styles.input} value='Lad Krabang Bankok' keyboardType='phone-pad' />
+            {/* <Text style={styles.label}>Address</Text> */}
+            <TextInput style={styles.input} value='Lad Krabang Bankok' placeholder='Address' keyboardType='phone-pad' />
 
-            <Text style={styles.label}>Name</Text>
-            <TextInput style={styles.input} placeholder='contract' />
+            {/* <Text style={styles.label}>Name</Text> */}
+            <TextInput style={styles.input} placeholder='Contract' />
 
-            <Text style={styles.label}> Document </Text>
+            <Text style={styles.label}> {'\n'} Document </Text>
 
+            <TextInput style={styles.file}
+                multiline
+                numberOfLines={3}
+                maxLength={40} placeholder='Upload File'></TextInput>
 
             <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%' }]}>
                 <Text style={styles.buttonText}>CONFIRM</Text>
@@ -34,7 +38,7 @@ const IdentifyScreen = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#BBAEF5',
+        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         // margin: 5,
@@ -45,15 +49,30 @@ const styles = StyleSheet.create({
         borderRadius: 100,
     },
     input: {
-        fontSize: 16,
+        fontSize: 18,
         borderBottomColor: "#262B46",
-        backgroundColor: '#fff',
+        backgroundColor: '#F6F7F9',
         width: "80%",
         borderBottomWidth: 2,
         borderRadius: 5,
         padding: 5,
-        marginBottom: 10,
-        marginTop: 5,
+        paddingVertical: 10,
+        marginBottom: 15,
+    },
+    file: {
+        fontSize: 18,
+        borderColor: "#262B46",
+        backgroundColor: '#F6F7F9',
+        width: "80%",
+        borderWidth: 2,
+        borderRadius: 5,
+        padding: 5,
+        padding: 50,
+        marginBottom: 15,
+        justifyContent: "center",
+        textAlign: 'center',
+
+
     },
     label: {
         fontSize: 20,
@@ -62,11 +81,12 @@ const styles = StyleSheet.create({
 
     },
     title: {
-        fontSize: 30,
-        fontWeight: 'bold',
+        fontSize: 40,
+        fontWeight: '400',
+        margin: 0
     },
     button: {
-        backgroundColor: '#465067',
+        backgroundColor: '#8667F2',
         borderRadius: 50,
         padding: 10,
         alignItems: 'center',
@@ -76,6 +96,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         letterSpacing: 3,
+        fontSize: 20
     },
 });
 

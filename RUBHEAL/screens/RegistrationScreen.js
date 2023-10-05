@@ -23,7 +23,8 @@ const RegistrationScreen = (props) => {
           isChecked={isChecked1}
           onClick={handleCheck1}
         />
-        <Text style={{ color: 'red', marginStart: 10 }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pretium. </Text>
+        <Text style={{ color: 'red', marginStart: 10 }}>agree that our app does not
+          cover money fraud. (require) </Text>
 
       </View>
 
@@ -32,7 +33,7 @@ const RegistrationScreen = (props) => {
       </TouchableOpacity>
       <View style={{ flexDirection: 'row', fontSize: 12, }}>
         <Text style={{ color: '#000' }}>Already have an account?</Text>
-        <Text style={{ color: 'blue' }}Í> login</Text>
+        <Text style={{ color: 'blue' }} Í> login</Text>
       </View>
     </View>
   );
@@ -41,7 +42,7 @@ const RegistrationScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#BBAEF5',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     // margin: 5,
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 16,
     borderBottomColor: "#262B46",
-    backgroundColor: '#fff',
+    backgroundColor: '#F6F7F9',
     width: "80%",
     borderBottomWidth: 2,
     borderRadius: 5,
@@ -62,11 +63,12 @@ const styles = StyleSheet.create({
     marginVertical: 10
   },
   title: {
+    marginTop: 20,
     fontSize: 30,
-    fontWeight: 'bold',
+    fontWeight: '400',
   },
   button: {
-    backgroundColor: '#465067',
+    backgroundColor: '#8667F2',
     borderRadius: 50,
     padding: 10,
     alignItems: 'center',
