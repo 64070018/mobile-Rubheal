@@ -24,7 +24,7 @@ const Tab = createBottomTabNavigator();
 function TabNavigator() {
 
     return (
-        <Tab.Navigator initialRouteName="HomeScreen" screenOptions={{
+        <Tab.Navigator initialRouteName="HOME" screenOptions={{
             tabBarActiveTintColor: "darkblue",
             tabBarStyle: { backgroundColor: "#6A988B" },
             tabBarInactiveTintColor: "black"
@@ -35,7 +35,7 @@ function TabNavigator() {
                     return <AntDesign name="home" size={26} color={color} />;
                 },
             }} />
-            <Tab.Screen name="TOP 10" component={RankScreen} options={{
+            <Tab.Screen name="Top" component={Rank} options={{
                 headerShown: false,
                 tabBarIcon: ({ color, size }) => {
                     return <AntDesign name="Trophy" size={26} color={color} />;
@@ -59,6 +59,18 @@ function TabNavigator() {
 
 }
 
+
+function Rank() {
+    return (
+        <CartNavigator.Navigator initialRouteName="Rank">
+            <CartNavigator.Screen name="Rank" component={RankScreen} />
+            <CartNavigator.Screen name="Detail" component={DetailScreen} />
+            <CartNavigator.Screen name="Cart" component={CartScreen} />
+            <CartNavigator.Screen name="OrderDetail" component={OrderDetail} />
+            <CartNavigator.Screen name="customerBuy" component={CustomerBuyProduct} />
+        </CartNavigator.Navigator>
+    )
+}
 
 function Navigation() {
     return (

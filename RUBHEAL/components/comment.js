@@ -9,13 +9,13 @@ const comment = (props) => {
                 <Image
                     source={{ uri: 'https://picsum.photos/200' }}
                     style={[styles.account, { marginTop: 10 }]} />
-                <Text style={{ fontSize: 20, fontWeight: '600', }}> {props.item.name}{'\n'}
+                <Text style={{ fontSize: 16, fontWeight: '400', }}> {props.item.name}{'\n'}
                     <View style={{ flexDirection: 'row', marginTop: 5, }}>
-                        <AntDesign name="star" size={20} color='orange' />
-                        <AntDesign name="star" size={20} color='orange' />
-                        <AntDesign name="star" size={20} color='orange' />
-                        <AntDesign name="star" size={20} color='orange' />
-                        <AntDesign name="star" size={20} color='orange' />
+                        <AntDesign name="star" size={16} color='orange' />
+                        <AntDesign name="star" size={16} color='orange' />
+                        <AntDesign name="star" size={16} color='orange' />
+                        <AntDesign name="star" size={16} color='orange' />
+                        <AntDesign name="star" size={16} color='orange' />
                         <Text style={{ fontSize: 16, bottom: 0 }}> {props.item.timestamp} </Text>
                     </View>
                 </Text>
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
         paddingTop: 30
     },
     content: {
+        paddingHorizontal: '19%',
         fontSize: 16,
         fontWeight: 'light',
         textAlign: 'left',
@@ -45,9 +46,10 @@ const styles = StyleSheet.create({
 
     },
     account: {
-        width: responsiveWidth(15),
-        height: responsiveWidth(15),
+        width: responsiveWidth(10),
+        height: responsiveWidth(10),
         borderRadius: 50,
+        marginLeft: 20,
     },
 });
 

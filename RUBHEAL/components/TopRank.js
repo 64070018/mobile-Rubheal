@@ -1,28 +1,27 @@
 
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+
 import { AntDesign } from "@expo/vector-icons";
 import { responsiveHeight } from "react-native-responsive-dimensions";
 const TopTank = (props) => {
     return (
-        // <View style={{ maxWidth: '50%', minWidth: '50%' }}>
-            <ScrollView>
-                <TouchableOpacity style={{ height: 400,}}>
-                    <Image source={{ uri: props.item.pic }} style={styles.product} />
-                    <View>
-                        <Text style={styles.catTitle} numberOfLines={1}>{props.item.title}</Text>
-                        <View style={{ flexDirection: 'row', marginTop: 5, }}>
-                            <AntDesign name="star" size={25} color='#E4A70A' />
-                            <AntDesign name="star" size={25} color='#E4A70A' />
-                            <AntDesign name="star" size={25} color='#E4A70A' />
-                            <AntDesign name="star" size={25} color='#E4A70A' />
-                            <AntDesign name="star" size={25} color='#E4A70A' />
-                            <Text style={{ fontSize: 16, bottom: 0 }}> {props.item.rate} (5.0) </Text>
-                        </View>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: "red", }}> {props.item.price} บาท </Text>
+        <ScrollView>
+            <TouchableOpacity style={{ height: 350, }}>
+                <Image source={{ uri: props.item.pic }} style={styles.product} />
+                <View>
+                    <Text style={styles.catTitle} numberOfLines={1}>{props.item.title}</Text>
+                    <View style={{ flexDirection: 'row', marginTop: 5, }}>
+                        <AntDesign name="star" size={16} color='#FFC400' />
+                        <AntDesign name="star" size={16} color='#FFC400' />
+                        <AntDesign name="star" size={16} color='#FFC400' />
+                        <AntDesign name="star" size={16} color='#FFC400' />
+                        <AntDesign name="star" size={16} color='#FFC400' />
+                        <Text style={{ fontSize: 16, bottom: 0 }}> {props.item.rate} (5.0) </Text>
                     </View>
-                </TouchableOpacity>
-            </ScrollView>
-        // </View>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: "black", }}> {props.item.price} บาท </Text>
+                </View>
+            </TouchableOpacity>
+        </ScrollView>
     );
 };
 
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
     },
     catTitle: {
         fontSize: 20,
-        fontWeight: 'bold',
+        fontWeight: 'light',
     },
     product: {
         width: "95%",

@@ -11,19 +11,19 @@ const ShowProduct = (props) => {
         <View style={{ maxWidth: '50%', minWidth: '50%' }}>
             <ScrollView>
                 {/* <TouchableOpacity style={{ height: 400, }}> */}
-                <TouchableOpacity style={{ height: 400, }} onPress={props.onSelectProduct}>
+                <TouchableOpacity style={{ height: 260, }} onPress={props.onSelectProduct}>
                     <Image source={{ uri: props.pic }} style={styles.product} />
                     <View>
                         <Text style={styles.catTitle} numberOfLines={1}> {props.title}</Text>
                         <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                            <AntDesign name="star" size={25} color='#E4A70A' />
-                            <AntDesign name="star" size={25} color='#E4A70A' />
-                            <AntDesign name="star" size={25} color='#E4A70A' />
-                            <AntDesign name="star" size={25} color='#E4A70A' />
-                            <AntDesign name="star" size={25} color='#E4A70A' />
+                            <AntDesign name="star" size={16} color='#FFC400' />
+                            <AntDesign name="star" size={16} color='#FFC400' />
+                            <AntDesign name="star" size={16} color='#FFC400' />
+                            <AntDesign name="star" size={16} color='#FFC400' />
+                            <AntDesign name="star" size={16} color='#FFC400' />
                             <Text style={{ fontSize: 16, bottom: 0 }}> {props.rate} (5.0) </Text>
                         </View>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: "red", }}> {props.price} บาท </Text>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: "black", }}> {props.price} บาท </Text>
                     </View>
                 </TouchableOpacity>
             </ScrollView>
@@ -42,11 +42,11 @@ const styles = StyleSheet.create({
     },
     catTitle: {
         fontSize: 20,
-        fontWeight: 'bold',
+        fontWeight: 'light',
     },
     product: {
         width: "95%",
-        height: responsiveHeight(30),
+        height: responsiveHeight(20),
         borderRadius: 10,
 
     }

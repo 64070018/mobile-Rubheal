@@ -15,17 +15,17 @@ const DetailScreen = ({ navigation, route }) => {
     return (
         <ScrollView showsVerticalScrollIndicator={false} >
             <Image source={{ uri: route.params.pic }} style={{ width: '100%', height: responsiveHeight(40) }} />
-            <View style={{ margin: 10 }}>
+            <View style={{ margin: 10, }}>
                 <Text style={styles.title}>{route.params.title}</Text>
                 <View style={{ flexDirection: 'row', marginTop: 5, }}>
-                    <AntDesign name="star" size={25} color='orange' />
-                    <AntDesign name="star" size={25} color='orange' />
-                    <AntDesign name="star" size={25} color='orange' />
-                    <AntDesign name="star" size={25} color='orange' />
-                    <AntDesign name="star" size={25} color='orange' />
+                    <AntDesign name="star" size={25} color='#FFC400' />
+                    <AntDesign name="star" size={25} color='#FFC400' />
+                    <AntDesign name="star" size={25} color='#FFC400' />
+                    <AntDesign name="star" size={25} color='#FFC400' />
+                    <AntDesign name="star" size={25} color='#FFC400' />
                     {/* <Text style={{ fontSize: 16, bottom: 0 }}> prop.item.rate (5.0) </Text> */}
                 </View>
-                <Text style={{ fontSize: 20, color: 'red', fontWeight: 'bold', marginTop: 5 }}> {route.params.price} บาท </Text>
+                <Text style={{ fontSize: 20, color: 'black', fontWeight: 'bold', marginTop: 5 }}> {route.params.price} บาท </Text>
 
                 <TouchableOpacity style={[styles.button]} onPress={() => {
                     navigation.navigate('Cart')
@@ -33,51 +33,52 @@ const DetailScreen = ({ navigation, route }) => {
                     <Text style={styles.buttonText}>BUY</Text>
                 </TouchableOpacity>
 
-                {/* store account */}
-                <View style={{ borderBottomColor: '#aaa', borderBottomWidth: 1, paddingVertical: 7, flexDirection: 'row', alignItems: 'center', columnGap: 10, marginTop: 10 }}>
-                    <Image
-                        source={{ uri: 'https://picsum.photos/200' }}
-                        style={[styles.account, { marginTop: 10 }]} />
-                    <Text style={{ fontSize: 20, fontWeight: '600', }}> Store Name </Text>
-                </View>
-
-                {/* Detail Product */}
-
-                <View>
-                    <Text style={styles.header}>Description Product</Text>
-                    <Text style={styles.content}>
-
-                        {route.params.detail}
-                    </Text>
-                </View>
-                <View style={{ borderTopWidth: 1, borderColor: 'gray', marginTop: 20 }}>
-                    <Text style={[styles.header, { color: 'red' }]}>Policy</Text>
-                    <Text style={[styles.content, { color: 'red' }]}>
-
-                        {route.params.policy}
-                    </Text>
-                </View>
-
-
-                {/* comments */}
-
-                <View style={{ marginTop: 30 }}>
-                    <Text style={styles.header}>Comments</Text>
-                    <TextInput style={styles.input}
-                        multiline
-                        numberOfLines={3}
-                        maxLength={40} placeholder='Feedback'></TextInput>
-                </View>
-
-                <FlatList
-                    data={COMMENT}
-                    renderItem={comment}
-                    numColumns={1}
-                    keyExtractor={item => `${item.id}`}
-                />
             </View>
 
-        </ScrollView>
+            {/* store account */}
+            <View style={{ borderBottomColor: '#aaa', borderBottomWidth: 1, paddingVertical: 7, flexDirection: 'row', alignItems: 'center', columnGap: 10, marginTop: 10 }}>
+                <Image
+                    source={{ uri: 'https://picsum.photos/200' }}
+                    style={[styles.account, ]} />
+                <Text style={{ fontSize: 20, fontWeight: '600', }}> Store Name </Text>
+            </View>
+
+            {/* Detail Product */}
+
+            <View>
+                <Text style={styles.header}>Description</Text>
+                <Text style={styles.content}>
+
+                    {route.params.detail}
+                </Text>
+            </View>
+            <View style={{ borderTopWidth: 1, borderColor: 'gray', marginTop: 20 }}>
+                <Text style={[styles.header,]}>Policy</Text>
+                <Text style={[styles.content,]}>
+
+                    {route.params.policy}
+                </Text>
+            </View>
+
+
+            {/* comments */}
+
+            <View style={{ marginTop: 30, }}>
+                <Text style={[styles.header, {fontSize: 16}]}>Comments</Text>
+                <TextInput style={styles.input}
+                    multiline
+                    numberOfLines={3}
+                    maxLength={40} placeholder='Feedback'></TextInput>
+            </View>
+
+            <FlatList
+                data={COMMENT}
+                renderItem={comment}
+                numColumns={1}
+                keyExtractor={item => `${item.id}`}
+            />
+
+        </ScrollView >
     );
 }
 
@@ -90,8 +91,10 @@ const styles = StyleSheet.create({
         // margin: 5,
     },
     button: {
-        marginTop: 20,
-        width: '100%',
+        position: 'absolute',
+        right: 0,
+        bottom: 0,
+        width: '20%',
         backgroundColor: '#BBAEF5',
         paddingVertical: 10
     },
@@ -104,25 +107,30 @@ const styles = StyleSheet.create({
     },
     input: {
         borderColor: "gray",
-        width: "100%",
+        width: "90%",
         borderWidth: 1,
         borderRadius: 10,
         paddingHorizontal: 5,
         backgroundColor: '#eee',
         fontSize: 16,
+        height: responsiveHeight(10),
+        marginHorizontal: '5%'
     },
     title: {
         fontSize: 30,
-        fontWeight: 'bold',
+        fontWeight: 'light',
         textAlign: 'left'
     },
     header: {
+        paddingHorizontal: 10,
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'left',
-        marginVertical: 20
+        marginTop: 20,
+        marginBottom: 10
     },
     content: {
+        paddingHorizontal: 10,
         fontSize: 16,
         fontWeight: 'light',
         textAlign: 'left',
@@ -130,9 +138,10 @@ const styles = StyleSheet.create({
 
     },
     account: {
-        width: responsiveWidth(15),
-        height: responsiveWidth(15),
+        width: responsiveWidth(10),
+        height: responsiveWidth(10),
         borderRadius: 50,
+        marginLeft: 20,
     },
 });
 

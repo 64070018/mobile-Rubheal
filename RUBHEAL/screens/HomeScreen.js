@@ -1,14 +1,12 @@
-import { StyleSheet, Text, View, Image, TextInput, FlatList, ScrollView, Systrace } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, FlatList, ScrollView } from 'react-native';
 
+import { AntDesign } from "@expo/vector-icons";
 
 import { PRODUCT } from "../data/dummy-data";
 import ShowProduct from '../components/ShowProduct';
 
 const HomeScreen = ({ navigation, route }, props) => {
-  // console.log(props)
-  // console.log(PRODUCT)
   const renderedItem = (itemData) => {
-    // console.log(itemData.item.title)
     return (
       <ShowProduct
         title={itemData.item.title}
@@ -22,31 +20,35 @@ const HomeScreen = ({ navigation, route }, props) => {
   }
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} placeholder="ค้นหาสินค้าที่คุณต้องการ" />
+      <View style={styles.input} >
+        <TextInput placeholder="Search" />
+        <AntDesign style={styles.searchIcon} name="faMagnifyingGlass" size={26} color={'gray'} />
+      </View>
+        <AntDesign style={{ position: 'absolute', right: 5, top: 15}} name="notification" size={26} color={'gray'} />
       <ScrollView>
         <Text style={styles.title}>Catagory</Text>
 
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ height: 200 }}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ height: 100 }}>
           <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-            <View style={{ alignItems: 'center', marginRight: 10 }}>
+            <View style={styles.cat}>
               <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2819/2819194.png' }} style={[styles.catagory,]} />
-              <Text style={styles.catTitle}>อาหาร</Text>
+              <Text style={styles.catTitle}>FOOD</Text>
             </View>
-            <View style={{ alignItems: 'center', marginRight: 10 }}>
+            <View style={styles.cat}>
               <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3300/3300371.png' }} style={styles.catagory} />
-              <Text style={styles.catTitle}>เสื้อผ้า</Text>
+              <Text style={styles.catTitle}>CLOTHES</Text>
             </View>
-            <View style={{ alignItems: 'center', marginRight: 10 }}>
+            <View style={styles.cat}>
               <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/7695/7695930.png' }} style={styles.catagory} />
-              <Text style={styles.catTitle}>เครื่องประดับ</Text>
+              <Text style={styles.catTitle}>ACCESSORY</Text>
             </View>
-            <View style={{ alignItems: 'center', marginRight: 10 }}>
+            <View style={styles.cat}>
               <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/6967/6967594.png' }} style={styles.catagory} />
-              <Text style={styles.catTitle}>โมเดล</Text>
+              <Text style={styles.catTitle}>MODEL</Text>
             </View>
-            <View style={{ alignItems: 'center', marginRight: 10 }}>
+            <View style={styles.cat}>
               <Image source={{ uri: 'https://icon-library.com/images/others-icon/others-icon-20.jpg' }} style={styles.catagory} />
-              <Text style={styles.catTitle}>เบ็ดเตล็ด</Text>
+              <Text style={styles.catTitle}>OTHERS</Text>
             </View>
           </View>
         </ScrollView>
@@ -69,17 +71,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
     marginHorizontal: 5,
+  },
+  cat: {
+    alignItems: 'center',
+    marginRight: 10
   },
   input: {
     borderColor: "gray",
-    width: "100%",
+    width: "90%",
     borderWidth: 1,
     borderRadius: 10,
+    marginVertical: 10,
     padding: 10,
-    marginVertical: 10
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  searchIcon: {
+    padding: 5,
+    position: 'absolute',
+    top: 0,
+    right: 5,
   },
   title: {
     fontSize: 20,
@@ -87,15 +100,16 @@ const styles = StyleSheet.create({
     textAlign: 'left'
   },
   catagory: {
-    width: 80,
-    height: 80,
+    width: 40,
+    height: 40,
     borderRadius: 10,
 
   },
   catTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginHorizontal: 10
+    fontSize: 14,
+    fontWeight: 'light',
+    marginHorizontal: 10,
+    marginTop: 5
   },
 });
 

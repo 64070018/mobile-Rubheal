@@ -4,7 +4,7 @@ import { PRODUCT } from "../data/dummy-data";
 // import showProduct from '../components/ShowProduct';
 import TopTank from '../components/TopRank';
 
-const RankScreen = (props) => {
+const RankScreen = ({ navigation, route }, props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>TOP 10 NOW!! {'\n'}</Text>
@@ -15,6 +15,7 @@ const RankScreen = (props) => {
           numColumns={1}
           keyExtractor={item => `${item.id}`}
         />
+
       </ScrollView>
     </View>
   );
