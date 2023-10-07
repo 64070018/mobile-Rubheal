@@ -16,7 +16,7 @@ const MessageScreen = ({navigation}) => {
     return (
       
         <TouchableOpacity onPress={() => {
-          navigation.navigate("chatScreen")
+          navigation.navigate("Chat")
       }}>
       <View style={styles.containerChat}>
         <View style={styles.picture}>
@@ -28,14 +28,14 @@ const MessageScreen = ({navigation}) => {
           />
         </View>
         <View style={{ flex: 3, padding: 10 }}>
-          <Text style={{ marginBottom: 10 }}>{itemData.item.name}</Text>
-          <Text style={{ marginBottom: 10 }}>{itemData.item.message}</Text>
+          <Text style={{ marginBottom: 10, fontWeight : "700" }}>{itemData.item.name}</Text>
+          <Text style={{ marginBottom: 10, color : "#242424" }}>{itemData.item.message}</Text>
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
-            <Text>{itemData.item.time} mins ago</Text>
+            <Text style={{color : "#BDBDBD"}}>{itemData.item.time} mins ago</Text>
             <View style={{ flexDirection: "row" }}>
-              <Text>{itemData.item.countChat} mins ago</Text>
+              <Text>{itemData.item.countChat}</Text>
            
                 <Image
                   source={require("../assets/icons8-message-50.png")}

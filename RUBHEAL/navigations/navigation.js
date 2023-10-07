@@ -4,22 +4,29 @@ import { AntDesign } from "@expo/vector-icons";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+
+
 
 import CartScreen from "../screens/CartScreen.js"
 import HomeScreen from "../screens/HomeScreen.js"
 import RankScreen from "../screens/RankScreen.js"
 import ChatScreen from "../screens/ChatScreen.js";
 import MessageScreen from "../screens/MessageScreen.js";
-import ProfileScreen from "../screens/Profile.js";
+import ProfileScreen from "../screens/ProfileScreen.js";
 import AdminPage from "../screens/AdminPage.js";
 import OrderDetail from "../screens/OrderDetail.js";
 import CustomerBuyProduct from "../screens/CustomerBuyProduct.js";
+import PageProductForAdmin from "../screens/PageProductForAdmin.js";
 import DetailScreen from "../screens/DetailScreen.js";
 
+import CustomHeaderButton from "../CustomButton/CustomHeaderButton.js";
 
 
 
 const CartNavigator = createNativeStackNavigator();
+const ChatNavigator = createNativeStackNavigator();
+const ProfileNavigator = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 function TabNavigator() {
 
@@ -41,13 +48,14 @@ function TabNavigator() {
                     return <AntDesign name="Trophy" size={26} color={color} />;
                 },
             }} />
-            <Tab.Screen name="Chat" component={MessageScreen} options={{
+            <Tab.Screen name="Chat" component={MessageNavigator} options={{
                 headerShown: false,
+                tabBarStyle : {display : 'none'},
                 tabBarIcon: ({ color, size }) => {
                     return <AntDesign name="wechat" size={26} color={color} />;
                 },
             }} />
-            <Tab.Screen name="Profile" component={ProfileScreen} options={{
+            <Tab.Screen name="Profile" component={UserNavigator} options={{
                 headerShown: false,
                 title: "ME",
                 tabBarIcon: ({ color, size }) => {
@@ -57,6 +65,25 @@ function TabNavigator() {
         </Tab.Navigator>
     )
 
+}
+
+function MessageNavigator() {
+    return (
+
+        <ChatNavigator.Navigator initialRouteName="Message">
+
+            <ChatNavigator.Screen name="Message" component={MessageScreen} options={ ({route, navigation}) => ({
+                headerRight: () => (
+                    <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                        <Item title="Tab_1" iconName="ios-pencil" onPress={() => { }}  />
+                        <Item title="Tab_2" iconName="ios-home" onPress={() => { navigation.navigate('Home') }}  />
+                    </HeaderButtons>),
+                        
+            })} />
+            <ChatNavigator.Screen name="Chat" component={ChatScreen} options={{ title: "Folk" }} />
+
+        </ChatNavigator.Navigator>
+    )
 }
 
 
@@ -84,6 +111,41 @@ function Navigation() {
     )
 
 }
+
+function UserNavigator() {
+
+   
+   
+    //    console.log(num)
+     
+    
+    
+        return (
+            <ProfileNavigator.Navigator initialRouteName="Profile">
+                <ProfileNavigator.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }}/>
+                <ProfileNavigator.Screen name="Admin" component={AdminNavigation} options={{ headerShown: false }} />
+    
+            </ProfileNavigator.Navigator>
+        )
+    }
+    
+    function AdminNavigation() {
+    
+     
+    
+       
+        
+    
+        return (
+            <ProfileNavigator.Navigator initialRouteName="Admin">
+                {/* <ProfileNavigator.Screen name="Profile" component={ProfileScreen} options={{headerShown : false}}/> */}
+                <ProfileNavigator.Screen name="Admin" component={AdminPage} options={{ headerShown: false }} />
+                <ProfileNavigator.Screen name="AdminProduct" component={PageProductForAdmin} />
+                <ProfileNavigator.Screen name="CustomerProduct" component={CustomerBuyProduct} />
+            </ProfileNavigator.Navigator>
+    
+        )
+    }
 
 export default function Mainavigation() {
     return (

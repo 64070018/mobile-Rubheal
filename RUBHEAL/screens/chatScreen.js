@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     },
   
     boxContent: {
-      flex: 3, borderRadius: 10, padding: 10, backgroundColor: '#6A988B'
+      flex: 3, borderRadius: 10, padding: 10, backgroundColor: '#F6F7F9'
     },
     boxTimeLeft: {
       alignItems: 'flex-start', padding: 10
