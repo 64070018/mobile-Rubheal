@@ -1,26 +1,65 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react'
+import { useNavigation } from '@react-navigation/core'
+
+
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import CheckBox from 'react-native-check-box'
 import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
+import { auth } from '../database'
 
-const LoginScreen = (props) => {
+
+const LoginScreen = () => {
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const navigation = useNavigation()
+    useEffect(() => {
+    
+        const unsubscribe = auth.onAuthStateChanged(user => {
+          if (user) {
+            navigation.replace("HomePage")
+          }
+        })
+    
+        return unsubscribe
+      }, [])
+
+      const handleLogin = () => {
+       
+        auth
+          .signInWithEmailAndPassword(email, password)
+          .then(userCredentials => {
+            const user = userCredentials.user;
+            console.log('Logged in with:', user.email);
+          })
+          .catch(error => alert(error.message))
+      }
+
+
     return (
         <View style={styles.container}>
             <Image source={{ uri: 'https://media.discordapp.net/attachments/1133043763456000071/1151545256026849290/logo2.png' }} style={styles.logo} />
 
             <Text style={styles.title}> Registration {'\n'}</Text>
-            <TextInput style={styles.input} placeholder='E-mail' keyboardType='email-address' />
-            <TextInput style={styles.input} placeholder='Password' secureTextEntry={true} />
-            
+            <TextInput style={styles.input} placeholder='E-mail' keyboardType='email-address' value={email}
+                onChangeText={text => setEmail(text)} />
+            <TextInput style={styles.input} placeholder='Password' secureTextEntry={true} value={password}
+                onChangeText={text => setPassword(text)} />
+
             <Text style={{ color: 'blue', marginTop: 20 }}>Forget Password</Text>
 
 
-            <TouchableOpacity style={[styles.button, { margin: 10, width: '40%' }]}>
-                <Text style={styles.buttonText}>CREATE ACCOUNT</Text>
+            <TouchableOpacity style={[styles.button, { margin: 10, width: '40%' }]} onPress={handleLogin}>
+                <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
             <View style={{ flexDirection: 'row', fontSize: 12, }}>
+
                 <Text style={{ color: '#000' }}>Already have an account?</Text>
-                <Text style={{ color: 'blue' }}> register </Text>
+                <TouchableOpacity onPress={() => navigation.replace("Register")}>
+                    <Text style={{ color: 'blue' }}> register </Text>
+
+                </TouchableOpacity>
             </View>
         </View>
     );

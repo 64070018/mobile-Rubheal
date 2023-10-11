@@ -19,6 +19,8 @@ import OrderDetail from "../screens/OrderDetail.js";
 import CustomerBuyProduct from "../screens/CustomerBuyProduct.js";
 import PageProductForAdmin from "../screens/PageProductForAdmin.js";
 import DetailScreen from "../screens/DetailScreen.js";
+import LoginScreen from "../screens/LoginScreen.js";
+import Register from "../screens/RegistrationScreen.js";
 
 import CustomHeaderButton from "../CustomButton/CustomHeaderButton.js";
 
@@ -26,8 +28,10 @@ import CustomHeaderButton from "../CustomButton/CustomHeaderButton.js";
 
 const CartNavigator = createNativeStackNavigator();
 const ChatNavigator = createNativeStackNavigator();
+const LoginNavigator = createNativeStackNavigator();
 const ProfileNavigator = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
 function TabNavigator() {
 
     return (
@@ -112,6 +116,18 @@ function Navigation() {
 
 }
 
+function LoginRegister(){
+    return (
+
+    <LoginNavigator.Navigator initialRouteName="Login">
+        <LoginNavigator.Screen name="Login" component={LoginScreen} options={{headerShown : false}} />
+        <LoginNavigator.Screen name="Register" component={Register} options={{headerShown : false}}/>
+        <LoginNavigator.Screen name="HomePage" component={TabNavigator} options={{headerShown : false}}/>
+    </LoginNavigator.Navigator>
+    )
+    
+}
+
 function UserNavigator() {
 
    
@@ -150,7 +166,7 @@ function UserNavigator() {
 export default function Mainavigation() {
     return (
         <NavigationContainer>
-            <TabNavigator />
+            <LoginRegister />
         </NavigationContainer>
     );
 }

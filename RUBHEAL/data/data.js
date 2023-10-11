@@ -27,8 +27,6 @@ export const USERBUY = [
     new Userbuy(1, "Fern", "084-652-3035", {uri : "https://casio-cmg.com/wp-content/uploads/2015/09/GA-110GB-1A_l.png"}, 4000, 1, 1),
     new Userbuy(1, "Boss", "084-652-3035", {uri : "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/90fb28a6-8634-4dc3-88d1-9a7866e5ef17/%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%97%E0%B9%89%E0%B8%B2%E0%B8%9C%E0%B8%B9%E0%B9%89-killshot-2-leather-DqWZ4j.png"}, 3600, 1, 2),
     new Userbuy(1, "Aom", "084-652-3035", {uri : "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/90fb28a6-8634-4dc3-88d1-9a7866e5ef17/%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%97%E0%B9%89%E0%B8%B2%E0%B8%9C%E0%B8%B9%E0%B9%89-killshot-2-leather-DqWZ4j.png"}, 3600, 1, 2),
-
-
 ]
 
 

@@ -8,11 +8,101 @@ import {
   Button,
   FlatList,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from 'react';
+
+import { firebase, auth, firestore } from '../database';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+
+
+
 
 import { PURCHASED } from "../data/data";
 
 const ProfileScreen = ({ navigation }) => {
+  const [data, setData] = useState([]);
+
+  // const navigation = useNavigation()
+
+
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.replace("Login")
+       
+      })
+      .catch(error => alert(error.message))
+  }
+
+  // const q = query(collection(firebase.firestore(), 'users'));
+
+
+
+  // const querySnapshot =  getDocs(q);
+
+  // const dataa = querySnapshot
+
+  // console.log(dataa)
+
+  const folk = async () =>{
+    const q = query(collection(firebase.firestore(), 'users'));
+    const querySnapshot = await getDocs(q);
+
+    const userData = querySnapshot.size;
+    var i;
+
+    for(i = 0; i  < querySnapshot.size; i++){
+      console.log(querySnapshot.docs[i].data().name)
+    }
+
+
+    console.log(userData)
+  }
+
+
+  useEffect(() => {
+
+    
+
+    const fetchData = async () => {
+      try {
+        // Check if the user is authenticated
+        if (auth.currentUser) {
+          const userEmail = auth.currentUser.email;
+
+          // Create a query to find the user document with a specific email
+          const q = query(collection(firebase.firestore(), 'users'), where('email', '==', userEmail));
+
+          // console.log(q)
+
+          const querySnapshot = await getDocs(q);
+
+          // console.log(querySnapshot.docs[0])
+
+          if (!querySnapshot.empty) {
+            const userData = querySnapshot.docs[0].data();
+            // You can access specific fields like userData.name, userData.email, etc.
+            setData(userData);
+          } else {
+            console.log('User document not found');
+          }
+        }
+
+        // setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data from Firestore:', error);
+        // setLoading(false);
+      }
+    };
+
+    fetchData();
+    folk();
+    const intervalId = setInterval(() => {
+      fetchData(); // Fetch data every 2 minutes
+    }, 100);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
 
   const renderItem = (itemData) => {
@@ -60,14 +150,14 @@ const ProfileScreen = ({ navigation }) => {
             style={{ width: 100, height: 100 }}
           />
 
-          <Text style={{ fontSize: 20, fontWeight: "900" }}>Folk</Text>
+          <Text style={{ fontSize: 20, fontWeight: "900" }}>{data.name}</Text>
         </View>
 
 
         <View style={{ flexDirection: 'row', marginTop: 20, width: "100%" }}>
 
           <View style={{ width: "50%" }}>
-            <Button title="Setting" color={"#8667F2"} />
+            <Button title="LogOut" color={"#8667F2"} onPress={handleSignOut} />
           </View>
 
           <View style={{ width: "50%" }}>
