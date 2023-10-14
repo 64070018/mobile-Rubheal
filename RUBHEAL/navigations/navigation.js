@@ -23,9 +23,13 @@ import LoginScreen from "../screens/LoginScreen.js";
 import Register from "../screens/RegistrationScreen.js";
 
 import CustomHeaderButton from "../CustomButton/CustomHeaderButton.js";
+import CreateScreen from "../screens/CreateScreen.js";
+import UpdateScreen from "../screens/UpdateScreen.js";
 
 
 
+
+const CreateNavigator = createNativeStackNavigator();
 const CartNavigator = createNativeStackNavigator();
 const ChatNavigator = createNativeStackNavigator();
 const LoginNavigator = createNativeStackNavigator();
@@ -54,7 +58,7 @@ function TabNavigator() {
             }} />
             <Tab.Screen name="Chat" component={MessageNavigator} options={{
                 headerShown: false,
-                tabBarStyle : {display : 'none'},
+                tabBarStyle: { display: 'none' },
                 tabBarIcon: ({ color, size }) => {
                     return <AntDesign name="wechat" size={26} color={color} />;
                 },
@@ -71,18 +75,29 @@ function TabNavigator() {
 
 }
 
+function AdminAndProductMangement() {
+    return (
+        <CreateNavigator.Navigator initialRouteName="AdminMange">
+            <CreateNavigator.Screen name="AdminMange" component={AdminPage} options={{ headerShown: false }} />
+            <CreateNavigator.Screen name="Create" component={CreateScreen} options={{ title: "Create Product" }} />
+            <CreateNavigator.Screen name="Update" component={UpdateScreen} options={{ title: "Update Product" }} />
+        </CreateNavigator.Navigator>
+    )
+
+}
+
+
+
 function MessageNavigator() {
     return (
-
         <ChatNavigator.Navigator initialRouteName="Message">
-
-            <ChatNavigator.Screen name="Message" component={MessageScreen} options={ ({route, navigation}) => ({
+            <ChatNavigator.Screen name="Message" component={MessageScreen} options={({ route, navigation }) => ({
                 headerRight: () => (
                     <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-                        <Item title="Tab_1" iconName="ios-pencil" onPress={() => { }}  />
-                        <Item title="Tab_2" iconName="ios-home" onPress={() => { navigation.navigate('Home') }}  />
+                        <Item title="Tab_1" iconName="ios-pencil" onPress={() => { }} />
+                        <Item title="Tab_2" iconName="ios-home" onPress={() => { navigation.navigate('Home') }} />
                     </HeaderButtons>),
-                        
+
             })} />
             <ChatNavigator.Screen name="Chat" component={ChatScreen} options={{ title: "Folk" }} />
 
@@ -116,52 +131,39 @@ function Navigation() {
 
 }
 
-function LoginRegister(){
+function LoginRegister() {
     return (
 
-    <LoginNavigator.Navigator initialRouteName="Login">
-        <LoginNavigator.Screen name="Login" component={LoginScreen} options={{headerShown : false}} />
-        <LoginNavigator.Screen name="Register" component={Register} options={{headerShown : false}}/>
-        <LoginNavigator.Screen name="HomePage" component={TabNavigator} options={{headerShown : false}}/>
-    </LoginNavigator.Navigator>
+        <LoginNavigator.Navigator initialRouteName="Login">
+            <LoginNavigator.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+            <LoginNavigator.Screen name="Register" component={Register} options={{ headerShown: false }} />
+            <LoginNavigator.Screen name="HomePage" component={TabNavigator} options={{ headerShown: false }} />
+        </LoginNavigator.Navigator>
     )
-    
+
 }
 
 function UserNavigator() {
+    return (
+        <ProfileNavigator.Navigator initialRouteName="Profile">
+            <ProfileNavigator.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+            <ProfileNavigator.Screen name="Admin" component={AdminNavigation} options={{ headerShown: false }} />
 
-   
-   
-    //    console.log(num)
-     
-    
-    
-        return (
-            <ProfileNavigator.Navigator initialRouteName="Profile">
-                <ProfileNavigator.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }}/>
-                <ProfileNavigator.Screen name="Admin" component={AdminNavigation} options={{ headerShown: false }} />
-    
-            </ProfileNavigator.Navigator>
-        )
-    }
-    
-    function AdminNavigation() {
-    
-     
-    
-       
-        
-    
-        return (
-            <ProfileNavigator.Navigator initialRouteName="Admin">
-                {/* <ProfileNavigator.Screen name="Profile" component={ProfileScreen} options={{headerShown : false}}/> */}
-                <ProfileNavigator.Screen name="Admin" component={AdminPage} options={{ headerShown: false }} />
-                <ProfileNavigator.Screen name="AdminProduct" component={PageProductForAdmin} />
-                <ProfileNavigator.Screen name="CustomerProduct" component={CustomerBuyProduct} />
-            </ProfileNavigator.Navigator>
-    
-        )
-    }
+        </ProfileNavigator.Navigator>
+    )
+}
+
+function AdminNavigation() {
+    return (
+        <ProfileNavigator.Navigator initialRouteName="Admin">
+            {/* <ProfileNavigator.Screen name="Profile" component={ProfileScreen} options={{headerShown : false}}/> */}
+            <ProfileNavigator.Screen name="Admin" component={AdminAndProductMangement} options={{ headerShown: false }} />
+            <ProfileNavigator.Screen name="AdminProduct" component={PageProductForAdmin} />
+            <ProfileNavigator.Screen name="CustomerProduct" component={CustomerBuyProduct} />
+        </ProfileNavigator.Navigator>
+
+    )
+}
 
 export default function Mainavigation() {
     return (

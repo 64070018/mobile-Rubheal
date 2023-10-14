@@ -1,35 +1,84 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  Button,
-  FlatList
-} from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, Button, FlatList } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { PURCHASED } from "../data/data";
-
-
-
+import { firebase } from "../database";
 
 
 const AdminPage = ({ navigation }) => {
+  const [data, setData] = useState([]);
+  const user = firebase.auth().currentUser;
 
-  const renderItem = (itemData) => {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
+  const fetchData = () => {
+
+    // Create a reference to your Firestore collection
+    const collectionRef = firebase.firestore().collection("products");
+
+    // Use the get() method to fetch the data
+    collectionRef.get()
+      .then((querySnapshot) => {
+        const items = [];
+        querySnapshot.forEach((res) => {
+          console.log(" INFORMATION ", res.data())
+          let info = res.data()
+          if (info.owner == user.uid) {
+            items.push({
+              key: res.id,
+              name: info.name,
+              price: info.price,
+              name: info.name,
+              detail: info.detail,
+              price: info.price,
+              amount: info.amount,
+              condition: info.condition,
+              image: info.image,
+              category: info.category
+            });
+          }
+        });
+        setData(items);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }
+
+
+
+
+  const deleteProduct = (productId) => {
+    const productRef = firebase.firestore().collection('products').doc(productId);
+
+    productRef
+      .delete()
+      .then(() => {
+        console.log('Document successfully deleted!');
+        fetchData()
+      })
+      .catch((error) => {
+        console.error('Error deleting document:', error);
+      });
+
+  };
+
+
+
+  const renderItem = (data) => {
+    // console.log(data)
     return (
       <View style={styles.contentBox}>
         <Image
-          source={itemData.item.image}
+          source={{ uri: data.item.image }}
           style={{ width: 100, height: 100 }}
         />
-
         <View style={{ flex: 1, padding: 10, alignItems: 'center' }}>
-          <Text> {itemData.item.productDetail}</Text>
+          <Text> {data.item.name}</Text>
           <View
             style={{
               flexDirection: "row",
@@ -37,19 +86,29 @@ const AdminPage = ({ navigation }) => {
               marginBottom: 5,
             }}
           >
-            <AntDesign name="star" size={25} color={"yellow"} />
-            <AntDesign name="star" size={25} color={"yellow"} />
-            <AntDesign name="star" size={25} color={"yellow"} />
-            <AntDesign name="star" size={25} color={"yellow"} />
-            <AntDesign name="star" size={25} color={"yellow"} />
+            <AntDesign name="star" size={25} color={"#FFC400"} />
+            <AntDesign name="star" size={25} color={"#FFC400"} />
+            <AntDesign name="star" size={25} color={"#FFC400"} />
+            <AntDesign name="star" size={25} color={"#FFC400"} />
+            <AntDesign name="star" size={25} color={"#FFC400"} />
             {/* <Text style={{ fontSize: 16, bottom: 0 }}> props.item.rate (5.0) </Text> */}
           </View>
-          <Text>ราคาสินค้า : {itemData.item.price}</Text>
+          <Text>ราคาสินค้า : {data.item.price}</Text>
           <View style={{ flexDirection: "row", marginTop: 20 }}>
             <View style={{ marginRight: 5 }}>
-              <Button title="update" color="#FAB400" />
+              <Button title="update" color="#FAB400" onPress={() => {
+                navigation.navigate('Update', {
+                  id: data.item.key,
+                  name: data.item.name,
+                  detail: data.item.detail,
+                  price: data.item.price,
+                  amount: data.item.amount,
+                  condition: data.item.condition,
+                  catagory: data.item.category
+                })
+              }} />
             </View>
-            <Button title="delete" color="#FF7777" />
+            <Button title="delete" color="#FF7777" onPress={() => deleteProduct(data.item.key)} />
           </View>
         </View>
       </View>
@@ -77,7 +136,7 @@ const AdminPage = ({ navigation }) => {
             style={{ width: 100, height: 100 }}
           />
 
-          <Text style={{ fontSize: 20, fontWeight: "900" }}>Folk</Text>
+          <Text style={{ fontSize: 20, fontWeight: "900" }}>User</Text>
         </View>
 
 
@@ -113,7 +172,9 @@ const AdminPage = ({ navigation }) => {
           }} />
         </View>
         <View style={{ padding: 10 }}>
-          <Button title="Create New product" color={"#B6CA8C"} />
+          <Button title="Create New product" color={"#B6CA8C"} onPress={() => {
+            navigation.navigate('Create')
+          }} />
         </View>
 
         {/* Product update delete */}
@@ -121,7 +182,7 @@ const AdminPage = ({ navigation }) => {
         <ScrollView showsVerticalScrollIndicator={false}>
 
 
-          <FlatList renderItem={renderItem} data={PURCHASED} numColumns={2} />
+          <FlatList renderItem={renderItem} data={data} numColumns={2} />
 
         </ScrollView>
       </View>
