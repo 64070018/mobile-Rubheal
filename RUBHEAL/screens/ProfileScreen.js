@@ -52,7 +52,7 @@ const ProfileScreen = ({ navigation }) => {
     var i;
 
     for(i = 0; i  < querySnapshot.size; i++){
-      console.log(querySnapshot.docs[i].data().name)
+      console.log(querySnapshot.docs[i].data())
     }
 
 
@@ -96,10 +96,10 @@ const ProfileScreen = ({ navigation }) => {
     };
 
     fetchData();
-    folk();
+
     const intervalId = setInterval(() => {
       fetchData(); // Fetch data every 2 minutes
-    }, 100);
+    }, 12000);
 
     return () => clearInterval(intervalId);
   }, []);

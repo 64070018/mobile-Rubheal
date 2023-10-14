@@ -48,7 +48,9 @@ const RegistrationScreen = () => {
       const userData = {
         email: user.email,
         name : name,
-        phone : phone
+        phone : phone,
+        position : "user"
+
         // Add other user data fields as needed
       };
 
