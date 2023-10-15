@@ -80,12 +80,12 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
                     </View>
                 </View>
 
-                <View style={{ paddingTop: 10 }}>
-                    <Button title="Back to Home" color="#9276F2" onPress={() => {
-                        navigation.navigate('Home') //ต้องแก้ไปหน้าhome
-                    }}></Button>
-                </View>
             </ScrollView>
+            <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
+                <Button title="Back to Home" color="#9276F2" onPress={() => {
+                    navigation.navigate('Home') //ต้องแก้ไปหน้าhome
+                }}></Button>
+            </View>
 
         </SafeAreaView>
 
