@@ -98,7 +98,7 @@ const UpdateScreen = (props) => {
                     <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%' }]}>
                         <Text style={styles.buttonText} onPress={() => {
                             updateProduct(productId, updatedData);
-                        }}>UPDATE</Text>
+                        }}>CONFIRM</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     label: {
-        fontSize: 20,
+        fontSize: 18,
         textAlign: 'left',
         width: '80%',
         marginTop: 10
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         marginHorizontal: '20%'
     },
     button: {
-        backgroundColor: '#465067',
+        backgroundColor: '#9276F2',
         borderRadius: 50,
         padding: 10,
         alignItems: 'center',
@@ -158,7 +158,32 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontWeight: 'bold',
-        letterSpacing: 3,
+        letterSpacing: 1,
+    },
+    dropdown: {
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        borderRadius: 8,
+        paddingHorizontal: 8,
+        width: '80%'
+    },
+    icon: {
+        marginRight: 5,
+    },
+    placeholderStyle: {
+        fontSize: 16,
+    },
+    selectedTextStyle: {
+        fontSize: 16,
+    },
+    iconStyle: {
+        width: 20,
+        height: 20,
+    },
+    inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
     },
     dropdown: {
         height: 50,

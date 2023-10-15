@@ -40,7 +40,7 @@ const LoginScreen = () => {
         <View style={styles.container}>
             <Image source={{ uri: 'https://media.discordapp.net/attachments/1133043763456000071/1151545256026849290/logo2.png' }} style={styles.logo} />
 
-            <Text style={styles.title}> Registration {'\n'}</Text>
+            <Text style={styles.title}> Login {'\n'}</Text>
             <TextInput style={styles.input} placeholder='E-mail' keyboardType='email-address' value={email}
                 onChangeText={text => setEmail(text)} />
             <TextInput style={styles.input} placeholder='Password' secureTextEntry={true} value={password}
@@ -54,9 +54,9 @@ const LoginScreen = () => {
             </TouchableOpacity>
             <View style={{ flexDirection: 'row', fontSize: 12, }}>
 
-                <Text style={{ color: '#000' }}>Already have an account?</Text>
+                <Text style={{ color: '#000' }}>Don't have an account?</Text>
                 <TouchableOpacity onPress={() => navigation.replace("Register")}>
-                    <Text style={{ color: 'blue' }}> register </Text>
+                    <Text style={{ color: 'blue' }}> Registration </Text>
 
                 </TouchableOpacity>
             </View>
@@ -67,7 +67,7 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#BBAEF5',
+        backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
         // margin: 5,
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     logo: {
         width: responsiveWidth(40),
         height: responsiveHeight(20),
+        marginBottom: 40,
         borderRadius: 100,
     },
     input: {
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     button: {
-        backgroundColor: '#465067',
+        backgroundColor: '#9276F2',
         borderRadius: 50,
         padding: 10,
         alignItems: 'center',
