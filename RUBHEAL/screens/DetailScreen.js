@@ -28,7 +28,7 @@ const DetailScreen = ({ navigation, route }) => {
                 <Text style={{ fontSize: 20, color: 'black', fontWeight: 'bold', marginTop: 5 }}> {route.params.price} บาท </Text>
 
                 <TouchableOpacity style={[styles.button]} onPress={() => {
-                    navigation.navigate('Cart')
+                    navigation.navigate('Cart', {title:route.params.title, pic:route.params.pic, price:route.params.price})
                 }}>
                     <Text style={styles.buttonText}>BUY</Text>
                 </TouchableOpacity>
