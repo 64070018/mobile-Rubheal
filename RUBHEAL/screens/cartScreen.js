@@ -8,77 +8,72 @@ import * as SplashScreen from 'expo-splash-screen';
 
 // SplashScreen.preventAutoHideAsync();
 
-const CartScreen = ({route, navigation}) => {
+const CartScreen = ({ route, navigation }) => {
     const [loaded] = useFonts({
-        "Josefin-Sans": require("../assets/fonts/Josefin_Sans/static/JosefinSans-Medium.ttf"),
+        "Anuphan": require("../assets/fonts/Josefin_Sans/static/JosefinSans-Medium.ttf"),
         Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
     });
 
     if (!loaded) {
         return null;
     }
-
-    const products = [
-        { id: 1, name: "Pencil", price: 5 },
-        { id: 2, name: "Notebook", price: 10 },
-        { id: 3, name: "Eraser", price: 2 },
-        { id: 4, name: "Sharpener", price: 7 },
-        { id: 5, name: "Sharpener", price: 7 },
-    ]
+    const data = {
+        pic: route.params.pic,
+        title: route.params.title,
+        price: route.params.price
+    }
+    console.log(route)
+    console.log(data)
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView style={{ padding: 10, marginBottom:50 }}>
-                {products.map((item) => {
-                    return (
-                        <View key={item.id} style={styles.product}>
-                            <Image style={{ width: 90, height: 90, borderColor: 'black', borderWidth: 1, }}
-                                source={require("../assets/crocs.png")} resizeMode="contain"
-                            />
-                            <View style={{ marginLeft: 15 }}>
-                                <Text style={{ fontSize: 20, fontFamily: 'Josefin-Sans' }}>{item.name}{'\n'}x{item.price} บาท</Text>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <AntDesign name="minussquareo" size={30} color="black" />
-                                    <Text style={{ marginHorizontal: 5, fontSize: 18 }}>1</Text>
-                                    <AntDesign name="plussquareo" size={30} color="black" />
-                                </View>
-                            </View>
+            <ScrollView style={{ padding: 10, marginBottom: 50 }}>
+                <View style={styles.product}>
+                    <Image style={{ width: 90, height: 90, borderColor: 'black', borderWidth: 1, }}
+                        source={{ uri: data.pic }} resizeMode="contain"
+                    />
+                    <View style={{ marginLeft: 15 }}>
+                        <Text style={{ fontSize: 20, fontFamily: 'Anuphan' }}>{data.title}{'\n'}x{data.price} Baht</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <AntDesign name="minussquareo" size={30} color="black" />
+                            <Text style={{ marginHorizontal: 5, fontSize: 18 }}>1</Text>
+                            <AntDesign name="plussquareo" size={30} color="black" />
                         </View>
-                    )
+                    </View>
+                </View>
 
-                })}
                 <View style={{ flexDirection: 'row', marginTop: 20 }}>
                     <Feather name="map-pin" size={24} color="black" />
                     <View style={{ marginLeft: 5 }}>
-                        <Text style={{ fontSize: 18, fontWeight: "bold", fontFamily: 'Anuphan' }}>ที่อยู่สำหรับการจัดส่ง</Text>
-                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>ลาดกระบัง</Text>
-                        <Text style={{ fontSize: 18, fontFamily: 'Josefin-Sans' }}>Aom 0949561292</Text>
+                        <Text style={{ fontSize: 18, fontWeight: "bold", fontFamily: 'Anuphan' }}>Ship To</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Ladkrabang</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Aom 0949561292</Text>
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 20 }}>
                     <Feather name="truck" size={24} color="black" />
                     <View style={{ marginLeft: 5 }}>
-                        <Text style={{ fontSize: 18, fontWeight: "bold", fontFamily: 'Anuphan' }}>ขนส่ง</Text>
-                        <Text style={{ fontSize: 18, fontFamily: 'Josefin-Sans' }}>Flash</Text>
+                        <Text style={{ fontSize: 18, fontWeight: "bold", fontFamily: 'Anuphan' }}>Shipping</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Flash</Text>
                     </View>
                 </View>
                 <View style={{ marginVertical: 20 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>ราคา</Text>
-                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>24 บาท</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Price</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>24 Baht</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>ค่าขนส่ง</Text>
-                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>24 บาท</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Shipping Fee</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>24 Baht</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>ทั้งหมด</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>24 บาท</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>Total</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>24 Baht</Text>
                     </View>
                 </View>
             </ScrollView>
             <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
-                <Button title="สั่งซื้อ" color="#9276F2" onPress={() => {
-                    navigation.navigate('OrderDetail')
+                <Button title="PLACE ORDER" color="#9276F2" onPress={() => {
+                    navigation.navigate('OrderDetail', {title:route.params.title, pic:route.params.pic, price:route.params.price})
                 }}></Button>
             </View>
         </SafeAreaView>
