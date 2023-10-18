@@ -1,11 +1,34 @@
 
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+
 import { AntDesign } from "@expo/vector-icons";
 import { responsiveHeight } from "react-native-responsive-dimensions";
 const ShowProduct = (props) => {
     // console.log("-----")
     // console.log(props)
     // console.log("-----")
+    const starIcons = [];
+
+  
+    // Use a for loop to generate the star icons
+    for (let i = 0; i < 5; i++) {
+
+        if(i < props.rating){
+            starIcons.push(
+              <AntDesign key={i} name="star" size={16} color="orange" />
+              
+            );
+
+        }
+
+        else{
+            starIcons.push(
+              <AntDesign key={i} name="star" size={16} color="grey" />
+
+            )
+        }
+    }
 
    
     // console.log
@@ -18,12 +41,8 @@ const ShowProduct = (props) => {
                     <View>
                         <Text style={styles.catTitle} numberOfLines={1}> {props.title}</Text>
                         <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                            <AntDesign name="star" size={16} color='#FFC400' />
-                            <AntDesign name="star" size={16} color='#FFC400' />
-                            <AntDesign name="star" size={16} color='#FFC400' />
-                            <AntDesign name="star" size={16} color='#FFC400' />
-                            <AntDesign name="star" size={16} color='#FFC400' />
-                            <Text style={{ fontSize: 16, bottom: 0 }}> {props.rate} (5.0) </Text>
+                            {starIcons}
+                            <Text style={{ fontSize: 16, bottom: 0 }}> ({props.rating}) </Text>
                         </View>
                         <Text style={{ fontSize: 20, fontWeight: 'bold', color: "black", }}> {props.price} บาท </Text>
                     </View>
@@ -32,6 +51,7 @@ const ShowProduct = (props) => {
         </View>
     );
 };
+
 
 const styles = StyleSheet.create({
     container: {

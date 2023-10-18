@@ -3,11 +3,12 @@ import { StyleSheet, Text, View, Image, TextInput, FlatList, ScrollView, Touchab
 import { AntDesign } from "@expo/vector-icons";
 import React, { useState, useEffect } from 'react';
 import { firebase, auth, firestore } from '../database';
-import { collection, query, where, getDocs, QuerySnapshot } from 'firebase/firestore';
+import { collection, query, where, getDocs, QuerySnapshot, onSnapshot } from 'firebase/firestore';
 
 
 import { PRODUCT } from "../data/dummy-data";
 import ShowProduct from '../components/ShowProduct';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 
 const HomeScreen = ({ navigation, route }, props) => {
@@ -15,31 +16,101 @@ const HomeScreen = ({ navigation, route }, props) => {
   // const [productData, setProductData] = useState([]);
   const [categoryData, setCategoryData] = useState("");
   const [cate, setCate] = useState("");
+  const [searchText, setSearchText] = useState('');
+  
+
+
+  //search
+
+  const SearchData = async () => {
+
+
+    const q = query(collection(firebase.firestore(), "products"));
+    const querySnapshot = await getDocs(q);
+    // console.log(querySnapshot.size)
+    const productData = [];
+    const productAll = [];
+    var i;
+
+    for (i = 0; i < querySnapshot.size; i++) {
+      const product = querySnapshot.docs[i].data().category;
+      if (product === cate) {
+
+        const dataPro = querySnapshot.docs[i].data();
+
+        const dataAll = {
+          name: dataPro.name,
+          amount: dataPro.amount,
+          category: dataPro.category,
+          id: querySnapshot.docs[i].id,
+          detail: dataPro.detail,
+          image: dataPro.image,
+          price: dataPro.price,
+          rating: dataPro.rating,
+          conditon: dataPro.condition,
+          rating: dataPro.rating
+        }
+
+
+        productData.push(dataAll);
 
 
 
 
-  // const Products = async () => {
-  //   const q = query(collection(firebase.firestore(), 'products'));
-  //   const querySnapshot = await getDocs(q);
 
-  //   // const userData = querySnapshot.size;
-  //   const productData = [];
-  //   var i;
+      }
 
-  //   for (i = 0; i < querySnapshot.size; i++) {
-  //     // console.log(querySnapshot.docs[i].data())
-  //     const product = querySnapshot.docs[i].data();
-  //     productData.push(product);
+      else {
+        const dataPro = querySnapshot.docs[i].data();
 
-  //   }
+        const dataAll = {
+          name: dataPro.name,
+          amount: dataPro.amount,
+          category: dataPro.category,
+          id: querySnapshot.docs[i].id,
+          detail: dataPro.detail,
+          image: dataPro.image,
+          price: dataPro.price,
+          rating: dataPro.rating,
+          conditon: dataPro.condition,
+          rating: dataPro.rating
+
+        }
+
+        // const updatedList = dataPro.map(item => ({
+        //   id: querySnapshot.docs[i].id,
+        //   ...item
+        // }));
+
+        productAll.push(dataAll)
+      }
+
+    }
 
 
-  //   return productData;
+    if (productAll.length == querySnapshot.size) {
+
+      const filteredData = productAll.filter(item =>
+        item.name.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setCategoryData(filteredData)
+    }
+
+    else {
+      const filteredData = productData.filter(item =>
+        item.name.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setCategoryData(filteredData)
+    }
 
 
 
-  // }
+
+
+  }
+
+
+  //category onClick
 
   const Catagories = async (cate) => {
 
@@ -54,17 +125,45 @@ const HomeScreen = ({ navigation, route }, props) => {
     for (i = 0; i < querySnapshot.size; i++) {
       // console.log(querySnapshot.docs[i].data())
       const product = querySnapshot.docs[i].data().category;
-      // console.log(product)
-      // console.log(cate)
-      if (product === cate) {
-        // console.log("1")
-        // console.log("folk")
 
-        productData.push(querySnapshot.docs[i].data());
+      const dataPro = querySnapshot.docs[i].data();
+
+      if (product === cate) {
+
+        const dataAll = {
+          name: dataPro.name,
+          amount: dataPro.amount,
+          category: dataPro.category,
+          id: querySnapshot.docs[i].id,
+          detail: dataPro.detail,
+          image: dataPro.image,
+          price: dataPro.price,
+          rating: dataPro.rating,
+          conditon: dataPro.condition,
+          rating: dataPro.rating
+
+        }
+
+
+        productData.push(dataAll);
       }
 
       else {
-        productAll.push(querySnapshot.docs[i].data())
+        const dataAll = {
+          name: dataPro.name,
+          amount: dataPro.amount,
+          category: dataPro.category,
+          id: querySnapshot.docs[i].id,
+          detail: dataPro.detail,
+          image: dataPro.image,
+          price: dataPro.price,
+          rating: dataPro.rating,
+          conditon: dataPro.condition,
+          rating: dataPro.rating
+
+        }
+
+        productAll.push(dataAll)
       }
 
     }
@@ -79,10 +178,17 @@ const HomeScreen = ({ navigation, route }, props) => {
     }
     setCategoryData(productData)
 
+
     return productData
 
 
   }
+
+
+
+
+
+
 
 
 
@@ -92,10 +198,10 @@ const HomeScreen = ({ navigation, route }, props) => {
     const fetchData = async () => {
 
       try {
-        // setCategory()
+
         if (cate == "food") {
           Catagories(cate)
-          console.log("folk")
+
 
 
 
@@ -103,10 +209,12 @@ const HomeScreen = ({ navigation, route }, props) => {
         }
         else if (cate == "clothes") {
           Catagories(cate)
-          
+
         }
         else if (cate == "model") {
           Catagories(cate)
+
+
 
         }
 
@@ -126,29 +234,58 @@ const HomeScreen = ({ navigation, route }, props) => {
 
         }
       }
-      catch(err){
+      catch (err) {
         console.log(err)
       }
 
-      }
-      
-
-    console.log("Folk")
-
-
+    }
     fetchData()
 
+    const fetchData1 = async () => {
+      try {
+        const q = query(collection(firebase.firestore(), 'products'));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+          const productData = [];
+          snapshot.forEach((doc) => {
+            const dataPro = doc.data();
+            const dataAll = {
+              name: dataPro.name,
+              amount: dataPro.amount,
+              category: dataPro.category,
+              id: doc.id,
+              detail: dataPro.detail,
+              image: dataPro.image,
+              price: dataPro.price,
+              rating: dataPro.rating,
+              condition: dataPro.condition,
+              rating: dataPro.rating,
+            };
+            productData.push(dataAll);
+
+            console.log(productData)
+          });
+          setCategoryData(productData);
+        });
+        return unsubscribe;
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData1();
 
 
 
-    // console.log("cate")
-    console.log(cate)
-    // console.log(categoryData)
-    const intervalId = setInterval(() => {
-      fetchData()// Fetch data every 2 minutes
-    }, 10000);
 
-    return () => clearInterval(intervalId);
+
+
+    // console.log(cate)
+
+
+    // const intervalId = setInterval(() => {
+    //   fetchData()
+    // }, 10000);
+
+    // return () => clearInterval(intervalId);
 
   }, [cate])
 
@@ -161,8 +298,9 @@ const HomeScreen = ({ navigation, route }, props) => {
         title={itemData.item.name}
         pic={itemData.item.image}
         price={itemData.item.price}
+        rating={itemData.item.rating}
         onSelectProduct={() => {
-          navigation.navigate("Detail", { title: itemData.item.name, pic: itemData.item.image, detail: itemData.item.detail, policy: itemData.item.condition, price: itemData.item.price }, setCate(""));
+          navigation.navigate("Detail", { title: itemData.item.name, pic: itemData.item.image, detail: itemData.item.detail, policy: itemData.item.condition, price: itemData.item.price, id: itemData.item.id,   rating : itemData.item.rating}, setCate(""));
         }}
       />
     );
@@ -170,8 +308,10 @@ const HomeScreen = ({ navigation, route }, props) => {
   return (
     <View style={styles.container}>
       <View style={styles.input} >
-        <TextInput placeholder="Search" />
-        {/* <AntDesign style={styles.searchIcon} name="faMagnifyingGlass" size={26} color={'gray'} /> */}
+        <TextInput placeholder="Search" onChangeText={text => setSearchText(text)} value={searchText} />
+
+        <AntDesign style={styles.searchIcon} name="search1" size={26} color={'gray'} onPress={() => SearchData(cate)} />
+
       </View>
       <AntDesign style={{ position: 'absolute', right: 5, top: 15 }} name="notification" size={26} color={'gray'} />
       <ScrollView>

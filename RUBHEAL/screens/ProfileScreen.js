@@ -97,11 +97,11 @@ const ProfileScreen = ({ navigation }) => {
 
     fetchData();
 
-    const intervalId = setInterval(() => {
-      fetchData(); // Fetch data every 2 minutes
-    }, 12000);
+    // const intervalId = setInterval(() => {
+    //   fetchData(); // Fetch data every 2 minutes
+    // }, 12000);
 
-    return () => clearInterval(intervalId);
+    // return () => clearInterval(intervalId);
   }, []);
 
 

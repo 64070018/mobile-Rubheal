@@ -3,6 +3,29 @@ import { AntDesign } from "@expo/vector-icons";
 import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
 
 const comment = (props) => {
+    const starIcons = [];
+  
+    // Use a for loop to generate the star icons
+    for (let i = 0; i < 5; i++) {
+
+        if(i < props.item.rating){
+            starIcons.push(
+              <AntDesign key={i} name="star" size={16} color="orange" />
+              
+            );
+
+        }
+
+        else{
+            starIcons.push(
+              <AntDesign key={i} name="star" size={16} color="grey" />
+
+            )
+        }
+    }
+
+    
+   
     return (
         <View style={{ borderBottomColor: '#aaa', borderBottomWidth: 1, paddingVertical: 10 }}>
             <View style={{ paddingVertical: 7, flexDirection: 'row', alignItems: 'center', columnGap: 10, marginTop: 10 }}>
@@ -11,18 +34,16 @@ const comment = (props) => {
                     style={[styles.account, { marginTop: 10 }]} />
                 <Text style={{ fontSize: 16, fontWeight: '400', }}> {props.item.name}{'\n'}
                     <View style={{ flexDirection: 'row', marginTop: 5, }}>
-                        <AntDesign name="star" size={16} color='orange' />
-                        <AntDesign name="star" size={16} color='orange' />
-                        <AntDesign name="star" size={16} color='orange' />
-                        <AntDesign name="star" size={16} color='orange' />
-                        <AntDesign name="star" size={16} color='orange' />
-                        <Text style={{ fontSize: 16, bottom: 0 }}> {props.item.timestamp} </Text>
+
+                    
+                    {starIcons} 
+                        <Text style={{ fontSize: 16, bottom: 0 }}> {props.item.time} </Text>
                     </View>
                 </Text>
 
             </View>
             <Text style={styles.content}>
-                {props.item.content}
+                {props.item.comment}
             </Text>
         </View>
     );
