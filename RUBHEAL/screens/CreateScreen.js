@@ -95,11 +95,11 @@ const CreateScreen = ({ navigation, route }) => {
   const [selectedValue, setSelectedValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const data = [
-    { label: 'Food', value: 'Food' },
-    { label: 'Clothes', value: 'Clothes' },
-    { label: 'Accessory', value: 'Accessory' },
-    { label: 'Model', value: 'Model' },
-    { label: 'Other', value: 'Other' },
+    { label: 'Food', value: 'food' },
+    { label: 'Clothes', value: 'clothes' },
+    { label: 'Accessory', value: 'accessory' },
+    { label: 'Model', value: 'model' },
+    { label: 'Other', value: 'other' },
   ];
 
 
