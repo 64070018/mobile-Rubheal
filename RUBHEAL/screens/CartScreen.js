@@ -21,13 +21,15 @@ const CartScreen = ({ route, navigation }) => {
     if (!loaded) {
         return null;
     }
+
     const data = {
         pic: route.params.pic,
         title: route.params.title,
         price: route.params.price,
         amount: productAmount
     }
-    const total = parseFloat(data.price) + 24
+    const cal_total = data.price * data.amount
+    const total = parseFloat(cal_total) + 24
     console.log(route)
     console.log(data)
 
@@ -49,7 +51,7 @@ const CartScreen = ({ route, navigation }) => {
                 owner: user.uid
             })
             .then(() => {
-                navigation.navigate('OrderDetail', { date: myDate, time: myTime, title: route.params.title, pic: route.params.pic, price: route.params.price, amount: data.amount  })
+                navigation.navigate('OrderDetail', { date: myDate, time: myTime, title: route.params.title, pic: route.params.pic, price: route.params.price, amount: data.amount, total: total })
             });
     }
     

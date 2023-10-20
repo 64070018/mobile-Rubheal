@@ -23,9 +23,9 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
         pic: route.params.pic,
         title: route.params.title,
         price: route.params.price,
+        total: route.params.total,
         amount: route.params.amount
     }
-    const total = parseFloat(data.price) + 24
     return (
 
         <SafeAreaView style={styles.container}>
@@ -66,7 +66,7 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>Total</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>{total} Baht</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>{data.total} Baht</Text>
                     </View>
                 </View>
 
