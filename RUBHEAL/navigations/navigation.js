@@ -31,6 +31,7 @@ import UpdateScreen from "../screens/UpdateScreen.js";
 
 const CreateNavigator = createNativeStackNavigator();
 const CartNavigator = createNativeStackNavigator();
+const OrderNavigator = createNativeStackNavigator();
 const ChatNavigator = createNativeStackNavigator();
 const LoginNavigator = createNativeStackNavigator();
 const ProfileNavigator = createNativeStackNavigator();
@@ -122,9 +123,10 @@ function Navigation() {
     return (
         <CartNavigator.Navigator initialRouteName="Home">
             <CartNavigator.Screen name="Home" component={HomeScreen} />
+            <CartNavigator.Screen name="Create" component={CreateScreen} />
+            <CartNavigator.Screen name="Login" component={LoginScreen} />
+            <CartNavigator.Screen name="Update" component={UpdateScreen} />
             <CartNavigator.Screen name="Detail" component={DetailScreen} />
-            <CartNavigator.Screen name="Cart" component={CartScreen} />
-            <CartNavigator.Screen name="OrderDetail" component={OrderDetail} />
             <CartNavigator.Screen name="customerBuy" component={CustomerBuyProduct} />
         </CartNavigator.Navigator>
     )
@@ -138,6 +140,8 @@ function LoginRegister() {
             <LoginNavigator.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
             <LoginNavigator.Screen name="Register" component={Register} options={{ headerShown: false }} />
             <LoginNavigator.Screen name="HomePage" component={TabNavigator} options={{ headerShown: false }} />
+            <LoginNavigator.Screen name="OrderDetail" component={OrderDetail} />
+            <LoginNavigator.Screen name="Cart" component={CartScreen} />
         </LoginNavigator.Navigator>
     )
 
