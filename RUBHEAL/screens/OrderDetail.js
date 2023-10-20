@@ -18,10 +18,14 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
         return null;
     }
     const data = {
+        date: route.params.date,
+        time: route.params.time,
         pic: route.params.pic,
         title: route.params.title,
-        price: route.params.price
+        price: route.params.price,
+        amount: route.params.amount
     }
+    const total = parseFloat(data.price) + 24
     return (
 
         <SafeAreaView style={styles.container}>
@@ -33,7 +37,7 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Placed on</Text>
-                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>23:43, 16/9/2023</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>{data.time}, {data.date}</Text>
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 20 }}>
@@ -54,7 +58,7 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
                 <View style={{ marginTop: 20 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Price</Text>
-                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>24 Baht</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>{data.price} Baht</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Shipping Fee</Text>
@@ -62,7 +66,7 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>Total</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>24 Baht</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>{total} Baht</Text>
                     </View>
                 </View>
 
@@ -73,9 +77,7 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
                     <View style={{ marginLeft: 15 }}>
                         <Text style={{ fontSize: 20, fontFamily: 'Anuphan' }}>{data.title}{'\n'}x{data.price} Baht</Text>
                         <View style={{ flexDirection: 'row' }}>
-                            <AntDesign name="minussquareo" size={30} color="black" />
-                            <Text style={{ marginHorizontal: 5, fontSize: 18 }}>1</Text>
-                            <AntDesign name="plussquareo" size={30} color="black" />
+                            <Text style={{ marginHorizontal: 5, fontSize: 18 }}>{data.amount}</Text>
                         </View>
                     </View>
                 </View>

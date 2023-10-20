@@ -1,29 +1,73 @@
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, Button, SafeAreaView, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, SafeAreaView, FlatList, ScrollView, Pressable, Alert } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-
+import { firebase, config, storage } from '../database';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import dayjs  from "dayjs";
 // SplashScreen.preventAutoHideAsync();
 
 const CartScreen = ({ route, navigation }) => {
+    //อย่าเอาไว้หลังconditionเด็ดขาดไม่งั้นพังแน่
+    const [productAmount, setproductAmount] = useState(1);
     const [loaded] = useFonts({
         "Anuphan": require("../assets/fonts/Josefin_Sans/static/JosefinSans-Medium.ttf"),
         Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
     });
-
+    
     if (!loaded) {
         return null;
     }
     const data = {
         pic: route.params.pic,
         title: route.params.title,
-        price: route.params.price
+        price: route.params.price,
+        amount: productAmount
     }
+    const total = parseFloat(data.price) + 24
     console.log(route)
     console.log(data)
+
+    const user = firebase.auth().currentUser;
+
+    // purchased table
+    const purchased = () => {
+        myDate = dayjs(new Date).format('DD/MM/YYYY')
+        myTime = dayjs(new Date).format('HH:mm')
+        console.log(myDate)
+        firebase
+            .firestore()
+            .collection("purchased")
+            .add({
+                time: myDate,
+                title: data.title,
+                total_price: total,
+                amount: data.amount,
+                owner: user.uid
+            })
+            .then(() => {
+                navigation.navigate('OrderDetail', { date: myDate, time: myTime, title: route.params.title, pic: route.params.pic, price: route.params.price, amount: data.amount  })
+            });
+    }
+    
+    function minus() {
+        if (data.amount <= 1) {
+            Alert.alert('DELETE', 'Are you sure to delete from the cart?', [
+                {
+                    text: 'yes',
+                    onPress: () => navigation.navigate('Home')
+                }
+            ])
+        } else {
+            setproductAmount(data.amount - 1)
+        }
+    }
+    function plus() {
+        setproductAmount(productAmount+1)
+    }
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={{ padding: 10, marginBottom: 50 }}>
@@ -34,9 +78,13 @@ const CartScreen = ({ route, navigation }) => {
                     <View style={{ marginLeft: 15 }}>
                         <Text style={{ fontSize: 20, fontFamily: 'Anuphan' }}>{data.title}{'\n'}x{data.price} Baht</Text>
                         <View style={{ flexDirection: 'row' }}>
-                            <AntDesign name="minussquareo" size={30} color="black" />
-                            <Text style={{ marginHorizontal: 5, fontSize: 18 }}>1</Text>
-                            <AntDesign name="plussquareo" size={30} color="black" />
+                            <Pressable onPress={minus}>
+                                <AntDesign name="minussquareo" size={30} color="black" />
+                            </Pressable>
+                            <Text style={{ marginHorizontal: 5, fontSize: 18 }}>{data.amount}</Text>
+                            <Pressable onPress={plus}>
+                                <AntDesign name="plussquareo" size={30} color="black" />
+                            </Pressable>
                         </View>
                     </View>
                 </View>
@@ -59,7 +107,7 @@ const CartScreen = ({ route, navigation }) => {
                 <View style={{ marginVertical: 20 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Price</Text>
-                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>24 Baht</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>{data.price} Baht</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Shipping Fee</Text>
@@ -67,14 +115,14 @@ const CartScreen = ({ route, navigation }) => {
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>Total</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>24 Baht</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>{total} Baht</Text>
                     </View>
                 </View>
             </ScrollView>
             <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
-                <Button title="PLACE ORDER" color="#9276F2" onPress={() => {
-                    navigation.navigate('OrderDetail', {title:route.params.title, pic:route.params.pic, price:route.params.price})
-                }}></Button>
+                <Pressable style={styles.order} onPress={purchased}>
+                    <Text style={styles.textbutton}>PLACE ORDER</Text>
+                </Pressable>
             </View>
         </SafeAreaView>
 
@@ -99,6 +147,18 @@ const styles = StyleSheet.create({
         // width: '90%',
         // borderColor: 'black', borderWidth: 1
         // height: 50,
+    },
+    order: {
+        backgroundColor: "#9276F2",
+        width: "100%",
+        height: 50,
+        justifyContent: "center",
+        alignContent: "center"
+    },
+    textbutton: {
+        fontWeight: "700",
+        color: 'white',
+
     }
 
 });
