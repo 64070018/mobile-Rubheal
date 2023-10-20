@@ -119,7 +119,7 @@ const RegistrationScreen = () => {
       {touched.email && errors.email && (
         <Text style={{color : 'red'}}>{errors.email}</Text>
       )}
-      <TextInput style={styles.input} placeholder='Phone' keyboardType='phone-pad' value={values.phone} onChangeText={handleChange('phone')}  onBlur={() => setFieldTouched('phone')}/>
+      <TextInput style={styles.input} placeholder='Phone' keyboardType='phone-pad' value={values.phone} onChangeText={handleChange('phone')}  onBlur={() => setFieldTouched('phone')} />
       {touched.phone && errors.phone && (
         <Text style={{color : 'red'}}>{errors.phone}</Text>
       )}

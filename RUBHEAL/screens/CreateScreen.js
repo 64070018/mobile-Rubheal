@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Alert, Button, } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Alert, Button, ScrollView} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import * as ImagePicker from 'expo-image-picker';
+
 import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
 // import DocumentPicker from 'react-native-document-picker';
 // import * as ImagePicker from 'react-native-image-picker';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { firebase, config, storage } from '../database';
-import { uploadBytesResumable, getDownloadURL, getStorage, ref } from "firebase/storage";
+import { uploadBytesResumable, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
+ // Import storage functions
+
 
 
 
@@ -79,6 +83,9 @@ async function selectImage() {
   }
 }
 
+
+
+
 const CreateScreen = ({ navigation, route }) => {
   // const [id, setid] = useState("");
   const [name, setName] = useState("");
@@ -86,10 +93,14 @@ const CreateScreen = ({ navigation, route }) => {
   const [amount, setAomunt] = useState("");
   const [category, setCategory] = useState("");
   const [condition, setCondition] = useState("");
+  
   const [detail, setDetail] = useState("");
   // const [rating, setRating] = useState("");
-  const [image, setImage] = useState("https://picsum.photos/200");
+  // const [image, setImage] = useState("https://picsum.photos/200");
   // const [owner, setOwner] = useState("");
+  const [image, setImage] = useState(null);
+
+const [uploading, setUploading] = useState(false);
   const user = firebase.auth().currentUser;
 
   const [selectedValue, setSelectedValue] = useState(null);
@@ -102,10 +113,65 @@ const CreateScreen = ({ navigation, route }) => {
     { label: 'Other', value: 'other' },
   ];
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  
+    const source = { uri: result.assets[0].uri };
+    setImage(source);
+  }
+  
+  const uploadImage = async () => {
+    if (image) {
+      setUploading(true);
+      const blob = await fetch(image.uri).then((response) => response.blob());
+      const filename =  Date.now() + '.jpg';
+      const imageRef = ref(storage, filename);
+  
+      try {
+        await uploadBytes(imageRef, blob);
+  
+        const downloadURL = await getDownloadURL(imageRef);
+  
+      // Now, add the downloadURL to Firestore along with any other data you want to associate with the image
+      const db = getFirestore();
+      const imageCollection = collection(db, 'images'); // Replace 'images' with your Firestore collection name
+      const docRef = await addDoc(imageCollection, {
+        imageUrl: downloadURL,
+        // Add any additional fields you want to associate with the image
+      });
+      
+        setUploading(false);
+        Alert.alert('Photo uploaded!');
+        setImage(null);
+      } catch (e) {
+        console.error(e);
+        setUploading(false);
+        Alert.alert('Failed to upload photo.');
+      }
+    } else {
+      Alert.alert('No image selected.');
+    }
+  }
+  
+
 
 
   // เก็บ owner in product table
-  const createProduct = () => {
+  const createProduct = async () => {
+
+    const blob = await fetch(image.uri).then((response) => response.blob());
+    const filename =  Date.now() + '.jpg';
+    const imageRef = ref(storage, filename);
+
+    await uploadBytes(imageRef, blob);
+
+    const downloadURL = await getDownloadURL(imageRef);
+
     firebase
       .firestore()
       .collection("products")
@@ -116,8 +182,9 @@ const CreateScreen = ({ navigation, route }) => {
         category: category,
         condition: condition,
         detail: detail,
-        image: image,
-        owner: user.uid
+        image: downloadURL,
+        owner: user.uid,
+        rating : 0
       })
       .then(() => {
         setName("");
@@ -126,7 +193,7 @@ const CreateScreen = ({ navigation, route }) => {
         setCategory(null);
         setCondition("");
         setDetail("");
-        // setImage("");
+        setImage(null);
         // Alert.alert("Create Success", "New Product was added!!");
         Alert.alert(
           "Create Success",
@@ -183,6 +250,8 @@ const CreateScreen = ({ navigation, route }) => {
 
 
   };
+   
+
 
 
 
@@ -190,8 +259,13 @@ const CreateScreen = ({ navigation, route }) => {
 
 
   return (
-    <View style={styles.container}>
 
+
+    <ScrollView>
+
+    <View style={styles.container}>
+   
+      
 
 
       {/* <Text style={styles.title}> Create </Text> */}
@@ -253,12 +327,14 @@ const CreateScreen = ({ navigation, route }) => {
 
       <Text style={styles.label}> Image </Text>
 
-      <Button title='test' onPress={handleImagePicker}></Button>
+      <Button title='test' onPress={pickImage}></Button>
+      {image && <Image source={{ uri: image.uri }} style={{ width: 50, height: 50 }} />}
 
       <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%' }]} onPress={createProduct}>
         <Text style={styles.buttonText}>CONFIRM</Text>
       </TouchableOpacity>
     </View>
+    </ScrollView>
   );
 }
 

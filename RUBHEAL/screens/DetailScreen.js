@@ -85,7 +85,17 @@ const DetailScreen = ({ navigation, route }) => {
 
     console.log(Math.floor(rate / num));
 
-    meanRate = Math.floor(rate/num)
+    if(rate == 0){
+        meanRate = 0
+    }
+
+    else{
+        meanRate = Math.floor(rate/num)
+
+    }
+
+
+    
 
 
     
@@ -112,7 +122,7 @@ const DetailScreen = ({ navigation, route }) => {
 
     //addComment
     const AddComment = async () =>{
-        console.log(auth.currentUser.uid)
+        // console.log(auth.currentUser)
         const userEmail = auth.currentUser.email;
         const q = query(collection(firebase.firestore(), 'users'), where('email', '==', userEmail));
      
@@ -167,6 +177,7 @@ const DetailScreen = ({ navigation, route }) => {
             let i = 0;
             let rate = 0;
             let num = 0;
+            var meanRate = 0;
     
             for (i; i < querySnapshotComments.size; i++) {
                 const commentId = querySnapshotComments.docs[i].data().ProductId;
@@ -175,8 +186,20 @@ const DetailScreen = ({ navigation, route }) => {
                     num += 1;
                 }
             }
+
+           
+
+            if(rate == 0){
+                meanRate = 0
+            }
+
+            else{
+
+                meanRate = Math.floor(rate / num);
+            }
     
-            const meanRate = Math.floor(rate / num);
+
+            
     
        
             route.params.rating = meanRate;
@@ -189,6 +212,9 @@ const DetailScreen = ({ navigation, route }) => {
     
 
     useEffect(() => {
+        console.log(route.params)
+
+  
         const readRating = listenForRatingChanges();
 
 

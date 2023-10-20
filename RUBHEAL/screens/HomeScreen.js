@@ -112,78 +112,78 @@ const HomeScreen = ({ navigation, route }, props) => {
 
   //category onClick
 
-  const Catagories = async (cate) => {
+  // const Catagories = async (cate) => {
 
-    // console.log(cate)
-    const q = query(collection(firebase.firestore(), "products"));
-    const querySnapshot = await getDocs(q);
+  //   // console.log(cate)
+  //   const q = query(collection(firebase.firestore(), "products"));
+  //   const querySnapshot = await getDocs(q);
 
-    const productData = [];
-    const productAll = [];
-    var i;
+  //   const productData = [];
+  //   const productAll = [];
+  //   var i;
 
-    for (i = 0; i < querySnapshot.size; i++) {
-      // console.log(querySnapshot.docs[i].data())
-      const product = querySnapshot.docs[i].data().category;
+  //   for (i = 0; i < querySnapshot.size; i++) {
+  //     // console.log(querySnapshot.docs[i].data())
+  //     const product = querySnapshot.docs[i].data().category;
 
-      const dataPro = querySnapshot.docs[i].data();
+  //     const dataPro = querySnapshot.docs[i].data();
 
-      if (product === cate) {
+  //     if (product === cate) {
 
-        const dataAll = {
-          name: dataPro.name,
-          amount: dataPro.amount,
-          category: dataPro.category,
-          id: querySnapshot.docs[i].id,
-          detail: dataPro.detail,
-          image: dataPro.image,
-          price: dataPro.price,
-          rating: dataPro.rating,
-          conditon: dataPro.condition,
-          rating: dataPro.rating
+  //       const dataAll = {
+  //         name: dataPro.name,
+  //         amount: dataPro.amount,
+  //         category: dataPro.category,
+  //         id: querySnapshot.docs[i].id,
+  //         detail: dataPro.detail,
+  //         image: dataPro.image,
+  //         price: dataPro.price,
+  //         rating: dataPro.rating,
+  //         conditon: dataPro.condition,
+  //         rating: dataPro.rating
 
-        }
-
-
-        productData.push(dataAll);
-      }
-
-      else {
-        const dataAll = {
-          name: dataPro.name,
-          amount: dataPro.amount,
-          category: dataPro.category,
-          id: querySnapshot.docs[i].id,
-          detail: dataPro.detail,
-          image: dataPro.image,
-          price: dataPro.price,
-          rating: dataPro.rating,
-          conditon: dataPro.condition,
-          rating: dataPro.rating
-
-        }
-
-        productAll.push(dataAll)
-      }
-
-    }
-    // console.log(productAll.length)
-    // console.log(querySnapshot.size)
-
-    if (productAll.length == querySnapshot.size) {
-      // console.log("folk")
-      // console.log(productAll)
-      setCategoryData(productAll)
-      return productAll
-    }
-    setCategoryData(productData)
+  //       }
 
 
-    return productData
+  //       productData.push(dataAll);
+  //     }
+
+  //     else {
+  //       const dataAll = {
+  //         name: dataPro.name,
+  //         amount: dataPro.amount,
+  //         category: dataPro.category,
+  //         id: querySnapshot.docs[i].id,
+  //         detail: dataPro.detail,
+  //         image: dataPro.image,
+  //         price: dataPro.price,
+  //         rating: dataPro.rating,
+  //         conditon: dataPro.condition,
+  //         rating: dataPro.rating
+
+  //       }
+
+  //       productAll.push(dataAll)
+  //     }
+
+  //   }
 
 
-  }
+  //   if (productAll.length == querySnapshot.size) {
+   
+  //     setCategoryData(productAll)
+  //     return productAll
+  //   }
+  //   setCategoryData(productData)
 
+
+  //   return productData
+
+
+  // }
+
+
+ 
 
 
 
@@ -193,85 +193,51 @@ const HomeScreen = ({ navigation, route }, props) => {
 
 
   useEffect(() => {
+      
 
 
-    const fetchData = async () => {
+    
+    const q = query(collection(firebase.firestore(), 'products'));
 
-      try {
+    // Create a real-time listener to fetch and update data
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const productData = [];
+      const productAll = [];
 
-        if (cate == "food") {
-          Catagories(cate)
+      snapshot.forEach((doc) => {
+        const dataPro = doc.data();
+        const dataAll = {
+          name: dataPro.name,
+          amount: dataPro.amount,
+          category: dataPro.category,
+          id: doc.id,
+          detail: dataPro.detail,
+          image: dataPro.image,
+          price: dataPro.price,
+          rating: dataPro.rating,
+          condition: dataPro.condition,
+        };
 
-
-
-
-
+        if (dataPro.category === cate) {
+          productData.push(dataAll);
+        } else {
+          productAll.push(dataAll);
         }
-        else if (cate == "clothes") {
-          Catagories(cate)
+      });
 
-        }
-        else if (cate == "model") {
-          Catagories(cate)
-
-
-
-        }
-
-        else if (cate == "accessories") {
-          Catagories(cate)
-
-        }
-        else if (cate == 'other') {
-          Catagories(cate)
-
-        }
-        else {
-
-
-          Catagories(cate)
-
-
-        }
+      if (productAll.length === snapshot.size) {
+        setCategoryData(productAll);
+      } else {
+        setCategoryData(productData);
       }
-      catch (err) {
-        console.log(err)
-      }
+    });
 
-    }
-    fetchData()
-
-    const fetchData1 = async () => {
-      try {
-        const q = query(collection(firebase.firestore(), 'products'));
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-          const productData = [];
-          snapshot.forEach((doc) => {
-            const dataPro = doc.data();
-            const dataAll = {
-              name: dataPro.name,
-              amount: dataPro.amount,
-              category: dataPro.category,
-              id: doc.id,
-              detail: dataPro.detail,
-              image: dataPro.image,
-              price: dataPro.price,
-              rating: dataPro.rating,
-              condition: dataPro.condition,
-              rating: dataPro.rating,
-            };
-            productData.push(dataAll);
-
-            console.log(productData)
-          });
-          setCategoryData(productData);
-        });
-        return unsubscribe;
-      } catch (err) {
-        console.log(err);
-      }
+    return () => {
+      // Unsubscribe from the real-time listener when the component unmounts
+      unsubscribe();
     };
-    fetchData1();
+
+  
 
 
 
@@ -299,6 +265,7 @@ const HomeScreen = ({ navigation, route }, props) => {
         pic={itemData.item.image}
         price={itemData.item.price}
         rating={itemData.item.rating}
+        
         onSelectProduct={() => {
           navigation.navigate("Detail", { title: itemData.item.name, pic: itemData.item.image, detail: itemData.item.detail, policy: itemData.item.condition, price: itemData.item.price, id: itemData.item.id,   rating : itemData.item.rating}, setCate(""));
         }}
