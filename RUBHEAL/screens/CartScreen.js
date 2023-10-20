@@ -131,24 +131,17 @@ const CartScreen = ({ route, navigation }) => {
 
     );
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
         backgroundColor: '#fff',
-        // paddingHorizontal: 10,
-        // alignItems: 'center'
         paddingTop: 10,
     },
     product: {
         // flex: 1,
         flexDirection: 'row',
         marginTop: 10
-        // justifyContent: 'flex-start',
-        // width: '90%',
-        // borderColor: 'black', borderWidth: 1
-        // height: 50,
     },
     order: {
         backgroundColor: "#9276F2",
@@ -160,7 +153,7 @@ const styles = StyleSheet.create({
     textbutton: {
         fontWeight: "700",
         color: 'white',
-
+        textAlign: 'center'
     }
 
 });

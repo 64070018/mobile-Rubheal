@@ -1,6 +1,6 @@
 import React from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, Button, SafeAreaView, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, SafeAreaView, FlatList, ScrollView, Pressable } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
@@ -84,9 +84,10 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
 
             </ScrollView>
             <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
-                <Button title="Back to Home" color="#9276F2" onPress={() => {
-                    navigation.navigate('Home') //ต้องแก้ไปหน้าhome
-                }}></Button>
+                <Pressable style={styles.order} onPress={() => {
+                    navigation.navigate('Home')}}>
+                    <Text style={styles.textbutton}>Back to Home</Text>
+                </Pressable>
             </View>
 
         </SafeAreaView>
@@ -100,18 +101,23 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: '#fff',
-        // paddingHorizontal: 10,
-        // alignItems: 'center'
-        // paddingTop: 10,
     },
     product: {
         // flex: 1,
         flexDirection: 'row',
         marginTop: 10
-        // justifyContent: 'flex-start',
-        // width: '90%',
-        // borderColor: 'black', borderWidth: 1
-        // height: 50,
+    },
+    order: {
+        backgroundColor: "#9276F2",
+        width: "100%",
+        height: 50,
+        justifyContent: "center",
+        alignContent: "center"
+    },
+    textbutton: {
+        fontWeight: "700",
+        color: 'white',
+        textAlign: 'center'
     }
 
 });
