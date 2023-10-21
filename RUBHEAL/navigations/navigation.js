@@ -6,7 +6,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
-
+import SettingAccount from "../screens/SettingAccount";
+import IdentifyScreen from "../screens/IdentifyScreen.js";
 
 import CartScreen from "../screens/CartScreen.js"
 import HomeScreen from "../screens/HomeScreen.js"
@@ -57,7 +58,7 @@ function TabNavigator() {
                     return <AntDesign name="Trophy" size={26} color={color} />;
                 },
             }} />
-            <Tab.Screen name="Chat" component={MessageNavigator} options={{
+            <Tab.Screen name="ChatTab" component={MessageNavigator} options={{
                 headerShown: false,
                 tabBarStyle: { display: 'none' },
                 tabBarIcon: ({ color, size }) => {
@@ -100,7 +101,7 @@ function MessageNavigator() {
                     </HeaderButtons>),
 
             })} />
-            <ChatNavigator.Screen name="Chat" component={ChatScreen} options={{ title: "Folk" }} />
+            <ChatNavigator.Screen name="Chat" component={ChatScreen} options={{ title: "Chat Room" }} />
 
         </ChatNavigator.Navigator>
     )
@@ -152,6 +153,8 @@ function UserNavigator() {
         <ProfileNavigator.Navigator initialRouteName="Profile">
             <ProfileNavigator.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
             <ProfileNavigator.Screen name="Admin" component={AdminNavigation} options={{ headerShown: false }} />
+            <ProfileNavigator.Screen name="Setting" component={SettingAccount} options={{ headerShown: true }} />
+            <ProfileNavigator.Screen name="Saler" component={IdentifyScreen} options={{ headerShown: true }} />
 
         </ProfileNavigator.Navigator>
     )

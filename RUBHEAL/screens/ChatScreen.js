@@ -9,13 +9,13 @@ import { and } from "firebase/firestore";
 
 
 const senderZone = (itemData) => {
-  console.log("SenderZone");
+  // console.log("SenderZone");
   const time = itemData.Timestamp.toDate();
   const hour = time.getHours(); // Get the hours (0-23)
   const minute = time.getMinutes(); // Get the minutes (0-59)
   const formattedTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-  console.log(time)
-  console.log(itemData.text)
+  // console.log(time)
+  // console.log(itemData.text)
   return (
     <View style={styles.box}>
       <View>
@@ -41,7 +41,7 @@ const senderZone = (itemData) => {
 }
 
 const receiverZone = (itemData) => {
-  console.log("receiverZone")
+  // console.log("receiverZone")
   const time = itemData.Timestamp.toDate();
   const hour = time.getHours(); // Get the hours (0-23)
   const minute = time.getMinutes(); // Get the minutes (0-59)
@@ -95,8 +95,8 @@ const Imagezone = () => {
 
 
 const ChatScreen = (route) => {
-  console.log("firebase.auth().currentUser")
-  console.log(firebase.auth().currentUser)
+  // console.log("firebase.auth().currentUser")
+  // console.log(firebase.auth().currentUser)
   const email = route.route.params.email
   const UID = firebase.auth().currentUser.email;
   const messagesRef = firebase.firestore().collection('messages');
@@ -137,7 +137,7 @@ const ChatScreen = (route) => {
   }
   if (messages && messages.length > 0) {
     const messageComponents = [];
-    console.log(messages)
+    // console.log(messages)
     messages.forEach((element) => {
 
       // if (element.receiver == email && element.sender != UID ) 

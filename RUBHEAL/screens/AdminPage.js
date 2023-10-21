@@ -143,7 +143,9 @@ const AdminPage = ({ navigation }) => {
         <View style={{ flexDirection: 'row', marginTop: 20, width: "100%" }}>
 
           <View style={{ width: "50%" }}>
-            <Button title="Setting" color={"#8667F2"} />
+            <Button title="Setting" color={"#8667F2"} onPress={() => {
+              navigation.navigate('Setting', { name: "setting" })
+            }}/>
           </View>
 
           <View style={{ width: "50%" }}>

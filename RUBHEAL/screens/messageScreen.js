@@ -20,12 +20,12 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 const MessageScreen = ({ navigation }) => {
   const UID = firebase.auth().currentUser.uid;
-  console.log(UID);
+  // console.log(UID);
 
   const userRef = firebase.firestore().collection('users');
   const [users] = useCollectionData(userRef);
-  console.log("users")
-  console.log(users)
+  // console.log("users")
+  // console.log(users)
 
   // const real_user = users.filter((item) => item.email != firebase.auth().currentUser.email)
   // console.log(real_user)

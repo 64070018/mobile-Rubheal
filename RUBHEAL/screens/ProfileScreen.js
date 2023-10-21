@@ -22,47 +22,20 @@ const ProfileScreen = ({ navigation }) => {
   const [data, setData] = useState([]);
 
   // const navigation = useNavigation()
-
-
   const handleSignOut = () => {
     auth
       .signOut()
       .then(() => {
         navigation.replace("Login")
-       
+
       })
       .catch(error => alert(error.message))
-  }
-
-  // const q = query(collection(firebase.firestore(), 'users'));
-
-
-
-  // const querySnapshot =  getDocs(q);
-
-  // const dataa = querySnapshot
-
-  // console.log(dataa)
-
-  const folk = async () =>{
-    const q = query(collection(firebase.firestore(), 'users'));
-    const querySnapshot = await getDocs(q);
-
-    const userData = querySnapshot.size;
-    var i;
-
-    for(i = 0; i  < querySnapshot.size; i++){
-      console.log(querySnapshot.docs[i].data())
-    }
-
-
-    console.log(userData)
   }
 
 
   useEffect(() => {
 
-    
+
 
     const fetchData = async () => {
       try {
@@ -154,19 +127,23 @@ const ProfileScreen = ({ navigation }) => {
         </View>
 
 
-        <View style={{ flexDirection: 'row', marginTop: 20, width: "100%" }}>
-
-          <View style={{ width: "50%" }}>
-            <Button title="LogOut" color={"#8667F2"} onPress={handleSignOut} />
-          </View>
-
-          <View style={{ width: "50%" }}>
-            <Button title="Swap Admin" color={"#8667F2"} onPress={() => {
-              navigation.navigate('Admin', { name: "admin" })
+        <View style={{ flexDirection: 'col', marginTop: 20, width: "100%" }}>
+          <View style={{ width: "100%" }}>
+            <Button title="Saler" color={"#8667F2"} onPress={() => {
+              console.log(data)
+              if (data.position == 'user') {
+                navigation.navigate('Saler', { name: "Saler" })
+              } else {
+                navigation.navigate('Admin', { name: "admin" })
+              }
             }} />
-
           </View>
 
+          <View style={{ width: "100%" }}>
+            <Button title="Setting" color={"#8667F2"} onPress={() => {
+              navigation.navigate('Setting', { name: "setting" })
+            }} />
+          </View>
         </View>
 
         <View
