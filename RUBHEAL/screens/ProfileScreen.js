@@ -1,107 +1,83 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  Button,
-  FlatList,
-} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Button, FlatList, } from "react-native";
 import React, { useEffect, useState } from 'react';
-
 import { firebase, auth, firestore } from '../database';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-
-
-
-
-import { PURCHASED } from "../data/data";
+import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
+import History from "../components/History";
 
 const ProfileScreen = ({ navigation }) => {
   const [data, setData] = useState([]);
-
-  // const navigation = useNavigation()
-  const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(() => {
-        navigation.replace("Login")
-
-      })
-      .catch(error => alert(error.message))
-  }
-
-
+  const [historyData, setHistoryData] = useState([]);
   useEffect(() => {
-
-
-
     const fetchData = async () => {
       try {
         // Check if the user is authenticated
         if (auth.currentUser) {
           const userEmail = auth.currentUser.email;
-
           // Create a query to find the user document with a specific email
           const q = query(collection(firebase.firestore(), 'users'), where('email', '==', userEmail));
-
-          // console.log(q)
-
+          // const history = query(collection(firebase.firestore(), 'purchased'));
+          const history = query(collection(firebase.firestore(), 'purchased'), where('customer', '==', userEmail));
           const querySnapshot = await getDocs(q);
-
-          // console.log(querySnapshot.docs[0])
-
+          const historySnapshot = await getDocs(history);
+          // profile
           if (!querySnapshot.empty) {
             const userData = querySnapshot.docs[0].data();
-            // You can access specific fields like userData.name, userData.email, etc.
             setData(userData);
           } else {
             console.log('User document not found');
           }
+          // history
+          const result = []
+          if (!historySnapshot.empty) {
+            for (const history of historySnapshot.docs) {
+              result.push(history.data())
+            }
+          } else {
+            console.log('History document not found');
+          }
+          setHistoryData(result)
         }
 
-        // setLoading(false);
       } catch (error) {
         console.error('Error fetching data from Firestore:', error);
-        // setLoading(false);
       }
     };
 
     fetchData();
-
-    // const intervalId = setInterval(() => {
-    //   fetchData(); // Fetch data every 2 minutes
-    // }, 12000);
-
-    // return () => clearInterval(intervalId);
   }, []);
 
 
   const renderItem = (itemData) => {
-    return (
+    console.log("itemdata", itemData)
+    console.log("test RederItem")
 
-
-      <View
-        style={{
-          flexDirection: "row",
-          padding: 10,
-          margin: 10,
-        }}
-      >
-        <Image
-          source={itemData.item.image}
-          style={{ width: 100, height: 100 }}
+    if (itemData.item != "No purchase history") {
+      return (
+        <History
+          title={itemData.item.title}
+          image={itemData.item.pic}
+          price={itemData.item.total_price}
+          date={itemData.item.date}
         />
-
-        <View style={{ flex: 1, padding: 10 }}>
-          <Text>{itemData.item.productDetail}</Text>
-          <Text>ราคาสินค้า :  {itemData.item.price}</Text>
+      );
+    } else {
+      return (
+        <View>
+          <Text style={{
+            textAlign: 'center',
+            justifyContent: 'center',
+            fontSize: 20,
+            marginTop: responsiveHeight(10),
+            color: '#999'
+          }}> No purchase history </Text>
         </View>
-      </View>
-
-    );
+      )
+    }
   };
+
+  console.log("------------        history pls        ----------------")
+  console.log("historyData 2", historyData)
   return (
     <View style={styles.container}>
       <View style={styles.nav}>
@@ -160,7 +136,13 @@ const ProfileScreen = ({ navigation }) => {
 
         <ScrollView>
 
-          <FlatList data={PURCHASED} renderItem={renderItem} />
+          {/* <FlatList data={historyData} renderItem={renderItem} /> */}
+          <FlatList
+            data={historyData.length > 0 ? historyData : ["No purchase history"]}
+            renderItem={renderItem}
+            numColumns={1}
+          />
+
 
 
 
