@@ -6,25 +6,30 @@ import * as ImagePicker from 'expo-image-picker';
 import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
 // import DocumentPicker from 'react-native-document-picker';
 // import * as ImagePicker from 'react-native-image-picker';
-import { launchImageLibrary } from 'react-native-image-picker';
+
 import { firebase, config, storage } from '../database';
 import { uploadBytesResumable, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+
+import { Formik } from 'formik';
+import * as Yup from 'yup'
+
+
 // Import storage functions
+
+
+
+
+
 
 
 
 
 const CreateScreen = ({ navigation, route }) => {
   // const [id, setid] = useState("");
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [amount, setAomunt] = useState("");
-  const [category, setCategory] = useState("");
-  const [condition, setCondition] = useState("");
 
-  const [detail, setDetail] = useState("");
   const [image, setImage] = useState(null);
+  const [isImageError, setIsImageError] = useState(false);
+
 
   const user = firebase.auth().currentUser;
 
@@ -45,13 +50,27 @@ const CreateScreen = ({ navigation, route }) => {
       quality: 1,
     });
 
+    console.log("Folk")
+    console.log(result.assets)
+    if(result.assets == null){
+      setIsImageError(true)
+    }
+
     const source = { uri: result.assets[0].uri };
+   
     setImage(source);
+    // if(source == ""){
+    //   setIsImageError(true)
+    // }
   }
 
-  // เก็บ owner in product table
-  const createProduct = async () => {
 
+
+
+
+  // เก็บ owner in product table
+  const createProduct = async (name, detail, price, amount, condition, category) => {
+    console.log(category)
     const blob = await fetch(image.uri).then((response) => response.blob());
     const filename = Date.now() + '.jpg';
     const imageRef = ref(storage, filename);
@@ -99,83 +118,165 @@ const CreateScreen = ({ navigation, route }) => {
       });
   }
 
+
+
+
+
+  const createProductSchema = Yup.object().shape({
+    name: Yup.string().required("Please Enter your name"),
+    detail: Yup.string().required("Please Enter your detail"),
+    price: Yup.number("Please Enter your number").required("Please Enter your price"),
+    amount: Yup.number("Please Enter your number").required("Please Enter your amount"),
+    condition: Yup.string().required("Please Enter your condition"),
+    category: Yup.string().required("Please selected your category")
+
+
+  })
+
+
+
+
+
+
+
   return (
 
+    <Formik
+      initialValues={{
+        name: '',
+        detail: '',
+        price: 0,
+        amount: 0,
+        condition: '',
+        category: ''
+      }}
+      validationSchema={createProductSchema}>
 
-    <ScrollView>
-
-      <View style={styles.container}>
+      {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit, setFieldValue }) => (
 
 
+        <ScrollView>
 
-
-        {/* <Text style={styles.title}> Create </Text> */}
-        {/* <Text style={styles.label}>Name</Text> */}
-        <TextInput style={styles.input} placeholder='Product Name'
-          value={name}
-          onChangeText={(val) => setName(val)} />
-
-        <Text style={styles.label}>Description</Text>
-        <TextInput
-          multiline
-          numberOfLines={4}
-          style={[styles.input,]}
-          placeholder='Detail Product'
-          value={detail}
-          onChangeText={(val) => setDetail(val)} />
-
-        {/* <Text style={styles.label}>Address</Text> */}
-        <TextInput style={styles.input} placeholder='price' keyboardType='numeric'
-          value={price}
-          onChangeText={(val) => setPrice(val)} />
-
-        {/* <Text style={styles.label}>Name</Text> */}
-        <TextInput style={styles.input} placeholder='amount' keyboardType='numeric'
-          value={amount}
-          onChangeText={(val) => setAomunt(val)} />
-
-        <Text style={styles.label}>Description</Text>
-        <TextInput
-          multiline
-          numberOfLines={4}
-          style={styles.input}
-          placeholder='Condition'
-          value={condition}
-          onChangeText={(val) => setCondition(val)} />
-
-        <Text style={styles.label}>Catagory</Text>
-        <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          data={data}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder="select catagory"
-          value={category}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setCategory(item.value);
-            setIsFocus(false);
-          }}
-        />
+          <View style={styles.container}>
 
 
 
 
-        <Text style={styles.label}> Image </Text>
+            {/* <Text style={styles.title}> Create </Text> */}
+            {/* <Text style={styles.label}>Name</Text> */}
+            <TextInput style={styles.input} placeholder='Product Name'
+              value={values.name}
+              onChangeText={handleChange('name')}
+              onBlur={() => setFieldTouched('name')} />
 
-        <Button title='test' onPress={pickImage}></Button>
-        {image && <Image source={{ uri: image.uri }} style={{ width: 50, height: 50 }} />}
+            {touched.name && errors.name && (
+              <Text style={{ color: 'red' }}>{errors.name}</Text>
+            )}
 
-        <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%' }]} onPress={createProduct}>
-          <Text style={styles.buttonText}>CONFIRM</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+
+            <Text style={styles.label}>Description</Text>
+            <TextInput
+              multiline
+              numberOfLines={4}
+              style={[styles.input,]}
+              placeholder='Detail Product'
+              value={values.detail}
+              onChangeText={handleChange('detail')}
+              onBlur={() => setFieldTouched('detail')} />
+
+            {touched.detail && errors.detail && (
+              <Text style={{ color: 'red' }}>{errors.detail}</Text>
+            )}
+
+
+            {/* <Text style={styles.label}>Address</Text> */}
+            <TextInput style={styles.input} placeholder='price' keyboardType='numeric'
+              value={values.price}
+              onChangeText={handleChange('price')}
+              onBlur={() => setFieldTouched('price')} />
+
+            {touched.price && errors.price && (
+              <Text style={{ color: 'red' }}>{errors.price}</Text>
+            )}
+
+
+            {/* <Text style={styles.label}>Name</Text> */}
+            <TextInput style={styles.input} placeholder='amount' keyboardType='numeric'
+              value={values.amount}
+              onChangeText={handleChange('amount')}
+              onBlur={() => setFieldTouched('amount')} />
+
+            {touched.amount && errors.amount && (
+              <Text style={{ color: 'red' }}>{errors.amount}</Text>
+            )}
+
+
+            <Text style={styles.label}>Description</Text>
+            <TextInput
+              multiline
+              numberOfLines={4}
+              style={styles.input}
+              placeholder='Condition'
+              value={values.condition}
+              onChangeText={handleChange('condition')}
+              onBlur={() => setFieldTouched('condition')} />
+            {touched.condition && errors.condition && (
+              <Text style={{ color: 'red' }}>{errors.condition}</Text>
+            )}
+
+
+            <Text style={styles.label}>Catagory</Text>
+            <Dropdown
+              style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={data}
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder="select catagory"
+              value={values.category}
+              // onFocus={() => setIsFocus(true)}
+              // onBlur={() => setIsFocus(false)}
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => {
+                setIsFocus(false);
+                setFieldTouched('category', true); // Set the "category" field as touched to trigger validation
+              }}
+
+              onChange={item => {
+                // setCategory(item.value);
+                setFieldValue("category", item.value)
+                // setIsFocus(false);
+              }}
+            />
+        {touched.category && values.category === "" && errors.category && (
+  <Text style={{ color: 'red' }}>{errors.category}</Text>
+)}
+
+            {/* {values.category === "" && errors.category && isFocus &&(
+              <Text style={{ color: 'red' }}>{errors.category}</Text>
+            )} */}
+
+
+
+            <Text style={styles.label}> Image </Text>
+
+            <Button title='Upload Image' onPress={pickImage} />
+            {image && <Image source={{ uri: image.uri }} style={{ width: 50, height: 50 }} />}
+            {!image &&isImageError  &&(
+              <Text style={{ color: 'red' }}>กรุณาใส่รูป</Text>
+
+            )}
+
+            <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%' }]} onPress={() => createProduct(values.name, values.detail, values.price, values.amount, values.condition, values.category)}>
+              <Text style={styles.buttonText}>CONFIRM</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      )}
+    </Formik>
   );
 }
 
