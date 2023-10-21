@@ -243,6 +243,7 @@ const DetailScreen = ({ navigation, route }) => {
     
         return()=>{
           // Unsubscribe from the real-time listener when the component unmounts
+
           readRating();
           unsubscribe();
           queryRating();

@@ -3,15 +3,92 @@ import { StyleSheet, Text, View, Image, TextInput, FlatList, ScrollView } from '
 import { PRODUCT } from "../data/dummy-data";
 // import showProduct from '../components/ShowProduct';
 import TopTank from '../components/TopRank';
+import React, { useState, useEffect } from 'react';
+import { firebase, auth, firestore } from '../database';
+import { collection, query, where, getDocs, addDoc, onSnapshot, orderBy } from 'firebase/firestore';
+
 
 const RankScreen = ({ navigation, route }, props) => {
+
+  const [products, setProduct] = useState('');
+
+
+
+  useEffect(() => {
+    console.log(products)
+
+
+
+
+    // fetchData()
+    const productRef = query(collection(firebase.firestore(), 'products'), orderBy('rating', 'desc'));;
+
+    // Set up a real-time listener to listen for new comments in Firestore
+    const unsubscribe = onSnapshot(productRef, (querySnapshot) => {
+      const allProduct = [];
+
+      querySnapshot.forEach((doc) => {
+        const productData = doc.data();
+
+        const dataAll = {
+          name: productData.name,
+          amount: productData.amount,
+          category: productData.category,
+          id: doc.id,
+          detail: productData.detail,
+          image: productData.image,
+          price: productData.price,
+          rating: productData.rating,
+          condition: productData.condition,
+        };
+
+          allProduct.push(dataAll);
+  
+      });
+
+      setProduct(allProduct);
+
+    });
+
+
+   
+    return () => {
+      // Unsubscribe from the real-time listener when the component unmounts
+
+      unsubscribe();
+
+
+
+    };
+
+  }, [])
+  const Top10Product =  products.slice(0, 10)
+
+  const renderedItem = (itemData) => {
+
+    return (
+
+      <TopTank
+        title={itemData.item.name}
+        pic={itemData.item.image}
+        price={itemData.item.price}
+        rating={itemData.item.rating}
+        
+        onSelectProduct={() => {
+          navigation.navigate("Detail", { title: itemData.item.name, pic: itemData.item.image, detail: itemData.item.detail, policy: itemData.item.condition, price: itemData.item.price, id: itemData.item.id,   rating : itemData.item.rating});
+        }}
+      />
+    );
+  }
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>TOP 10 NOW!! {'\n'}</Text>
       <ScrollView showsVerticalScrollIndicator={false}>
         <FlatList
-          data={PRODUCT}
-          renderItem={TopTank}
+          data={Top10Product}
+          renderItem={renderedItem}
           numColumns={1}
           keyExtractor={item => `${item.id}`}
         />

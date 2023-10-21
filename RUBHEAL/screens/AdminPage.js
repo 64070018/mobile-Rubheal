@@ -12,6 +12,7 @@ const AdminPage = ({ navigation }) => {
 
   useEffect(() => {
     fetchData();
+    
   }, []);
 
 
@@ -104,7 +105,8 @@ const AdminPage = ({ navigation }) => {
                   price: data.item.price,
                   amount: data.item.amount,
                   condition: data.item.condition,
-                  catagory: data.item.category
+                  catagory: data.item.category,
+                  image : data.item.image
                 })
               }} />
             </View>

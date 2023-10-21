@@ -16,11 +16,6 @@ const RegistrationScreen = () => {
   
   const navigation = useNavigation()
   const [isChecked1, setIsChecked1] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [ConfirmPassword, setConfirmPassword] = useState("");
   const handleCheck1 = () => {
     setIsChecked1(!isChecked1);
     console.log(isChecked1)
