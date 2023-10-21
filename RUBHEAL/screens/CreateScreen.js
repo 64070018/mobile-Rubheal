@@ -17,13 +17,6 @@ import * as Yup from 'yup'
 // Import storage functions
 
 
-
-
-
-
-
-
-
 const CreateScreen = ({ navigation, route }) => {
   // const [id, setid] = useState("");
 
@@ -94,12 +87,6 @@ const CreateScreen = ({ navigation, route }) => {
         rating: 0
       })
       .then(() => {
-        setName("");
-        setPrice("");
-        setAomunt("");
-        setCategory(null);
-        setCondition("");
-        setDetail("");
         setImage(null);
         Alert.alert(
           "Create Success",
