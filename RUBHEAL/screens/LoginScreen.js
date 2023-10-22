@@ -16,24 +16,24 @@ const LoginScreen = () => {
 
     const navigation = useNavigation()
     useEffect(() => {
-    
-        const unsubscribe = auth.onAuthStateChanged(user => {
-          if (user) {
-            navigation.replace("HomePage")
-          }
-        })
-    
-        return unsubscribe
-      }, [])
 
-      const handleLogin = () => {
-        signInWithEmailAndPassword(auth, email, password)
-        .then(userCredentials => {
-            const user = userCredentials.user;
-            console.log('Logged in with:', user.email);
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user) {
+                navigation.replace("HomePage")
+            }
         })
-        .catch(error => alert(error.message))
-      }
+
+        return unsubscribe
+    }, [])
+
+    const handleLogin = () => {
+        signInWithEmailAndPassword(auth, email, password)
+            .then(userCredentials => {
+                const user = userCredentials.user;
+                console.log('Logged in with:', user.email);
+            })
+            .catch(error => alert(error.message))
+    }
 
 
     return (
@@ -46,7 +46,11 @@ const LoginScreen = () => {
             <TextInput style={styles.input} placeholder='Password' secureTextEntry={true} value={password}
                 onChangeText={text => setPassword(text)} />
 
-            <Text style={{ color: 'blue', marginTop: 20 }}>Forget Password</Text>
+
+
+            <TouchableOpacity onPress={() => navigation.replace("Forgot")}>
+                <Text style={{ color: 'blue', marginTop: 20 }}>Forget Password</Text>
+            </TouchableOpacity>
 
 
             <TouchableOpacity style={[styles.button, { margin: 10, width: '40%' }]} onPress={handleLogin}>

@@ -6,6 +6,9 @@ import { firebase, storage } from '../database';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Timestamp } from 'firebase/firestore';
 
+import { Formik } from 'formik';
+import * as Yup from 'yup'
+
 const IdentifyScreen = ({ navigation }) => {
     console.log("############################### saler page ###############################")
     const [id, setid] = useState("");
@@ -34,7 +37,7 @@ const IdentifyScreen = ({ navigation }) => {
                         setid(res.id)
                         setName(info.name)
                         setPhone(info.phone),
-                        setAddress(info.address)
+                            setAddress(info.address)
                     }
                 });
                 setData(items);
@@ -119,74 +122,91 @@ const IdentifyScreen = ({ navigation }) => {
 
 
 
+    const salerSchema = Yup.object().shape({
+        name: Yup.string().required("Please Enter your name"),
+        phone: Yup.number("Please Enter Number").required("Please Enter you phone"),
+        address: Yup.string().required("Please Enter you address"),
+        idCard: Yup.number("Please Enter Number").required("Please Enter you ID card")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    })
 
 
 
 
 
     return (
-        <ScrollView>
-            <View style={styles.container}>
 
-                {/* <Text style={styles.title}> Saler {'\n'}</Text> */}
-                <Text style={styles.label}>Name</Text>
-                <TextInput style={styles.input} value={name} placeholder='Name'
-                    onChangeText={(val) => {
-                        setName(val)
-                    }} />
+        <Formik
+            initialValues={{
+                name: name,
+                phone: phone,
+                address: address,
+                idCard: idCard
 
-                <Text style={styles.label}>ID Card</Text>
-                <TextInput style={styles.input} value={idCard} keyboardType='numeric' placeholder='ID Card Number'
-                    onChangeText={(val) => {
-                        setIdCard(val)
-                    }} />
+            }}
+            validationSchema={salerSchema}>
 
-                <Text style={styles.label}>Address</Text>
-                <TextInput style={styles.input} value={address} placeholder='Address' keyboardType='phone-pad'
-                    onChangeText={(val) => {
-                        setAddress(val)
-                    }} />
+            {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit, setFieldValue }) => (
 
-                <Text style={styles.label}>Phone</Text>
-                <TextInput style={styles.input} placeholder='Contract' value={phone} keyboardType='phone-pad'
-                    onChangeText={(val) => {
-                        setPhone(val)
-                    }} />
+                <ScrollView>
+                    <View style={styles.container}>
 
-                <Text style={styles.label}> {'\n'} Certified True Copy </Text>
+                        {/* <Text style={styles.title}> Saler {'\n'}</Text> */}
+                        <Text style={styles.label}>Name</Text>
+                        <TextInput style={styles.input} value={values.name} placeholder='Name'
+                            onChangeText={handleChange('name')}
+                            onBlur={() => setFieldTouched('name')} />
+                        {touched.name && errors.name && (
+                            <Text style={{ color: 'red' }}>{errors.name}</Text>
+                        )}
 
-                <ImageBackground
-                    source={image ? { uri: image.uri } : require('../assets/upload.png')}
-                    style={styles.backgroundImage}
-                >
-                    <TouchableOpacity style={[styles.selectImage, { marginTop: 20, marginBottom: 10, width: '80%', }]}
-                        onPress={pickImage}>
-                        {/* <Text style={{ color: '#000', textAlign: 'center', fontSize: 20, }}>Select Image</Text> */}
 
-                    </TouchableOpacity>
-                </ImageBackground>
+                        <Text style={styles.label}>ID Card</Text>
+                        <TextInput style={styles.input} value={values.idCard} keyboardType='numeric' placeholder='ID Card Number'
+                            onChangeText={handleChange('idCard')}
+                            onBlur={() => setFieldTouched('idCard')} />
+                        {touched.idCard && errors.idCard && (
+                            <Text style={{ color: 'red' }}>{errors.idCard}</Text>
+                        )}
 
-                <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%' }]}
-                    onPress={regisToSaler}>
-                    <Text style={styles.buttonText}>CONFIRM</Text>
-                </TouchableOpacity>
-            </View>
-        </ScrollView>
+                        <Text style={styles.label}>Address</Text>
+                        <TextInput style={styles.input} value={values.address} placeholder='Address' keyboardType='phone-pad'
+                            onChangeText={handleChange('address')}
+                            onBlur={() => setFieldTouched('address')} />
+                        {touched.address && errors.address && (
+                            <Text style={{ color: 'red' }}>{errors.address}</Text>
+                        )}
+
+                        <Text style={styles.label}>Phone</Text>
+                        <TextInput style={styles.input} placeholder='Contract' value={values.phone} keyboardType='phone-pad'
+                            onChangeText={handleChange('phone')}
+                            onBlur={() => setFieldTouched('phone')} />
+                        {touched.phone && errors.phone && (
+                            <Text style={{ color: 'red' }}>{errors.phone}</Text>
+                        )}
+
+                        <Text style={styles.label}> {'\n'} Certified True Copy </Text>
+
+                        <ImageBackground
+                            source={image ? { uri: image.uri } : require('../assets/upload.png')}
+                            style={styles.backgroundImage}
+                        >
+                            <TouchableOpacity style={[styles.selectImage, { marginTop: 20, marginBottom: 10, width: '80%', }]}
+                                onPress={pickImage}>
+                                {/* <Text style={{ color: '#000', textAlign: 'center', fontSize: 20, }}>Select Image</Text> */}
+
+                            </TouchableOpacity>
+                        </ImageBackground>
+
+                        <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%' }]}
+                            onPress={regisToSaler}>
+                            <Text style={styles.buttonText}>CONFIRM</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+
+            )}
+        </Formik>
     );
 }
 

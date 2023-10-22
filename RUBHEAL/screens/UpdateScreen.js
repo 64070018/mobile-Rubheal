@@ -36,7 +36,7 @@ const UpdateScreen = (props) => {
         });
 
         const source = { uri: result.assets[0].uri };
-        setImage(source);
+        
     
 
 
@@ -49,7 +49,7 @@ const UpdateScreen = (props) => {
         const downloadURL = await getDownloadURL(imageRef);
     
 
-
+        setImage(downloadURL)
         setFileImage(downloadURL)
 
         
@@ -145,7 +145,7 @@ const UpdateScreen = (props) => {
                     <View style={styles.content}>
                         {/* <Text style={styles.title}> Update {'\n'}</Text> */}
 
-                        <Text style={styles.label}>Name {fileImage}</Text>
+                        <Text style={styles.label}>Name </Text>
                         <TextInput style={styles.input} value={values.name} onBlur={() => setFieldTouched('name')} onChangeText={handleChange('name')} />
                         {touched.name && errors.name && (
                             <Text style={{ color: 'red' }}>{errors.name}</Text>
