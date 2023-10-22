@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, Image, ScrollView, TextInput, TouchableOpacity, FlatList } from "react-native";
 import React, { useRef, useState } from "react";
-import { firebase } from "../database";
+import { firebase, storage } from "../database"; // Import your Firebase configuration here
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { and } from "firebase/firestore";
-
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage"; // Corrected the import statement
+import * as ImagePicker from 'expo-image-picker';
+import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
 
 
 
@@ -16,29 +17,58 @@ const senderZone = (itemData) => {
   const formattedTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
   // console.log(time)
   // console.log(itemData.text)
-  return (
-    <View style={styles.senderBox}>
-      <View >
-        <View style={styles.boxContent}>
-          <Text style={styles.text}>
-            {itemData.text}
-          </Text>
+
+  if (itemData.text != undefined) {
+    return (
+
+      <View style={styles.senderBox}>
+        <View >
+          <View style={styles.boxContent}>
+            <Text style={styles.text}>
+              {itemData.text}
+            </Text>
+          </View>
+          <View style={styles.boxTimeLeft}>
+            <Text>{formattedTime}</Text>
+          </View>
         </View>
-        <View style={styles.boxTimeLeft}>
-          <Text>{formattedTime}</Text>
+        <View style={styles.personLeft}>
+          <Image
+            source={{
+              uri: "https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=1xw:0.84415xh;center,top",
+            }}
+            style={{ width: 50, height: 50, borderRadius: 50 }}
+          />
         </View>
       </View>
-      <View style={styles.personLeft}>
-        <Image
-          source={{
-            uri: "https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=1xw:0.84415xh;center,top",
-          }}
-          style={{ width: 50, height: 50, borderRadius: 50 }}
-        />
+    )
+
+  } else {
+    return (
+      <View style={styles.senderBox}>
+        <View >
+          <View style={styles.boxTimeLeft}>
+            <Image
+              source={{
+                uri: itemData.image,
+              }}
+              style={{ width: responsiveWidth(50), height: responsiveHeight(30), }}
+            />
+          </View>
+        </View>
+        <View style={styles.personLeft}>
+          <Image
+            source={{
+              uri: "https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=1xw:0.84415xh;center,top",
+            }}
+            style={{ width: 50, height: 50, borderRadius: 50 }}
+          />
+        </View>
       </View>
-    </View>
-  )
+    )
+  }
 }
+
 
 const receiverZone = (itemData) => {
   // console.log("receiverZone")
@@ -46,53 +76,62 @@ const receiverZone = (itemData) => {
   const hour = time.getHours(); // Get the hours (0-23)
   const minute = time.getMinutes(); // Get the minutes (0-59)
   const formattedTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-  return (
-    <View style={styles.box}>
-      <View style={styles.personRight}>
-        <Image
-          source={{
-            uri: "https://img.freepik.com/free-photo/puppy-that-is-walking-snow_1340-37228.jpg",
-          }}
-          style={{ width: 50, height: 50, borderRadius: 50 }}
-        />
-      </View>
-
-      <View>
-        <View style={styles.boxContent}>
-          <Text style={styles.text}>
-            {itemData.text}
-          </Text>
+  console.log("text", itemData.text)
+  console.log("text", itemData.image)
+  if (itemData.text != undefined) {
+    return (
+      <View style={styles.box}>
+        <View style={styles.personRight}>
+          <Image
+            source={{
+              uri: "https://img.freepik.com/free-photo/puppy-that-is-walking-snow_1340-37228.jpg",
+            }}
+            style={{ width: 50, height: 50, borderRadius: 50 }}
+          />
         </View>
-        <View style={styles.boxTimeRight}>
-          <Text>{formattedTime}</Text>
+
+        <View>
+          <View style={styles.boxContent}>
+            <Text style={styles.text}>
+              {itemData.text}
+            </Text>
+          </View>
+          <View style={styles.boxTimeRight}>
+            <Text>{formattedTime}</Text>
+          </View>
         </View>
       </View>
-    </View>
-  )
+    )
+
+  } else {
+    return (
+      <View style={styles.box}>
+        <View style={styles.personRight}>
+          <Image
+            source={{
+              uri: "https://img.freepik.com/free-photo/puppy-that-is-walking-snow_1340-37228.jpg",
+            }}
+            style={{ width: 50, height: 50, borderRadius: 50 }}
+          />
+        </View>
+
+        <View>
+          {/* <View style={styles.boxContent}> */}
+          <Image
+            source={{
+              uri: itemData.image,
+            }}
+            style={{ width: responsiveWidth(50), height: responsiveHeight(30), }}
+          />
+          {/* </View> */}
+          <View style={styles.boxTimeRight}>
+            <Text>{formattedTime}</Text>
+          </View>
+        </View>
+      </View>
+    )
+  }
 }
-
-const Imagezone = () => {
-  {/* <View style={styles.box}>
-            <View style={styles.personRight}>
-              <Image
-                source={{
-                  uri: "https://img.freepik.com/free-photo/puppy-that-is-walking-snow_1340-37228.jpg",
-                }}
-                style={{ width: 50, height: 50, borderRadius: 50 }}
-              />
-            </View>
-
-            <View style={{ flex: 4 }}>
-              <View style={{ flex: 1, borderRadius: 10, padding: 10 }}>
-                <Image source={require("../assets/vase.png")} style={{ width: 250, height: 250 }} />
-              </View>
-              <View style={styles.boxTimeRight}>
-                <Text>16:04</Text>
-              </View>
-            </View>
-          </View> */}
-}
-
 
 const ChatScreen = (route) => {
   // console.log("firebase.auth().currentUser")
@@ -102,6 +141,50 @@ const ChatScreen = (route) => {
   const messagesRef = firebase.firestore().collection('messages');
   const query = messagesRef.orderBy('Timestamp');
   const [messages] = useCollectionData(query, { idField: 'id' });
+  const [image, setImage] = useState({ "uri": undefined });
+
+
+  const pickImage = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      if (result.assets == null) {
+        setIsImageError(true)
+      }
+
+      const source = { uri: result.assets[0].uri };
+      console.log("asdf")
+      // setImage(source);
+      console.log("asdf2", image)
+
+      const blob = await fetch(source.uri).then((response) => response.blob());
+      const filename = Date.now() + '.jpg';
+      const imageRef = ref(storage, filename);
+
+      await uploadBytes(imageRef, blob);
+
+      // const downloadURL = await getDownloadURL(imageRef);
+
+      const user = firebase.auth().currentUser;
+      await firebase.firestore().collection('messages')
+        .add({
+          Timestamp: new Date(),
+          image: await getDownloadURL(imageRef),
+          receiver: email,
+          sender: user.email
+        })
+
+    } catch (error) {
+      console.log("error", error)
+
+    }
+
+    // setImage(null)
+  }
 
   const InputZone = () => {
     const [messageText, setMessageText] = useState("");
@@ -125,7 +208,7 @@ const ChatScreen = (route) => {
           <TouchableOpacity onPress={sendMessage}>
             <Image source={require("../assets/send.png")} style={{ width: 30, height: 30 }} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={pickImage}>
             <Image
               source={require("../assets/image.png")}
               style={{ width: 30, height: 30 }}
