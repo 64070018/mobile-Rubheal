@@ -18,6 +18,8 @@ const IdentifyScreen = ({ navigation }) => {
     const [idCard, setIdCard] = useState("");
     const [image, setImage] = useState(null);
     const [data, setData] = useState([]);
+  const [isImageError, setIsImageError] = useState(false);
+
     const user = firebase.auth().currentUser;
     const fetchData = () => {
         const collectionRef = firebase.firestore().collection("users");
@@ -64,6 +66,9 @@ const IdentifyScreen = ({ navigation }) => {
             aspect: [4, 3],
             quality: 1,
         });
+        if (result.assets == null) {
+            setIsImageError(true)
+          }
 
         const source = { uri: result.assets[0].uri };
         setImage(source);
@@ -124,9 +129,13 @@ const IdentifyScreen = ({ navigation }) => {
 
     const salerSchema = Yup.object().shape({
         name: Yup.string().required("Please Enter your name"),
-        phone: Yup.number("Please Enter Number").required("Please Enter you phone"),
+        phone : Yup.string().min(10, "Must be exactly 10 digits").max(10, "Must be exactly 10 digits").matches(/^[0-9]+$/, "Must be only digits").required("Please Enter your phone number"),
+
         address: Yup.string().required("Please Enter you address"),
-        idCard: Yup.number("Please Enter Number").required("Please Enter you ID card")
+        idCard: Yup.string()
+        .required("Please Enter your ID card").matches(/[0-9]/, "Must be only number")
+        .min(13, "ID card must be at least 13 digits").max(13, "ID card must be at least 13 digits")
+
 
     })
 
@@ -197,9 +206,14 @@ const IdentifyScreen = ({ navigation }) => {
 
                             </TouchableOpacity>
                         </ImageBackground>
+                        {!image && isImageError && (
+                            <Text style={{ color: 'red' }}>Please Upload Image</Text>
 
-                        <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%' }]}
-                            onPress={regisToSaler}>
+                        )}
+
+
+                        <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%', backgroundColor : !isValid || values.name == "" || values.idCard == "" || values.address == "" || values.phone == "" ? "#666" : "#8667F2" }]}
+                            onPress={regisToSaler} disabled={!isValid || values.name == "" || values.idCard == "" || values.address == "" || values.phone == ""}>
                             <Text style={styles.buttonText}>CONFIRM</Text>
                         </TouchableOpacity>
                     </View>
@@ -253,7 +267,7 @@ const styles = StyleSheet.create({
         margin: 0
     },
     button: {
-        backgroundColor: '#8667F2',
+        // backgroundColor: '#8667F2',
         borderRadius: 50,
         padding: 10,
         alignItems: 'center',

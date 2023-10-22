@@ -45,12 +45,12 @@ const CreateScreen = ({ navigation, route }) => {
 
     console.log("Folk")
     console.log(result.assets)
-    if(result.assets == null){
+    if (result.assets == null) {
       setIsImageError(true)
     }
 
     const source = { uri: result.assets[0].uri };
-   
+
     setImage(source);
     // if(source == ""){
     //   setIsImageError(true)
@@ -112,8 +112,10 @@ const CreateScreen = ({ navigation, route }) => {
   const createProductSchema = Yup.object().shape({
     name: Yup.string().required("Please Enter your name"),
     detail: Yup.string().required("Please Enter your detail"),
-    price: Yup.number("Please Enter your number").required("Please Enter your price"),
-    amount: Yup.number("Please Enter your number").required("Please Enter your amount"),
+    price: Yup.number().typeError('Price must be a number') 
+    .positive('Price must be a positive number').required("Please Enter your price"),
+    amount: Yup.number("Please Enter your number").typeError('Price must be a number') 
+    .positive('Price must be a positive number').required("Please Enter your price"),
     condition: Yup.string().required("Please Enter your condition"),
     category: Yup.string().required("Please selected your category")
 
@@ -132,14 +134,14 @@ const CreateScreen = ({ navigation, route }) => {
       initialValues={{
         name: '',
         detail: '',
-        price: 0,
-        amount: 0,
+        price: '',
+        amount: '',
         condition: '',
         category: ''
       }}
       validationSchema={createProductSchema}>
 
-      {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit, setFieldValue }) => (
+      {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit, setFieldValue,handleBlur }) => (
 
 
         <ScrollView>
@@ -176,12 +178,10 @@ const CreateScreen = ({ navigation, route }) => {
             )}
 
 
-            {/* <Text style={styles.label}>Address</Text> */}
-            <TextInput style={styles.input} placeholder='price' keyboardType='numeric'
-              value={values.price}
-              onChangeText={handleChange('price')}
-              onBlur={() => setFieldTouched('price')} />
 
+            {/* <Text style={styles.label}>Address</Text> */}
+          
+            <TextInput style={styles.input} value={values.price}  keyboardType='numeric' onBlur={() => setFieldTouched('price')} onChangeText={handleChange('price')} placeholder='Price' />
             {touched.price && errors.price && (
               <Text style={{ color: 'red' }}>{errors.price}</Text>
             )}
@@ -226,23 +226,21 @@ const CreateScreen = ({ navigation, route }) => {
               value={values.category}
               // onFocus={() => setIsFocus(true)}
               // onBlur={() => setIsFocus(false)}
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => {
-                setIsFocus(false);
-                setFieldTouched('category', true); // Set the "category" field as touched to trigger validation
-              }}
+         
+            
 
               onChange={item => {
                 // setCategory(item.value);
                 setFieldValue("category", item.value)
+                // setFieldTouched('category', true);
                 // setIsFocus(false);
               }}
             />
-        {touched.category && values.category === "" && errors.category && (
-  <Text style={{ color: 'red' }}>{errors.category}</Text>
-)}
-
-            {/* {values.category === "" && errors.category && isFocus &&(
+            {/* {touched.category && values.category === "" && errors.category && (
+              <Text style={{ color: 'red' }}>{errors.category}</Text>
+            )} */}
+{/* 
+            {values.category === "" && errors.category && isFocus &&(
               <Text style={{ color: 'red' }}>{errors.category}</Text>
             )} */}
 
@@ -252,12 +250,12 @@ const CreateScreen = ({ navigation, route }) => {
 
             <Button title='Upload Image' onPress={pickImage} />
             {image && <Image source={{ uri: image.uri }} style={{ width: 50, height: 50 }} />}
-            {!image &&isImageError  &&(
+            {!image && isImageError && (
               <Text style={{ color: 'red' }}>กรุณาใส่รูป</Text>
 
             )}
 
-            <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%' }]} onPress={() => createProduct(values.name, values.detail, values.price, values.amount, values.condition, values.category)}>
+            <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%', backgroundColor:  !isValid  || values.name == "" || values.detail == "" || values.price == "" || values.amount == "" || values.condition  == "" || values.category == "" || image == null ? '#666' : '#9276F2', }]} disabled={!isValid  || values.name == "" || values.detail == "" || values.price == "" || values.condition == "" || values.category == "" || image == null} onPress={() => createProduct(values.name, values.detail, values.price, values.amount, values.condition, values.category)}>
               <Text style={styles.buttonText}>CONFIRM</Text>
             </TouchableOpacity>
           </View>
@@ -309,7 +307,7 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   button: {
-    backgroundColor: '#9276F2',
+    // backgroundColor: '#9276F2',
     borderRadius: 50,
     padding: 10,
     alignItems: 'center',

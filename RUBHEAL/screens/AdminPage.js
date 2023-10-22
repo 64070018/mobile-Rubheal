@@ -28,6 +28,10 @@ const AdminPage = ({ navigation }) => {
         querySnapshot.forEach((res) => {
           console.log(" INFORMATION ", res.data())
           let info = res.data()
+
+          console.log("###INFORMATION###")
+          console.log(info)
+       
           if (info.owner == user.uid) {
             items.push({
               key: res.id,
@@ -39,7 +43,8 @@ const AdminPage = ({ navigation }) => {
               amount: info.amount,
               condition: info.condition,
               image: info.image,
-              category: info.category
+              category: info.category,
+              rating : info.rating
             });
           }
         });
@@ -71,7 +76,7 @@ const AdminPage = ({ navigation }) => {
 
 
   const renderItem = (data) => {
-    // console.log(data)
+    console.log(data)
     return (
       <View style={styles.contentBox}>
         <Image
@@ -106,7 +111,8 @@ const AdminPage = ({ navigation }) => {
                   amount: data.item.amount,
                   condition: data.item.condition,
                   catagory: data.item.category,
-                  image : data.item.image
+                  image : data.item.image,
+                  rating : data.item.rating
                 })
               }} />
             </View>

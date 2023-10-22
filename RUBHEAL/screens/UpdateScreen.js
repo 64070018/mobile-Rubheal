@@ -14,6 +14,7 @@ import * as Yup from 'yup'
 const UpdateScreen = (props) => {
     const { navigation } = props;
     const data = props.route.params
+    console.log("###DATA###")
     console.log(data)
     const [name, setName] = useState(data.name);
     const [price, setPrice] = useState(data.price);
@@ -21,6 +22,7 @@ const UpdateScreen = (props) => {
     const [category, setCategory] = useState(data.catagory);
     const [condition, setCondition] = useState(data.condition);
     const [detail, setDetail] = useState(data.detail);
+    const [rating, setRating] = useState(data.rating)
 
     const [image, setImage] = useState(data.image);
 
@@ -101,8 +103,10 @@ const UpdateScreen = (props) => {
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('Name is required'),
         detail: Yup.string().required('Detail is required'),
-        price: Yup.number().required('Price is required'),
-        amount: Yup.number().required('Amount is required'),
+        price: Yup.number().typeError('Price must be a number') // Custom type error message
+        .positive('Price must be a positive number').required("Please Enter your price"),
+        amount: Yup.number().typeError('Price must be a number') // Custom type error message
+        .positive('Price must be a positive number').required("Please Enter your price"),
         condition: Yup.string().required('Condition is required'),
     });
 
@@ -124,24 +128,48 @@ const UpdateScreen = (props) => {
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
-
+                    console.log("###IMAGE###")
                     console.log(fileImage)
 
+                    if(fileImage === null){
+                        setFileImage(data.image)
+                        console.log(fileImage)
+                    }
+
+                    if(fileImage === null){
+                        updateProduct(productId, {
+                            name: values.name,
+                            price: values.price,
+                            detail: values.detail,
+                            amount: values.amount,
+                            condition: values.condition,
+                            category: category,
+                            owner: user.uid,
+                            image: data.image,
+                            rating : rating
+                        });
+                    }
+
+                    else{
+                        updateProduct(productId, {
+                            name: values.name,
+                            price: values.price,
+                            detail: values.detail,
+                            amount: values.amount,
+                            condition: values.condition,
+                            category: category,
+                            owner: user.uid,
+                            image: fileImage,
+                            rating : rating
+                        });
+                    }
+
                     // Handle form submission here, e.g., call the updateProduct function
-                    updateProduct(productId, {
-                        name: values.name,
-                        price: values.price,
-                        detail: values.detail,
-                        amount: values.amount,
-                        condition: values.condition,
-                        category: category,
-                        owner: user.uid,
-                        image: fileImage,
-                    });
+                   
                     setSubmitting(false);
                 }}
             >
-                {({ values, handleChange, handleSubmit, errors, touched, setFieldTouched }) => (
+                {({ values, handleChange, handleSubmit, errors, touched, setFieldTouched, isValid }) => (
                     <View style={styles.content}>
                         {/* <Text style={styles.title}> Update {'\n'}</Text> */}
 
@@ -202,7 +230,7 @@ const UpdateScreen = (props) => {
                             </TouchableOpacity>
                         </ImageBackground>
 
-                        <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%' }]} onPress={handleSubmit}>
+                        <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%', backgroundColor : !isValid ? '#666' : '#9276F2', }]} disabled={!isValid} onPress={handleSubmit}>
                             <Text style={styles.buttonText}>CONFIRM</Text>
                         </TouchableOpacity>
                     </View>
@@ -256,7 +284,7 @@ const styles = StyleSheet.create({
         marginHorizontal: '20%'
     },
     button: {
-        backgroundColor: '#9276F2',
+        // backgroundColor: '#9276F2',
         borderRadius: 50,
         padding: 10,
         alignItems: 'center',
