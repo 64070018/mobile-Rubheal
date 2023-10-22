@@ -17,8 +17,19 @@ const CartScreen = ({ route, navigation }) => {
     const [address, setAddress] = useState('')
     const [addressName, setAddressName] = useState('')
     const [phone, setPhone] = useState('')
+    
+    const data = {
+        owner: route.params.owner,
+        pic: route.params.pic,
+        title: route.params.title,
+        price: route.params.price,
+        amount: productAmount,
+        numOrder: myRandom(5000, 100000)
+    }
+
     const getData = async () => {
         const users = await firebase.firestore().collection('users').where('email', '==', user.email).get();
+        // const user_id = await firebase.firestore().collection('users').where('email', '==', user.email).get();
         console.log('aaaaaaaaaaaaaaaaaaaaaa')
         users.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
@@ -31,6 +42,7 @@ const CartScreen = ({ route, navigation }) => {
     useEffect(() => {
         getData()
     })
+
     const [loaded] = useFonts({
         Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
     });
@@ -45,18 +57,11 @@ const CartScreen = ({ route, navigation }) => {
         return Math.floor(Math.random() * N) + min;
     }
 
-    const data = {
-        pic: route.params.pic,
-        title: route.params.title,
-        price: route.params.price,
-        amount: productAmount,
-        numOrder: myRandom(5000, 100000)
-    }
     const cal_total = data.price * data.amount
     const total = parseFloat(cal_total) + 24
 
     const purchased = () => {
-        console.log(address)
+        // console.log(data.owner)
         if (!address) {
             Alert.alert('No Address!', 'Field your address in Settings',[
              {text: 'OK', onPress: () => navigation.navigate('HomePage')}])
@@ -73,7 +78,7 @@ const CartScreen = ({ route, navigation }) => {
                 title: data.title,
                 total_price: total,
                 amount: data.amount,
-                owner: 'test',
+                owner: data.owner,
                 customer: user.email,
                 order_num: data.numOrder,
                 address: address,
@@ -85,7 +90,7 @@ const CartScreen = ({ route, navigation }) => {
                 navigation.navigate('OrderDetail', {
                     date: myDate, time: myTime, title: route.params.title, pic: route.params.pic,
                     price: route.params.price, amount: data.amount, total: total, numOrder: data.numOrder,
-                    address: address, addressName: addressName, phone: phone
+                    address: address, addressName: addressName, phone: phone, id: data.id
                 })
             });
         }

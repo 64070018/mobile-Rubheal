@@ -48,7 +48,7 @@ const HomeScreen = ({ navigation, route }, props) => {
           price: dataPro.price,
           rating: dataPro.rating,
           conditon: dataPro.condition,
-          rating: dataPro.rating
+          rating: dataPro.rating,
         }
 
 
@@ -216,8 +216,8 @@ const HomeScreen = ({ navigation, route }, props) => {
           price: dataPro.price,
           rating: dataPro.rating,
           condition: dataPro.condition,
+          owner: dataPro.owner
         };
-
         if (dataPro.category === cate) {
           productData.push(dataAll);
         } else {
@@ -267,7 +267,8 @@ const HomeScreen = ({ navigation, route }, props) => {
         rating={itemData.item.rating}
         
         onSelectProduct={() => {
-          navigation.navigate("Detail", { title: itemData.item.name, pic: itemData.item.image, detail: itemData.item.detail, policy: itemData.item.condition, price: itemData.item.price, id: itemData.item.id,   rating : itemData.item.rating}, setCate(""));
+          // console.log(itemData.item)
+          navigation.navigate("Detail", { title: itemData.item.name, pic: itemData.item.image, detail: itemData.item.detail, policy: itemData.item.condition, price: itemData.item.price, id: itemData.item.id, rating : itemData.item.rating, owner: itemData.item.owner}, setCate(""));
         }}
       />
     );
