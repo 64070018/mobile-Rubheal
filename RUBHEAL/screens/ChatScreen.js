@@ -17,8 +17,8 @@ const senderZone = (itemData) => {
   // console.log(time)
   // console.log(itemData.text)
   return (
-    <View style={styles.box}>
-      <View>
+    <View style={styles.senderBox}>
+      <View >
         <View style={styles.boxContent}>
           <Text style={styles.text}>
             {itemData.text}
@@ -100,7 +100,7 @@ const ChatScreen = (route) => {
   const email = route.route.params.email
   const UID = firebase.auth().currentUser.email;
   const messagesRef = firebase.firestore().collection('messages');
-  const query = messagesRef.orderBy('Timestamp').limit(25);
+  const query = messagesRef.orderBy('Timestamp');
   const [messages] = useCollectionData(query, { idField: 'id' });
 
   const InputZone = () => {
@@ -117,8 +117,8 @@ const ChatScreen = (route) => {
       setMessageText("")
     }
     return (
-      <View style={{ margin: 15, flexDirection: "row", position: 'absolute', top: "10%" }}>
-        <TextInput style={styles.input} placeholder="Text" value={messageText} onChangeText={(val) => setMessageText(val)} />
+      <View style={styles.boxInput}>
+        <TextInput style={styles.input} placeholder="Type Something" value={messageText} onChangeText={(val) => setMessageText(val)} />
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center", flexDirection: 'row', justifyContent: 'space-around' }}
         >
@@ -137,7 +137,7 @@ const ChatScreen = (route) => {
   }
   if (messages && messages.length > 0) {
     const messageComponents = [];
-    // console.log(messages)
+    console.log(messages)
     messages.forEach((element) => {
 
       // if (element.receiver == email && element.sender != UID ) 
@@ -145,7 +145,7 @@ const ChatScreen = (route) => {
         if (element.sender == UID) {
           // console.log(element.sender, 'sender')
           messageComponents.push(senderZone(element));
-        }else if (element.sender == email) {
+        } else if (element.sender == email) {
           // console.log(element.receiver, 'receiver')
           messageComponents.push(receiverZone(element));
         }
@@ -153,7 +153,7 @@ const ChatScreen = (route) => {
     });
 
     return (
-      <View>
+      <View style={{ backgroundColor: 'white', height: '100%' }}>
         <ScrollView>
           {messageComponents.map((component, index) => (
             <React.Fragment key={index}>{component}</React.Fragment>
@@ -161,6 +161,7 @@ const ChatScreen = (route) => {
         </ScrollView>
         <InputZone />
       </View>
+
     );
   } else {
     return (
@@ -197,43 +198,65 @@ const styles = StyleSheet.create({
   backgroundChat: {
     flex: 6,
     width: "100%",
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    // backgroundColor: "blue",
   },
 
   box: {
     flexDirection: 'row',
-    marginVertical: 20,
+    marginVertical: 10,
     marginHorizontal: 20,
+    // backgroundColor: "red",
   },
   input: {
     height: 40,
     margin: 12,
     borderBottomWidth: 1,
     borderColor: '#ccc',
-    backgroundColor: '#eee',
-    borderRadius: 50,
     padding: 10,
     flex: 3,
   },
 
   boxContent: {
-    borderRadius: 10, backgroundColor: '#F6F7F9'
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: '#F6F7F9',
   },
   boxTimeLeft: {
-    alignItems: 'flex-start', padding: 10
+    alignItems: 'flex-end', padding: 10
   },
   boxTimeRight: {
-    alignItems: 'flex-end', padding: 10
-
+    alignItems: 'flex-start', padding: 10
   },
   personRight: {
-    flex: 1, justifyContent: 'flex-end'
+    flex: 0, justifyContent: 'flex-end'
   },
   personLeft: {
-    flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end'
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
   },
   text: {
     fontSize: 20
+  },
+  senderBox: {
+    justifyContent: "flex-end",
+    flexDirection: 'row',
+    marginVertical: 10,
+    marginHorizontal: 20,
+    // backgroundColor: "red",
+  },
+  boxInput: {
+    backgroundColor: 'white',
+    width: '100%',
+    flexDirection: "row", position: 'fixed', bottom: 0,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 0.4,
+    elevation: 2,
   }
 });
 
