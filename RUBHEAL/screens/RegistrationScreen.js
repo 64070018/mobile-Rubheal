@@ -143,7 +143,7 @@ const RegistrationScreen = () => {
 
           </View>
 
-          <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%', backgroundColor: !isValid || isChecked1 == false || values.name == "" || values.password == "" || values.ConfirmPassword == "" || values.phone == "" || values.email == "" ? '#a5c9ca' : '#8667F2', }]} disabled={!isValid || isChecked1 == false || values.name == "" || values.password == "" || values.ConfirmPassword == "" || values.phone == "" || values.email == ""} onPress={() => handleSignUp(values.email, values.password, values.name, values.phone)}>
+          <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%', backgroundColor: !isValid || isChecked1 == false || values.name == "" || values.password == "" || values.ConfirmPassword == "" || values.phone == "" || values.email == "" ? '#666' : '#8667F2', }]} disabled={!isValid || isChecked1 == false || values.name == "" || values.password == "" || values.ConfirmPassword == "" || values.phone == "" || values.email == ""} onPress={() => handleSignUp(values.email, values.password, values.name, values.phone)}>
             <Text style={styles.buttonText}>CREATE ACCOUNT</Text>
           </TouchableOpacity>
           <View style={{ flexDirection: 'row', fontSize: 12, }}>

@@ -1,47 +1,153 @@
 import { View, Text, Image, ScrollView, FlatList, TouchableOpacity } from "react-native";
-import React from "react";
 
 import { PURCHASED } from "../data/data";
+import React, { useState, useEffect } from 'react';
+import { firebase, auth, firestore } from '../database';
+import { collection, query, where, getDocs, QuerySnapshot, onSnapshot } from 'firebase/firestore';
+import purchased from "../model/purchased";
 
 
-const PageProductForAdmin = ({navigation}) => {
-  console.log(PURCHASED)
+
+const PageProductForAdmin = ({ navigation }) => {
+
+   const [purchasedData, setProductData] = useState([])
+
+
+
+
+  const AllData = async () => {
+    const user = firebase.auth().currentUser;
+
+
+    const q = query(collection(firebase.firestore(), "purchased"));
+    const querySnapshot = await getDocs(q);
+    // console.log(querySnapshot.size)
+    const purchasedData = [];
+    const purchasedAll = [];
+    var i;
+
+    for (i = 0; i < querySnapshot.size; i++) {
+
+
+      const purchased = querySnapshot.docs[i].data();
+
+      if (purchased.owner == user.uid) {
+        purchasedData.push(purchased)
+
+
+      }
+    }
+
+    console.log(purchasedData)
+   
+    const countByProductId = {};
+
+    // Process the data to accumulate counts
+    purchasedData.forEach((item) => {
+      const productId = item.productId;
+      if (productId) {
+        // If productId is already in the countByProductId object, add the amount to the existing count; otherwise, initialize the count.
+        countByProductId[productId] = (countByProductId[productId] || 0) + item.amount;
+      }
+    });
+    console.log("####count####")
+    console.log(countByProductId)
+
+    const countArray = Object.keys(countByProductId).map((productId) => ({
+      productId,
+      count: countByProductId[productId],
+    }));
+    
+    console.log(countArray);
+
+
+    const uniqueProducts = {};
+
+    // Filter the data to keep only the unique products
+    const filteredData = purchasedData.filter((item) => {
+      if (!uniqueProducts[item.productId]) {
+        uniqueProducts[item.productId] = true;
+        return true;
+      }
+      return false;
+    });
+
+    // console.log(filteredData);
+
+
+
+
+    console.log("###count###")
+    console.log(filteredData)
+
+    // console.log("####Data###")
+    // console.log(filteredData[0].count)
+ 
+
+   for(var i = 0; i < filteredData.length; i++){
+      filteredData[i].allcount = countArray[i].count
+   }
+   console.log("###filter##")
+   console.log(filteredData)
+
+   setProductData(filteredData)
+
+
+
+    
+
+
+
+
+
+
+  }
+
+
+  useEffect(() => {
+    AllData()
+
+  }, [])
+
+
+
+
+  // console.log(PURCHASED)
   const renderItem = (itemData) => {
     return (
 
-        <TouchableOpacity onPress={() => {
-            navigation.navigate('CustomerProduct', {id : itemData.item.id})
-        }}>
-      <View
-        style={{
-          flexDirection: "row",
-          margin: 20,
-          borderBottomWidth: 1,
-          padding: 10,
-          borderBottomColor: "#ccc",
-        }}
-      >
-        <Image
-          source={itemData.item.image}
-          style={{ width: 150, height: 150, borderRadius: 10 }}
-        />
-        <View style={{ margin: 10 }}>
-          <Text>{itemData.item.productDetail}</Text>
-          <Text>{itemData.item.price} บาท / ชิ้น</Text>
-          <Text>ยอดฝากซื้อ : {itemData.item.countBuy}  เป็นเงิน {itemData.item.countBuy * itemData.item.price}</Text>
+      <TouchableOpacity onPress={() => {
+        navigation.navigate('CustomerProduct', { productId: itemData.item.productId, owner : itemData.item.owner })
+      }}>
+        <View
+          style={{
+            flexDirection: "row",
+            margin: 20,
+            borderBottomWidth: 1,
+            padding: 10,
+            borderBottomColor: "#ccc",
+          }}
+        >
+          <Image
+            source={{uri : itemData.item.pic}}
+            style={{ width: 150, height: 150, borderRadius: 10 }}
+          />
+          <View style={{ margin: 10 }}>
+            <Text>{itemData.item.title}</Text>
+            <Text>ยอดฝากซื้อ : {itemData.item.allcount} </Text>
+          </View>
         </View>
-      </View>
 
-        </TouchableOpacity>  
+      </TouchableOpacity>
     );
   };
 
   return (
     <ScrollView>
-    
 
-        <FlatList data={PURCHASED} renderItem={renderItem} />
-     
+
+      <FlatList data={purchasedData} renderItem={renderItem} />
+
     </ScrollView>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/core'
+import { useFonts } from 'expo-font';
 
 
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
@@ -9,7 +10,12 @@ import { auth } from '../database'
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 
+
+
+
 const LoginScreen = () => {
+
+
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -32,7 +38,15 @@ const LoginScreen = () => {
                 const user = userCredentials.user;
                 console.log('Logged in with:', user.email);
             })
-            .catch(error => alert(error.message))
+            .catch(error => alert("Gmail or Password wrong"))
+    }
+
+
+    const [loaded] = useFonts({
+        Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
+    });
+    if (!loaded) {
+        return null;
     }
 
 
