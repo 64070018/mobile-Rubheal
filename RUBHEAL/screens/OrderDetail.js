@@ -24,31 +24,39 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
         title: route.params.title,
         price: route.params.price,
         total: route.params.total,
-        amount: route.params.amount
+        amount: route.params.amount,
+        numOrder: route.params.numOrder,
+        address: route.params.address,
+        addressName: route.params.addressName,
+        phone: route.params.phone,
     }
+    console.log(data)
     return (
 
         <SafeAreaView style={styles.container}>
             <ScrollView style={{ paddingHorizontal: 10 }}>
                 <View style={{ marginTop: 20 }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Order No</Text>
-                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>11100234</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>{data.numOrder}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={styles.seperator}/>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Placed on</Text>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>{data.time}, {data.date}</Text>
                     </View>
                 </View>
-                <View style={{ flexDirection: 'row', marginTop: 20 }}>
+                <View style={styles.seperator}/>
+                <View style={{ flexDirection: 'row', marginTop: 10 }}>
                     <Feather name="map-pin" size={24} color="black" />
-                    <View style={{ marginLeft: 5 }}>
+                    <View style={{ marginLeft: 5, marginBottom: 10 }}>
                         <Text style={{ fontSize: 18, fontWeight: "bold", fontFamily: 'Anuphan' }}>Ship to</Text>
-                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Ladkrabang</Text>
-                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Aom 0949561292</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>{data.address}</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>{data.addressName} {data.phone}</Text>
                     </View>
                 </View>
-                <View style={{ flexDirection: 'row', marginTop: 20 }}>
+                <View style={styles.seperator}/>
+                <View style={{ flexDirection: 'row', marginVertical: 10 }}>
                     <Feather name="truck" size={24} color="black" />
                     <View style={{ marginLeft: 5 }}>
                         <Text style={{ fontSize: 18, fontWeight: "bold", fontFamily: 'Anuphan' }}>Shipping</Text>
@@ -56,17 +64,19 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
                     </View>
                 </View>
                 <View style={{ marginTop: 20 }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Price</Text>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>{data.price} Baht</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={styles.seperator}/>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Shipping Fee</Text>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>24 Baht</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>Total</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20, fontFamily: 'Anuphan' }}>{data.total} Baht</Text>
+                    <View style={styles.seperator}/>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>
+                        <Text style={{ fontWeight: 'bold', fontSize: 22, fontFamily: 'Anuphan' }}>Total</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 22, fontFamily: 'Anuphan' }}>{data.total} Baht</Text>
                     </View>
                 </View>
 
@@ -77,7 +87,7 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
                     <View style={{ marginLeft: 15 }}>
                         <Text style={{ fontSize: 20, fontFamily: 'Anuphan' }}>{data.title}{'\n'}x{data.price} Baht</Text>
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ marginHorizontal: 5, fontSize: 18 }}>{data.amount}</Text>
+                            <Text style={{ marginHorizontal: 5, fontSize: 18 }}>Qty:{data.amount}</Text>
                         </View>
                     </View>
                 </View>
@@ -105,12 +115,12 @@ const styles = StyleSheet.create({
     product: {
         // flex: 1,
         flexDirection: 'row',
-        marginTop: 10
+        marginTop: 20
     },
     order: {
         backgroundColor: "#9276F2",
         width: "100%",
-        height: 50,
+        height: 60,
         justifyContent: "center",
         alignContent: "center"
     },
@@ -118,6 +128,10 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         color: 'white',
         textAlign: 'center'
+    },seperator: {
+        height: 1,
+        width: '100%',
+        backgroundColor: '#ddd'
     }
 
 });
