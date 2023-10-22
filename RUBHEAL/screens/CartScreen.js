@@ -54,18 +54,13 @@ const CartScreen = ({ route, navigation }) => {
     }
     const cal_total = data.price * data.amount
     const total = parseFloat(cal_total) + 24
-    console.log(route)
-    console.log(phone)
-    //-----------------------------------------------------
 
-    //-----------------------------------------------------
-    // purchased table
     const purchased = () => {
-        // console.log(user.address)
-        // if (!user.address) {
-        //     Alert.alert('No Address!', 'Field your address in Settings',
-        //      {text: 'OK', onPress: () => navigation.navigate('Detail')})
-        // } else {
+        console.log(address)
+        if (!address) {
+            Alert.alert('No Address!', 'Field your address in Settings',[
+             {text: 'OK', onPress: () => navigation.navigate('HomePage')}])
+        } else {
         myDate = dayjs(new Date).format('DD/MM/YYYY')
         myTime = dayjs(new Date).format('HH:mm')
         console.log(myDate)
@@ -93,7 +88,7 @@ const CartScreen = ({ route, navigation }) => {
                     address: address, addressName: addressName, phone: phone
                 })
             });
-        // }
+        }
 
     }
 
