@@ -26,6 +26,8 @@ import Register from "../screens/RegistrationScreen.js";
 import CustomHeaderButton from "../CustomButton/CustomHeaderButton.js";
 import CreateScreen from "../screens/CreateScreen.js";
 import UpdateScreen from "../screens/UpdateScreen.js";
+import ForgotPasswordScreen from "../screens/ForgotPasswordScreen.js"
+
 
 
 
@@ -137,8 +139,9 @@ function Navigation() {
 function LoginRegister() {
     return (
 
-        <LoginNavigator.Navigator initialRouteName="Login">
+        <LoginNavigator.Navigator>
             <LoginNavigator.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+            <LoginNavigator.Screen name="Forgot" component={ForgotPasswordScreen} options={{headerShown : false}} />
             <LoginNavigator.Screen name="Register" component={Register} options={{ headerShown: false }} />
             <LoginNavigator.Screen name="HomePage" component={TabNavigator} options={{ headerShown: false }} />
             <LoginNavigator.Screen name="OrderDetail" component={OrderDetail} />

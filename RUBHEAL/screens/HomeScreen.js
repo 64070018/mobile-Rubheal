@@ -298,7 +298,7 @@ const HomeScreen = ({ navigation, route }, props) => {
               <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3300/3300371.png' }} style={styles.catagory} />
               <Text style={styles.catTitle}>CLOTHES</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cat} onPress={() => setCate("accessories")}>
+            <TouchableOpacity style={styles.cat} onPress={() => setCate("accessory")}>
               <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/7695/7695930.png' }} style={styles.catagory} />
               <Text style={styles.catTitle}>ACCESSORY</Text>
             </TouchableOpacity>
