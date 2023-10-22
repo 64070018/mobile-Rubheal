@@ -24,6 +24,7 @@ const ProfileScreen = ({ navigation }) => {
           if (!querySnapshot.empty) {
             const userData = querySnapshot.docs[0].data();
             setData(userData);
+            console.log(userData)
           } else {
             console.log('User document not found');
           }
@@ -37,6 +38,7 @@ const ProfileScreen = ({ navigation }) => {
             console.log('History document not found');
           }
           setHistoryData(result)
+          console.log(result)
         }
 
       } catch (error) {
@@ -76,6 +78,8 @@ const ProfileScreen = ({ navigation }) => {
     }
   };
 
+  const user = auth.currentUser
+
   console.log("------------        history pls        ----------------")
   console.log("historyData 2", historyData)
   return (
@@ -95,8 +99,12 @@ const ProfileScreen = ({ navigation }) => {
         {/* <FlatList data={CHAT} renderItem={renderItem} /> */}
         <View style={{ alignItems: "center" }}>
           <Image
-            source={require("../assets/profile.png")}
-            style={{ width: 100, height: 100 }}
+            source={
+              user.photoURL
+                ? { uri: user.photoURL }
+                : require("../assets/profile.png")
+            }
+            style={{ width: 100, height: 100, borderRadius: 50 }}
           />
 
           <Text style={{ fontSize: 20, fontWeight: "900" }}>{data.name}</Text>

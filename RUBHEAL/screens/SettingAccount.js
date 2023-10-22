@@ -1,9 +1,11 @@
 // import React, { useState, useEffect } from 'react';
 import React, { useEffect, useState } from "react";
 // import { AntDesign } from "@expo/vector-icons";
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Alert, Button, } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TextInput, TouchableOpacity, Alert, Button, ScrollView } from 'react-native';
 import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
-import { firebase, auth } from '../database';
+import { firebase, auth, storage } from '../database';
+import * as ImagePicker from 'expo-image-picker';
+import { uploadBytesResumable, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { collection, query, where, doc, getDoc, updateDoc, deleteDoc, } from "firebase/firestore";
 
 const SettingAccount = ({ navigation, route }) => {
@@ -15,7 +17,11 @@ const SettingAccount = ({ navigation, route }) => {
     const [address, setAddress] = useState("");
     const [addressName, setAddressName] = useState("");
     const [data, setData] = useState([]);
+    const [image, setImage] = useState(null);
+    const [isImageError, setIsImageError] = useState(false);
     const user = firebase.auth().currentUser;
+
+
     const fetchData = () => {
         const collectionRef = firebase.firestore().collection("users");
         collectionRef.get()
@@ -53,6 +59,28 @@ const SettingAccount = ({ navigation, route }) => {
         fetchData();
     }, []);
 
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log(result.assets)
+        if (result.assets == null) {
+            setIsImageError(true)
+        }
+
+        const source = { uri: result.assets[0].uri };
+
+        setImage(source);
+        if(source == ""){
+          setIsImageError(true)
+        }
+
+
+    }
 
     const handleSignOut = () => {
         auth
@@ -68,6 +96,16 @@ const SettingAccount = ({ navigation, route }) => {
     console.log("data 3 ????", data);
     const updateUser = async () => {
         console.log(id)
+
+
+        const blob = await fetch(image.uri).then((response) => response.blob());
+        const filename = Date.now() + '.jpg';
+        const imageRef = ref(storage, filename);
+
+        await uploadBytes(imageRef, blob);
+
+        const downloadURL = await getDownloadURL(imageRef);
+
         try {
             const userRef = doc(firebase.firestore(), "users", id);
             await updateDoc(userRef, {
@@ -76,7 +114,11 @@ const SettingAccount = ({ navigation, route }) => {
                 phone: phone,
                 address: address,
                 email: email,
-                addressName: addressName
+                addressName: addressName,
+                photoURL: downloadURL
+            });
+            await user.updateProfile({
+                photoURL: downloadURL,
             });
             console.log("อัปเดตข้อมูลเรียบร้อยแล้ว");
             Alert.alert(
@@ -95,50 +137,62 @@ const SettingAccount = ({ navigation, route }) => {
             console.error("เกิดข้อผิดพลาดในการอัปเดตข้อมูล:", e);
         }
     };
-
+    console.log(user.photoURL)
     return (
-        <View style={styles.container}>
-            {/* <Text style={[styles.title, { marginBottom: 10 }]}> Setting </Text> */}
+        <ScrollView>
+            <View style={styles.container}>
+                {/* <Text style={[styles.title, { marginBottom: 10 }]}> Setting </Text> */}
 
-            <TextInput style={styles.input} placeholder='Username'
-                value={name}
-                onChangeText={(val) => setName(val)} />
+                <TextInput style={styles.input} placeholder='Username'
+                    value={name}
+                    onChangeText={(val) => setName(val)} />
 
-            <TextInput
-                multiline
-                // numberOfLines={4}
-                style={[styles.input,]}
-                placeholder='Email'
-                value={email}
-                onChangeText={(val) => setEmail(val)}
-                editable={false} />
+                <TextInput
+                    multiline
+                    // numberOfLines={4}
+                    style={[styles.input,]}
+                    placeholder='Email'
+                    value={email}
+                    onChangeText={(val) => setEmail(val)}
+                    editable={false} />
 
-            <TextInput style={styles.input} placeholder='phone number' keyboardType='numeric'
-                value={phone}
-                onChangeText={(val) => setPhone(val)} />
+                <TextInput style={styles.input} placeholder='phone number' keyboardType='numeric'
+                    value={phone}
+                    onChangeText={(val) => setPhone(val)} />
 
 
-            <Text style={[styles.label, { textAlign: 'center', marginTop: 20 }]}>Address</Text>
+                <Text style={[styles.label, { textAlign: 'center', marginTop: 20 }]}>Address</Text>
 
-            <TextInput style={styles.input} placeholder='Name'
-                value={addressName}
-                onChangeText={(val) => setAddressName(val)} />
-            <TextInput
-                multiline
-                numberOfLines={4}
-                style={styles.input}
-                placeholder='Address'
-                value={address}
-                onChangeText={(val) => setAddress(val)} />
+                <TextInput style={styles.input} placeholder='Name'
+                    value={addressName}
+                    onChangeText={(val) => setAddressName(val)} />
+                <TextInput
+                    multiline
+                    numberOfLines={4}
+                    style={styles.input}
+                    placeholder='Address'
+                    value={address}
+                    onChangeText={(val) => setAddress(val)} />
 
-            <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%' }]} onPress={updateUser}>
-                <Text style={styles.buttonText}>CONFIRM</Text>
-            </TouchableOpacity>
+                <Text style={styles.label}> Image Profile </Text>
+                <ImageBackground
+                    source={image ? { uri: image.uri } : require('../assets/upload.png')}
+                    style={styles.backgroundImage}
+                >
+                    <TouchableOpacity style={[styles.selectImage, { marginTop: 20, marginBottom: 10 }]}
+                        onPress={pickImage}>
 
-            <View style={{ width: "100%", position: 'absolute', bottom: 0 }}>
-                <Button title="LogOut" color={"#c8b8ff"} onPress={handleSignOut} />
+                    </TouchableOpacity>
+                </ImageBackground>
+                <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%' }]} onPress={updateUser}>
+                    <Text style={styles.buttonText}>CONFIRM</Text>
+                </TouchableOpacity>
+
+                <View style={{ width: "100%", bottom: 0 }}>
+                    <Button title="LogOut" color={"#c8b8ff"} onPress={handleSignOut} />
+                </View>
             </View>
-        </View>
+        </ScrollView>
     );
 }
 
@@ -255,6 +309,20 @@ const styles = StyleSheet.create({
         height: 40,
         fontSize: 16,
         fontFamily: 'Anuphan'
+    },
+    selectImage: {
+        padding: 50,
+        marginBottom: 15,
+        justifyContent: "center",
+        // width: responsiveWidth(30),
+        // height: responsiveHeight(30)
+    },
+    backgroundImage: {
+        flex: 1,
+        width: responsiveWidth(80),
+        height: '100%',
+        resizeMode: 'cover',
+        justifyContent: 'center',
     },
 });
 

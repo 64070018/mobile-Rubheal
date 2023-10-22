@@ -12,7 +12,7 @@ const AdminPage = ({ navigation }) => {
 
   useEffect(() => {
     fetchData();
-    
+
   }, []);
 
 
@@ -31,7 +31,7 @@ const AdminPage = ({ navigation }) => {
 
           console.log("###INFORMATION###")
           console.log(info)
-       
+
           if (info.owner == user.uid) {
             items.push({
               key: res.id,
@@ -44,7 +44,7 @@ const AdminPage = ({ navigation }) => {
               condition: info.condition,
               image: info.image,
               category: info.category,
-              rating : info.rating
+              rating: info.rating
             });
           }
         });
@@ -111,8 +111,8 @@ const AdminPage = ({ navigation }) => {
                   amount: data.item.amount,
                   condition: data.item.condition,
                   catagory: data.item.category,
-                  image : data.item.image,
-                  rating : data.item.rating
+                  image: data.item.image,
+                  rating: data.item.rating
                 })
               }} />
             </View>
@@ -140,8 +140,12 @@ const AdminPage = ({ navigation }) => {
         {/* <FlatList data={CHAT} renderItem={renderItem} /> */}
         <View style={{ alignItems: "center" }}>
           <Image
-            source={require("../assets/profile.png")}
-            style={{ width: 100, height: 100 }}
+            source={
+              user.photoURL
+                ? { uri: user.photoURL }
+                : require("../assets/profile.png")
+            }
+            style={{ width: 100, height: 100, borderRadius: 50 }}
           />
 
           <Text style={{ fontSize: 20, fontWeight: "900" }}>User</Text>
@@ -153,11 +157,11 @@ const AdminPage = ({ navigation }) => {
           <View style={{ width: "50%" }}>
             <Button title="Setting" color={"#8667F2"} onPress={() => {
               navigation.navigate('Setting', { name: "setting" })
-            }}/>
+            }} />
           </View>
 
           <View style={{ width: "50%" }}>
-            <Button title="Swap User" color={"#8667F2"} onPress={() => {
+            <Button title="History" color={"#8667F2"} onPress={() => {
               navigation.navigate('Profile', { name: "admin" })
             }} />
 
