@@ -17,14 +17,15 @@ const CartScreen = ({ route, navigation }) => {
     const [address, setAddress] = useState('')
     const [addressName, setAddressName] = useState('')
     const [phone, setPhone] = useState('')
-    
+
     const data = {
         owner: route.params.owner,
         pic: route.params.pic,
         title: route.params.title,
         price: route.params.price,
         amount: productAmount,
-        numOrder: myRandom(5000, 100000)
+        numOrder: myRandom(5000, 100000),
+        productId: route.params.productId
     }
 
     const getData = async () => {
@@ -63,36 +64,38 @@ const CartScreen = ({ route, navigation }) => {
     const purchased = () => {
         // console.log(data.owner)
         if (!address) {
-            Alert.alert('No Address!', 'Field your address in Settings',[
-             {text: 'OK', onPress: () => navigation.navigate('HomePage')}])
+            Alert.alert('No Address!', 'Field your address in Settings', [
+                { text: 'OK', onPress: () => navigation.navigate('HomePage') }])
         } else {
-        myDate = dayjs(new Date).format('DD/MM/YYYY')
-        myTime = dayjs(new Date).format('HH:mm')
-        console.log(myDate)
-        firebase
-            .firestore()
-            .collection("purchased")
-            .add({
-                date: myDate,
-                time: myTime,
-                title: data.title,
-                total_price: total,
-                amount: data.amount,
-                owner: data.owner,
-                customer: user.email,
-                order_num: data.numOrder,
-                address: address,
-                addressName: addressName,
-                phone: phone,
-                pic: data.pic
-            })
-            .then(() => {
-                navigation.navigate('OrderDetail', {
-                    date: myDate, time: myTime, title: route.params.title, pic: route.params.pic,
-                    price: route.params.price, amount: data.amount, total: total, numOrder: data.numOrder,
-                    address: address, addressName: addressName, phone: phone, id: data.id
+            myDate = dayjs(new Date).format('DD/MM/YYYY')
+            myTime = dayjs(new Date).format('HH:mm')
+            console.log(myDate)
+            firebase
+                .firestore()
+                .collection("purchased")
+                .add({
+                    date: myDate,
+                    time: myTime,
+                    title: data.title,
+                    total_price: total,
+                    amount: data.amount,
+                    owner: data.owner,
+                    customer: user.email,
+                    order_num: data.numOrder,
+                    address: address,
+                    addressName: addressName,
+                    phone: phone,
+                    pic: data.pic,
+                    productId: route.params.productId
                 })
-            });
+                .then(() => {
+                    navigation.navigate('OrderDetail', {
+                        date: myDate, time: myTime, title: route.params.title, pic: route.params.pic,
+                        price: route.params.price, amount: data.amount, total: total, numOrder: data.numOrder,
+                        address: address, addressName: addressName, phone: phone, id: data.id,
+                        productId: route.params.productId
+                    })
+                });
         }
 
     }

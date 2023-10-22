@@ -9,10 +9,13 @@ import { collection, query, where, getDocs, addDoc, onSnapshot, orderBy } from '
 
 import { COMMENT } from "../data/dummy-data";
 import comment from '../components/comment';
+import { useSafeAreaFrame } from 'react-native-safe-area-context';
 
 const DetailScreen = ({ navigation, route }) => {
     const [addComment, setAddComment] = useState('');
     const [getComments, setComments] = useState([]);
+    const [productId, setProductId] = useState(route.params.id);
+    console.log("product id", productId)
   
     
 
@@ -76,6 +79,8 @@ const DetailScreen = ({ navigation, route }) => {
 
     for (i ; i < querySnapshotComments.size; i++){
         const commentId = querySnapshotComments.docs[i].data().ProductId;
+        setProductId(commentId)
+        console.log("comment id", commentId)
         if(route.params.id == commentId){
                 rate += querySnapshotComments.docs[i].data().rating;
                 num += 1;
@@ -281,7 +286,7 @@ const DetailScreen = ({ navigation, route }) => {
                 <Text style={{ fontSize: 20, color: 'black', fontWeight: 'bold', marginTop: 5 }}> {route.params.price} บาท</Text>
 
                 <TouchableOpacity style={[styles.button]} onPress={() => {
-                    navigation.navigate('Cart', {title:route.params.title, pic:route.params.pic, price:route.params.price, owner:route.params.owner })
+                    navigation.navigate('Cart', {title:route.params.title, pic:route.params.pic, price:route.params.price, owner:route.params.owner, productId: productId })
                     // navigation.navigate('Cart', {screen: 'Aom',params:{title:route.params.title, pic:route.params.pic, price:route.params.price}})
                 }}>
                     <Text style={styles.buttonText}>BUY</Text>
