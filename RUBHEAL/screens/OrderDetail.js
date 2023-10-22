@@ -96,7 +96,7 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
             <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
                 <Pressable style={styles.order} onPress={() => {
                     navigation.navigate('Home')}}>
-                    <Text style={styles.textbutton}>Back to Home</Text>
+                    <Text style={styles.textbutton}>BACK TO HOME</Text>
                 </Pressable>
             </View>
 
