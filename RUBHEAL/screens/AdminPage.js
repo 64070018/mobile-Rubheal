@@ -218,11 +218,11 @@ const styles = StyleSheet.create({
   navText: {
     fontSize: 30,
     fontWeight: "700",
+    fontFamily: 'Anuphan'
   },
 
   backgroundChat: {
     flex: 6,
-
     width: "100%",
   },
 
@@ -233,6 +233,7 @@ const styles = StyleSheet.create({
   iconText: {
     justifyContent: "center",
     padding: 10,
+    fontFamily: 'Anuphan'
   },
 
   contentBox: {

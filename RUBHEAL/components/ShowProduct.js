@@ -10,27 +10,27 @@ const ShowProduct = (props) => {
     // console.log("-----")
     const starIcons = [];
 
-  
+
     // Use a for loop to generate the star icons
     for (let i = 0; i < 5; i++) {
 
-        if(i < props.rating){
+        if (i < props.rating) {
             starIcons.push(
-              <AntDesign key={i} name="star" size={16} color="orange" />
-              
+                <AntDesign key={i} name="star" size={16} color="orange" />
+
             );
 
         }
 
-        else{
+        else {
             starIcons.push(
-              <AntDesign key={i} name="star" size={16} color="grey" />
+                <AntDesign key={i} name="star" size={16} color="grey" />
 
             )
         }
     }
 
-   
+
     // console.log
     return (
         <View style={{ maxWidth: '50%', minWidth: '50%' }}>
@@ -42,9 +42,15 @@ const ShowProduct = (props) => {
                         <Text style={styles.catTitle} numberOfLines={1}> {props.title}</Text>
                         <View style={{ flexDirection: 'row', marginTop: 5 }}>
                             {starIcons}
-                            <Text style={{ fontSize: 16, bottom: 0 }}> ({props.rating}) </Text>
+                            <Text style={{
+                                fontSize: 16, bottom: 0,
+                                fontFamily: 'Anuphan'
+                            }}> ({props.rating}) </Text>
                         </View>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: "black", }}> {props.price} บาท </Text>
+                        <Text style={{
+                            fontSize: 20, fontWeight: 'bold', color: "black",
+                            fontFamily: 'Anuphan'
+                        }}> {props.price} บาท </Text>
                     </View>
                 </TouchableOpacity>
             </ScrollView>
@@ -65,6 +71,7 @@ const styles = StyleSheet.create({
     catTitle: {
         fontSize: 20,
         fontWeight: 'light',
+        fontFamily: 'Anuphan'
     },
     product: {
         width: "95%",

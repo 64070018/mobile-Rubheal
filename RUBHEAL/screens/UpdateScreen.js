@@ -251,7 +251,8 @@ const styles = StyleSheet.create({
         marginLeft: '15%',
     },
     content: {
-        marginVertical: '20%'
+        marginVertical: '20%',
+        fontFamily: 'Anuphan'
     },
     logo: {
         width: responsiveWidth(40),
@@ -268,12 +269,14 @@ const styles = StyleSheet.create({
         padding: 5,
         marginBottom: 10,
         marginTop: 5,
+        fontFamily: 'Anuphan'
     },
     label: {
         fontSize: 18,
         textAlign: 'left',
         width: '80%',
-        marginTop: 10
+        marginTop: 10,
+        fontFamily: 'Anuphan'
 
     },
     title: {
@@ -281,7 +284,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         justifyContent: 'center',
         alignItems: 'center',
-        marginHorizontal: '20%'
+        marginHorizontal: '20%',
+        fontFamily: 'Anuphan'
     },
     button: {
         // backgroundColor: '#9276F2',
@@ -289,12 +293,14 @@ const styles = StyleSheet.create({
         padding: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: '20%'
+        marginLeft: '20%',
+        fontFamily: 'Anuphan'
     },
     buttonText: {
         color: 'white',
         fontWeight: 'bold',
         letterSpacing: 1,
+        fontFamily: 'Anuphan'
     },
     dropdown: {
         height: 50,
@@ -309,9 +315,11 @@ const styles = StyleSheet.create({
     },
     placeholderStyle: {
         fontSize: 16,
+        fontFamily: 'Anuphan'
     },
     selectedTextStyle: {
         fontSize: 16,
+        fontFamily: 'Anuphan'
     },
     iconStyle: {
         width: 20,
@@ -320,6 +328,7 @@ const styles = StyleSheet.create({
     inputSearchStyle: {
         height: 40,
         fontSize: 16,
+        fontFamily: 'Anuphan'
     },
     dropdown: {
         height: 50,
@@ -334,9 +343,11 @@ const styles = StyleSheet.create({
     },
     placeholderStyle: {
         fontSize: 16,
+        fontFamily: 'Anuphan'
     },
     selectedTextStyle: {
         fontSize: 16,
+        fontFamily: 'Anuphan'
     },
     iconStyle: {
         width: 20,
@@ -345,6 +356,7 @@ const styles = StyleSheet.create({
     inputSearchStyle: {
         height: 40,
         fontSize: 16,
+        fontFamily: 'Anuphan'
     },
     backgroundImage: {
         flex: 1,

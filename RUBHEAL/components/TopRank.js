@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     catTitle: {
         fontSize: 20,
         fontWeight: 'light',
+        fontFamily: 'Anuphan'
     },
     product: {
         width: "95%",

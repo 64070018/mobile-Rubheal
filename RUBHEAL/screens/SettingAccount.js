@@ -35,9 +35,9 @@ const SettingAccount = ({ navigation, route }) => {
                         setid(res.id)
                         setName(info.name)
                         setPhone(info.phone),
-                        setAddress(info.address),
-                        setEmail(info.email),
-                        setAddressName(info.addressName)
+                            setAddress(info.address),
+                            setEmail(info.email),
+                            setAddressName(info.addressName)
                     }
                 });
                 setData(items);
@@ -56,13 +56,13 @@ const SettingAccount = ({ navigation, route }) => {
 
     const handleSignOut = () => {
         auth
-          .signOut()
-          .then(() => {
-            navigation.replace("Login")
-    
-          })
-          .catch(error => alert(error.message))
-      }
+            .signOut()
+            .then(() => {
+                navigation.replace("Login")
+
+            })
+            .catch(error => alert(error.message))
+    }
 
 
     console.log("data 3 ????", data);
@@ -135,9 +135,9 @@ const SettingAccount = ({ navigation, route }) => {
                 <Text style={styles.buttonText}>CONFIRM</Text>
             </TouchableOpacity>
 
-          <View style={{ width: "100%", position: 'absolute', bottom: 0 }}>
-            <Button title="LogOut" color={"#c8b8ff"} onPress={handleSignOut} />
-          </View>
+            <View style={{ width: "100%", position: 'absolute', bottom: 0 }}>
+                <Button title="LogOut" color={"#c8b8ff"} onPress={handleSignOut} />
+            </View>
         </View>
     );
 }
@@ -165,23 +165,27 @@ const styles = StyleSheet.create({
         padding: 5,
         marginBottom: 10,
         marginTop: 5,
+        fontFamily: 'Anuphan'
     },
     label: {
         fontSize: 18,
         textAlign: 'left',
         width: '80%',
-        marginTop: 10
+        marginTop: 10,
+        fontFamily: 'Anuphan'
 
     },
     title: {
         fontSize: 30,
         fontWeight: 'bold',
+        fontFamily: 'Anuphan'
     },
     label: {
         fontSize: 20,
         fontWeight: '600',
         width: '80%',
-        marginBottom: 10
+        marginBottom: 10,
+        fontFamily: 'Anuphan'
     },
     button: {
         backgroundColor: '#9276F2',
@@ -194,6 +198,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         letterSpacing: 1,
+        fontFamily: 'Anuphan'
     },
     dropdown: {
         height: 50,
@@ -208,9 +213,11 @@ const styles = StyleSheet.create({
     },
     placeholderStyle: {
         fontSize: 16,
+        fontFamily: 'Anuphan'
     },
     selectedTextStyle: {
         fontSize: 16,
+        fontFamily: 'Anuphan'
     },
     iconStyle: {
         width: 20,
@@ -219,6 +226,7 @@ const styles = StyleSheet.create({
     inputSearchStyle: {
         height: 40,
         fontSize: 16,
+        fontFamily: 'Anuphan'
     },
     dropdown: {
         height: 50,
@@ -233,9 +241,11 @@ const styles = StyleSheet.create({
     },
     placeholderStyle: {
         fontSize: 16,
+        fontFamily: 'Anuphan'
     },
     selectedTextStyle: {
         fontSize: 16,
+        fontFamily: 'Anuphan'
     },
     iconStyle: {
         width: 20,
@@ -244,6 +254,7 @@ const styles = StyleSheet.create({
     inputSearchStyle: {
         height: 40,
         fontSize: 16,
+        fontFamily: 'Anuphan'
     },
 });
 

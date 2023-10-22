@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'light',
         textAlign: 'left',
-        lineHeight: 20
+        lineHeight: 20,
+        fontFamily: 'Anuphan'
 
     },
     account: {

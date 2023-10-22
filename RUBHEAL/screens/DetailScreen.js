@@ -15,7 +15,7 @@ const DetailScreen = ({ navigation, route }) => {
     const [addComment, setAddComment] = useState('');
     const [getComments, setComments] = useState([]);
     const [productId, setProductId] = useState(route.params.id);
-    console.log("product id", productId)
+    // console.log("product id", productId)
   
     
 
@@ -79,8 +79,6 @@ const DetailScreen = ({ navigation, route }) => {
 
     for (i ; i < querySnapshotComments.size; i++){
         const commentId = querySnapshotComments.docs[i].data().ProductId;
-        setProductId(commentId)
-        console.log("comment id", commentId)
         if(route.params.id == commentId){
                 rate += querySnapshotComments.docs[i].data().rating;
                 num += 1;
@@ -368,7 +366,8 @@ const styles = StyleSheet.create({
         fontSize: 30,
         textAlign: 'center',
         fontWeight: 'bold',
-        color: '#fff'
+        color: '#fff',
+        fontFamily: 'Anuphan'
 
     },
     input: {
@@ -380,12 +379,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#eee',
         fontSize: 16,
         height: responsiveHeight(10),
-        marginHorizontal: '5%'
+        marginHorizontal: '5%',
+        fontFamily: 'Anuphan'
     },
     title: {
         fontSize: 30,
         fontWeight: 'light',
-        textAlign: 'left'
+        textAlign: 'left',
+        fontFamily: 'Anuphan'
     },
     header: {
         paddingHorizontal: 10,
@@ -393,14 +394,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'left',
         marginTop: 20,
-        marginBottom: 10
+        marginBottom: 10,
+        fontFamily: 'Anuphan'
     },
     content: {
         paddingHorizontal: 10,
         fontSize: 16,
         fontWeight: 'light',
         textAlign: 'left',
-        lineHeight: 20
+        lineHeight: 20,
+        fontFamily: 'Anuphan'
 
     },
     account: {

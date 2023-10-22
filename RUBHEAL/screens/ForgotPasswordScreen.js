@@ -57,11 +57,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderRadius: 5,
         padding: 5,
-        marginVertical: 10
+        marginVertical: 10,
+        fontFamily: 'Anuphan'
     },
     title: {
         fontSize: 30,
         fontWeight: 'bold',
+        fontFamily: 'Anuphan'
     },
     button: {
         backgroundColor: '#9276F2',
@@ -73,6 +75,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontWeight: 'bold',
+        fontFamily: 'Anuphan'
     },
 });
 
