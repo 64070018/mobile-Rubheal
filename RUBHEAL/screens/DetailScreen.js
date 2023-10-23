@@ -281,7 +281,7 @@ const DetailScreen = ({ navigation, route }) => {
 
                     {/* <Text style={{ fontSize: 16, bottom: 0 }}> prop.item.rate (5.0) </Text> */}
                 </View>
-                <Text style={{ fontSize: 20, color: 'black', fontWeight: 'bold', marginTop: 5 }}> {route.params.price} บาท</Text>
+                <Text style={{ fontSize: 20, color: 'black', fontWeight: 'bold', marginTop: 5 }}> {route.params.price} Baht</Text>
 
                 <TouchableOpacity style={[styles.button]} onPress={() => {
                     navigation.navigate('Cart', {title:route.params.title, pic:route.params.pic, price:route.params.price, owner:route.params.owner, productId: productId })

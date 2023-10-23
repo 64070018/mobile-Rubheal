@@ -187,7 +187,7 @@ const IdentifyScreen = ({ navigation }) => {
                         )}
 
                         <Text style={styles.label}>Phone</Text>
-                        <TextInput style={styles.input} placeholder='Contract' value={values.phone} keyboardType='phone-pad'
+                        <TextInput style={styles.input} placeholder='Contact' value={values.phone} keyboardType='phone-pad'
                             onChangeText={handleChange('phone')}
                             onBlur={() => setFieldTouched('phone')} />
                         {touched.phone && errors.phone && (

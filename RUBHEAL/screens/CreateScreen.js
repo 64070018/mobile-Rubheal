@@ -176,7 +176,7 @@ const CreateScreen = ({ navigation, route }) => {
               multiline
               numberOfLines={4}
               style={[styles.input,]}
-              placeholder='Detail Product'
+              placeholder='Product Detail'
               value={values.detail}
               onChangeText={handleChange('detail')}
               onBlur={() => setFieldTouched('detail')} />
@@ -218,7 +218,7 @@ const CreateScreen = ({ navigation, route }) => {
               <View style={{flex:1}}>
 
                 <Text style={styles.label}>Amount</Text>
-                <TextInput style={styles.input} placeholder='amount' keyboardType='numeric'
+                <TextInput style={styles.input} placeholder='Amount' keyboardType='numeric'
                   value={values.amount}
                   onChangeText={handleChange('amount')}
                   onBlur={() => setFieldTouched('amount')} />
@@ -230,7 +230,7 @@ const CreateScreen = ({ navigation, route }) => {
 
             </View>
 
-            <Text style={styles.label}>Catagory</Text>
+            <Text style={styles.label}>Category</Text>
             <Dropdown
               style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
               placeholderStyle={styles.placeholderStyle}
@@ -240,7 +240,7 @@ const CreateScreen = ({ navigation, route }) => {
               maxHeight={300}
               labelField="label"
               valueField="value"
-              placeholder="select catagory"
+              placeholder="Select category"
               value={values.category}
 
 
