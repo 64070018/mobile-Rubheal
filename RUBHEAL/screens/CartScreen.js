@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, Button, SafeAreaView, FlatList, ScrollView, Pressable, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, SafeAreaView, FlatList, ScrollView, Pressable, Alert, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
@@ -209,9 +209,9 @@ const CartScreen = ({ route, navigation }) => {
                 </View>
             </View>
             <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
-                <Pressable style={styles.order} onPress={purchased}>
+                <TouchableOpacity style={styles.order} onPress={purchased}>
                     <Text style={styles.textbutton}>PLACE ORDER</Text>
-                </Pressable>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
 

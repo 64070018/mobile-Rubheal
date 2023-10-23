@@ -1,6 +1,6 @@
 import React from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, Button, SafeAreaView, FlatList, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, SafeAreaView, FlatList, ScrollView, Pressable, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
@@ -94,10 +94,10 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
 
             </ScrollView>
             <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
-                <Pressable style={styles.order} onPress={() => {
+                <TouchableOpacity style={styles.order} onPress={() => {
                     navigation.navigate('Home')}}>
                     <Text style={styles.textbutton}>BACK TO HOME</Text>
-                </Pressable>
+                </TouchableOpacity>
             </View>
 
         </SafeAreaView>
