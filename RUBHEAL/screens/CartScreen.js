@@ -65,7 +65,8 @@ const CartScreen = ({ route, navigation }) => {
         // console.log(data.owner)
         if (!address) {
             Alert.alert('No Address!', 'Field your address in Settings', [
-                { text: 'OK', onPress: () => navigation.navigate('HomePage') }])
+                { text: 'OK', onPress: () => navigation.navigate('HomePage') },
+            ])
         } else {
             myDate = dayjs(new Date).format('DD/MM/YYYY')
             myTime = dayjs(new Date).format('HH:mm')
@@ -106,7 +107,12 @@ const CartScreen = ({ route, navigation }) => {
                 {
                     text: 'yes',
                     onPress: () => navigation.navigate('Home')
-                }
+                },
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                },
             ])
         } else {
             setproductAmount(data.amount - 1)
