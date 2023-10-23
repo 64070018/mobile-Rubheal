@@ -24,10 +24,10 @@ const ForgotPasswordScreen = () => {
             <Text style={styles.title}> Change Password {'\n'}</Text>
             <TextInput style={styles.input} placeholder='E-mail' keyboardType='email-address' value={email}
                 onChangeText={text => setEmail(text)} />
-            <TouchableOpacity style={[styles.button, { margin: 10, width: '40%' }]} onPress={ChangePassword}>
+            <TouchableOpacity style={[styles.button, { margin: 10, width: '40%', backgroundColor : email == "" ? "#666" : "#9276F2" }]} disabled={email == ""} onPress={ChangePassword}>
                 <Text style={styles.buttonText}>Change Password</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, { margin: 10, width: '40%' }]} onPress={() => navigation.navigate("Login")}>
+            <TouchableOpacity style={[styles.button, { margin: 10, width: '40%', backgroundColor : "#9276F2" }]}  onPress={() => navigation.navigate("Login")}>
                 <Text style={styles.buttonText}>Back</Text>
             </TouchableOpacity>
             <View style={{ flexDirection: 'row', fontSize: 12, }}>
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Anuphan'
     },
     button: {
-        backgroundColor: '#9276F2',
+        // backgroundColor: '#9276F2',
         borderRadius: 50,
         padding: 10,
         alignItems: 'center',

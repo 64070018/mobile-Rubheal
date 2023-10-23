@@ -23,7 +23,6 @@ const PageProductForAdmin = ({ navigation }) => {
     const querySnapshot = await getDocs(q);
     // console.log(querySnapshot.size)
     const purchasedData = [];
-    const purchasedAll = [];
     var i;
 
     for (i = 0; i < querySnapshot.size; i++) {
@@ -41,6 +40,7 @@ const PageProductForAdmin = ({ navigation }) => {
     console.log(purchasedData)
    
     const countByProductId = {};
+    const saleTotalPrice = {};
 
     // Process the data to accumulate counts
     purchasedData.forEach((item) => {
@@ -50,18 +50,41 @@ const PageProductForAdmin = ({ navigation }) => {
         countByProductId[productId] = (countByProductId[productId] || 0) + item.amount;
       }
     });
+    purchasedData.forEach((item) => {
+      const productId = item.productId;
+      if (productId) {
+        // If productId is already in the countByProductId object, add the amount to the existing count; otherwise, initialize the count.
+        saleTotalPrice[productId] = (saleTotalPrice[productId] || 0) + item.total_price;
+      }
+    });
+
+
     console.log("####count####")
     console.log(countByProductId)
+
+    console.log("###price###")
+    console.log(saleTotalPrice)
 
     const countArray = Object.keys(countByProductId).map((productId) => ({
       productId,
       count: countByProductId[productId],
     }));
+
+
+    const saleArray = Object.keys(saleTotalPrice).map((productId) => ({
+      productId,
+      sale : saleTotalPrice[productId],
+    }));
+
+  
+
     
     console.log(countArray);
-
+    
+    console.log(saleArray)
 
     const uniqueProducts = {};
+  
 
     // Filter the data to keep only the unique products
     const filteredData = purchasedData.filter((item) => {
@@ -77,8 +100,8 @@ const PageProductForAdmin = ({ navigation }) => {
 
 
 
-    console.log("###count###")
-    console.log(filteredData)
+    // console.log("###count###")
+    // console.log(filteredData)
 
     // console.log("####Data###")
     // console.log(filteredData[0].count)
@@ -86,26 +109,19 @@ const PageProductForAdmin = ({ navigation }) => {
 
    for(var i = 0; i < filteredData.length; i++){
       filteredData[i].allcount = countArray[i].count
+      filteredData[i].sale_total = saleArray[i].sale
    }
-   console.log("###filter##")
-   console.log(filteredData)
+  //  console.log("###filter##")
+  //  console.log(filteredData)
 
    setProductData(filteredData)
-
-
-
-    
-
-
-
-
-
-
   }
 
 
   useEffect(() => {
     AllData()
+
+
 
   }, [])
 
@@ -135,6 +151,7 @@ const PageProductForAdmin = ({ navigation }) => {
           <View style={{ margin: 10 }}>
             <Text>{itemData.item.title}</Text>
             <Text>ยอดฝากซื้อ : {itemData.item.allcount} </Text>
+            <Text>ยอดขาย : {itemData.item.sale_total} </Text>
           </View>
         </View>
 
