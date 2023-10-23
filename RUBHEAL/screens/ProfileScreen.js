@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Button, FlatList, } from "react-native";
 import React, { useEffect, useState } from 'react';
 import { firebase, auth, firestore } from '../database';
+import { useFonts } from 'expo-font';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
 import History from "../components/History";
@@ -49,6 +50,12 @@ const ProfileScreen = ({ navigation }) => {
     fetchData();
   }, []);
 
+  const [loaded] = useFonts({
+    Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
+  });
+  if (!loaded) {
+    return null;
+  }
 
   const renderItem = (itemData) => {
     console.log("itemdata", itemData)
@@ -71,7 +78,8 @@ const ProfileScreen = ({ navigation }) => {
             justifyContent: 'center',
             fontSize: 20,
             marginTop: responsiveHeight(10),
-            color: '#999'
+            color: '#999',
+            fontFamily: 'Anuphan'
           }}> No purchase history </Text>
         </View>
       )
@@ -113,20 +121,23 @@ const ProfileScreen = ({ navigation }) => {
 
         <View style={{ flexDirection: 'col', marginTop: 20, width: "100%" }}>
           <View style={{ width: "100%" }}>
-            <Button title="Saler" color={"#8667F2"} onPress={() => {
-              console.log(data)
+            <TouchableOpacity style={styles.button} onPress={() => {
               if (data.position == 'user') {
                 navigation.navigate('Saler', { name: "Saler" })
               } else {
                 navigation.navigate('Admin', { name: "admin" })
               }
-            }} />
+            }} >
+              <Text style={styles.textbutton}>Saler</Text>
+            </TouchableOpacity>
           </View>
 
-          <View style={{ width: "100%" }}>
-            <Button title="Setting" color={"#8667F2"} onPress={() => {
+          <View style={{ width: "100%", marginVertical: 5 }}>
+            <TouchableOpacity style={styles.button} onPress={() => {
               navigation.navigate('Setting', { name: "setting" })
-            }} />
+            }} >
+              <Text style={styles.textbutton}>Setting</Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -193,6 +204,19 @@ const styles = StyleSheet.create({
   iconText: {
     justifyContent: "center",
     padding: 10,
+  },
+  button: {
+    backgroundColor: "#9276F2",
+    width: "100%",
+    height: 45,
+    justifyContent: "center",
+    alignContent: "center"
+  },
+  textbutton: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: 'black',
+    textAlign: 'center'
   },
 });
 
