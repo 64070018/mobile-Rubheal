@@ -8,8 +8,9 @@ const History = (props) => {
             style={{
                 flexDirection: "row",
                 padding: 10,
-                margin: 1,
-                backgroundColor: '#fff',
+                margin: 10,
+                backgroundColor: '#F6F7F9',
+                borderRadius: 10,
                 shadowColor: "#000",
                 shadowOffset: {
                     width: 0,
