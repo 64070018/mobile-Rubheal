@@ -105,8 +105,8 @@ function Rank() {
     return (
         <CartNavigator.Navigator initialRouteName="Rank">
             <CartNavigator.Screen name="Rank" component={RankScreen} />
-            <CartNavigator.Screen name="Detail" component={DetailScreen} />
-            <CartNavigator.Screen name="Cart" component={CartScreen} />
+            {/* <CartNavigator.Screen name="Detail" component={DetailScreen} /> */}
+            {/* <CartNavigator.Screen name="Cart" component={CartScreen} /> */}
             <CartNavigator.Screen name="OrderDetail" component={OrderDetail} />
             <CartNavigator.Screen name="customerBuy" component={CustomerBuyProduct} />
         </CartNavigator.Navigator>
@@ -137,6 +137,7 @@ function LoginRegister() {
             <LoginNavigator.Screen name="HomePage" component={TabNavigator} options={{ headerShown: false }} />
             <LoginNavigator.Screen name="OrderDetail" component={OrderDetail} />
             <LoginNavigator.Screen name="Cart" component={CartScreen} />
+            <LoginNavigator.Screen name="Rank" component={RankScreen} />
         </LoginNavigator.Navigator>
     )
 

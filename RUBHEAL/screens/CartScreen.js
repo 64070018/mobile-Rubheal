@@ -59,7 +59,7 @@ const CartScreen = ({ route, navigation }) => {
     }
 
     const cal_total = data.price * data.amount
-    const total = parseFloat(cal_total) + 24
+    const total = parseFloat(cal_total) + 50
 
     const purchased = () => {
         // console.log(data.owner)
@@ -171,7 +171,7 @@ const CartScreen = ({ route, navigation }) => {
                     <View style={styles.seperator} />
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Shipping Fee</Text>
-                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>24 Baht</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>50 Baht</Text>
                     </View>
                     <View style={styles.seperator} />
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>

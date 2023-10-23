@@ -50,7 +50,7 @@ const ShowProduct = (props) => {
                         <Text style={{
                             fontSize: 20, fontWeight: 'bold', color: "black",
                             fontFamily: 'Anuphan'
-                        }}> {props.price} บาท </Text>
+                        }}> {props.price} Baht </Text>
                     </View>
                 </TouchableOpacity>
             </ScrollView>

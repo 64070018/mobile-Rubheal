@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { CHAT } from "../data/data.js";
 import { firebase } from "../database.js";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { getDoc, query, where } from "firebase/firestore";
 
 
 
@@ -19,6 +20,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 
 const MessageScreen = ({ navigation }) => {
+  const [email, setEmail] = useState('')
   const UID = firebase.auth().currentUser.uid;
   // console.log(UID);
 
@@ -26,6 +28,36 @@ const MessageScreen = ({ navigation }) => {
   const [users] = useCollectionData(userRef);
   // console.log("users")
   // console.log(users)
+
+  const getMessage = async () => {
+    users.forEach(async (user) => {
+      const message = await firebase.firestore().collection('messages').where('reciever', '==', user.email).get()
+      console.log('user', '=>', user)
+      console.log('mes', '=>', message.docs)
+      // message.forEach((mes) => {
+      //   console.log('mes', '=>', mes)
+      // })
+      // const q = query(messagesRef, where('email', '==', user.email))
+      // const result = await getDoc(q)
+      // console.log(user)
+    })
+  }
+  useEffect(() => {
+    getMessage()
+  })
+
+//   const getData = async () => {
+//     const users = await firebase.firestore().collection('users').where('email', '==', user.email).get();
+//     // const user_id = await firebase.firestore().collection('users').where('email', '==', user.email).get();
+//     console.log('aaaaaaaaaaaaaaaaaaaaaa')
+//     users.forEach((doc) => {
+//         // doc.data() is never undefined for query doc snapshots
+//         setAddress(doc.data().address)
+//         setAddressName(doc.data().addressName)
+//         setPhone(doc.data().phone)
+//         console.log(doc.id, " => ", docs.data());
+//     });
+// }
 
   // const real_user = users.filter((item) => item.email != firebase.auth().currentUser.email)
   // console.log(real_user)
@@ -53,7 +85,7 @@ const MessageScreen = ({ navigation }) => {
 
 
   const renderItem = (itemData) => {
-    console.log(itemData)
+    // console.log(itemData)
     return (
       <TouchableOpacity onPress={() => {
         navigation.navigate("Chat", { email: itemData.item.email })
@@ -71,7 +103,7 @@ const MessageScreen = ({ navigation }) => {
           </View>
           <View style={{ flex: 3, padding: 10 }}>
             <Text style={{ marginBottom: 10, fontWeight: "700", fontSize: 16 }}>{itemData.item.name}</Text>
-            {/* <Text style={{ marginBottom: 10, color: "#242424" }}>{itemData.item.message}</Text> */}
+            {/* <Text style={{ marginBottom: 10, color: "#242424" }}>{getMessage(itemData.item.email)}</Text> */}
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
@@ -79,10 +111,10 @@ const MessageScreen = ({ navigation }) => {
               {/* <View style={{ flexDirection: "row" }}>
                 <Text>{itemData.item.countChat}</Text>
 
-                <Image
-                  source={require("../assets/icons8-message-50.png")}
-                  style={{ width: 20, height: 20, marginLeft: 5 }}
-                />
+                // <Image
+                //   source={require("../assets/icons8-message-50.png")}
+                //   style={{ width: 20, height: 20, marginLeft: 5 }}
+                // />
               </View> */}
             </View>
           </View>

@@ -35,7 +35,7 @@ const TopTank = (props) => {
                     {starIcons}
                         <Text style={{ fontSize: 16, bottom: 0 }}> {props.rating} </Text>
                     </View>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: "black", }}> {props.price} บาท </Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: "black", }}> {props.price} Baht </Text>
                 </View>
             </TouchableOpacity>
         </ScrollView>
