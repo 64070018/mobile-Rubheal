@@ -2,52 +2,51 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Button, Fl
 import React, { useEffect, useState } from 'react';
 import { firebase, auth, firestore } from '../database';
 import { useFonts } from 'expo-font';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, onSnapshot } from 'firebase/firestore';
 import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
 import History from "../components/History";
 
 const ProfileScreen = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [historyData, setHistoryData] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Check if the user is authenticated
         if (auth.currentUser) {
           const userEmail = auth.currentUser.email;
-          // Create a query to find the user document with a specific email
           const q = query(collection(firebase.firestore(), 'users'), where('email', '==', userEmail));
-          // const history = query(collection(firebase.firestore(), 'purchased'));
           const history = query(collection(firebase.firestore(), 'purchased'), where('customer', '==', userEmail));
-          const querySnapshot = await getDocs(q);
-          const historySnapshot = await getDocs(history);
-          // profile
-          if (!querySnapshot.empty) {
+          const userDataRef = onSnapshot(q, (querySnapshot) => {
             const userData = querySnapshot.docs[0].data();
             setData(userData);
-            console.log(userData)
-          } else {
-            console.log('User document not found');
-          }
-          // history
-          const result = []
-          if (!historySnapshot.empty) {
-            for (const history of historySnapshot.docs) {
-              result.push(history.data())
-            }
-          } else {
-            console.log('History document not found');
-          }
-          setHistoryData(result)
-          console.log(result)
-        }
+          });
 
+          const historyDataRef = onSnapshot(history, (historySnapshot) => {
+            const result = [];
+            historySnapshot.forEach((history) => {
+              result.push(history.data());
+            });
+            setHistoryData(result);
+          });
+
+          return () => {
+            // Unsubscribe from listeners when component unmounts
+            userDataRef();
+            historyDataRef();
+          };
+        }
       } catch (error) {
         console.error('Error fetching data from Firestore:', error);
       }
     };
 
-    fetchData();
+    const unsubscribe = fetchData();
+
+    return () => {
+      // Unsubscribe from the initial fetchData listener when component unmounts
+      unsubscribe();
+    };
   }, []);
 
   const [loaded] = useFonts({
