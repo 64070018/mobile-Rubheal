@@ -185,7 +185,7 @@ const IdentifyScreen = ({ navigation }) => {
                         )}
 
                         <Text style={styles.label}>Address</Text>
-                        <TextInput style={styles.input} value={values.address} placeholder='Address' keyboardType='phone-pad'
+                        <TextInput style={styles.input} value={values.address} placeholder='Address' 
                             onChangeText={handleChange('address')}
                             onBlur={() => setFieldTouched('address')} />
                         {touched.address && errors.address && (
@@ -284,7 +284,8 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         letterSpacing: 1,
-        fontSize: 20
+        fontSize: 20,
+        fontFamily: 'Anuphan'
     },
     backgroundImage: {
         flex: 1,
