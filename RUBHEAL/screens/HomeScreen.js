@@ -17,6 +17,8 @@ const HomeScreen = ({ navigation, route }, props) => {
   const [categoryData, setCategoryData] = useState("");
   const [cate, setCate] = useState("");
   const [searchText, setSearchText] = useState('');
+
+  console.log("zxcv", categoryData)
   
 
 
@@ -49,6 +51,7 @@ const HomeScreen = ({ navigation, route }, props) => {
           rating: dataPro.rating,
           conditon: dataPro.condition,
           rating: dataPro.rating,
+          mail: dataPro.mail
         }
 
 
@@ -73,7 +76,8 @@ const HomeScreen = ({ navigation, route }, props) => {
           price: dataPro.price,
           rating: dataPro.rating,
           conditon: dataPro.condition,
-          rating: dataPro.rating
+          rating: dataPro.rating,
+          mail: dataPro.mail
 
         }
 
@@ -216,7 +220,8 @@ const HomeScreen = ({ navigation, route }, props) => {
           price: dataPro.price,
           rating: dataPro.rating,
           condition: dataPro.condition,
-          owner: dataPro.owner
+          owner: dataPro.owner,
+          mail: dataPro.mail
         };
         if (dataPro.category === cate) {
           productData.push(dataAll);
@@ -268,7 +273,7 @@ const HomeScreen = ({ navigation, route }, props) => {
         
         onSelectProduct={() => {
           // console.log(itemData.item)
-          navigation.navigate("Detail", { title: itemData.item.name, pic: itemData.item.image, detail: itemData.item.detail, policy: itemData.item.condition, price: itemData.item.price, id: itemData.item.id, rating : itemData.item.rating, owner: itemData.item.owner}, setCate(""));
+          navigation.navigate("Detail", { title: itemData.item.name, pic: itemData.item.image, detail: itemData.item.detail, policy: itemData.item.condition, price: itemData.item.price, id: itemData.item.id, rating : itemData.item.rating, owner: itemData.item.owner, mail: itemData.item.mail}, setCate(""));
         }}
       />
     );

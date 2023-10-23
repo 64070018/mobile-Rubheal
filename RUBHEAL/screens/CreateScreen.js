@@ -60,8 +60,6 @@ const CreateScreen = ({ navigation, route }) => {
 
 
 
-
-
   // เก็บ owner in product table
   const createProduct = async (name, detail, price, amount, condition, category) => {
     console.log(category)
@@ -85,7 +83,8 @@ const CreateScreen = ({ navigation, route }) => {
         detail: detail,
         image: downloadURL,
         owner: user.uid,
-        rating: 0
+        rating: 0,
+        mail: user.email
       })
       .then(() => {
         setImage(null);

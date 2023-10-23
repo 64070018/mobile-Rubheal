@@ -19,6 +19,7 @@ const CartScreen = ({ route, navigation }) => {
     const [addressName, setAddressName] = useState('');
     const [phone, setPhone] = useState('');
     const [amount, setAmount] = useState('');
+    const [productData, setProductData] = useState([]);
 
     const data = {
         owner: route.params.owner,
@@ -30,25 +31,41 @@ const CartScreen = ({ route, navigation }) => {
         productId: route.params.productId
     }
 
+    const updateProduct = (productId, updatedData) => {
+        const productRef = firebase.firestore().collection('products').doc(productId);
+        // Use the update method to update the document with the new data
+        productRef.set(updatedData)
+            .then(() => {
+                console.log('Product updated successfully.');
+            })
+            .catch((error) => {
+                console.error('Error updating product:', error);
+            });
+    };
+
     const getData = async () => {
         const users = await firebase.firestore().collection('users').where('email', '==', user.email).get();
         const product = doc(firebase.firestore(), "products", route.params.productId)
         const docProductSnapshot = await getDoc(product)
+        setProductData(docProductSnapshot.data())
         setAmount(docProductSnapshot.data().amount)
+        // console.log("datadatadatadata", productData)
 
 
-        console.log('aaaaaaaaaaaaaaaaaaaaaa')
+        // console.log('aaaaaaaaaaaaaaaaaaaaaa')
         users.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
             setAddress(doc.data().address)
             setAddressName(doc.data().addressName)
             setPhone(doc.data().phone)
-            console.log(doc.id, " => ", doc.data());
+            // console.log(doc.id, " => ", doc.data());
         });
     }
     useEffect(() => {
         getData()
     })
+
+    // console.log("datadatadata", productData)
 
     const [loaded] = useFonts({
         Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
@@ -81,6 +98,18 @@ const CartScreen = ({ route, navigation }) => {
                 },
                 {
                     text: 'OK', onPress: () => {
+                        // data.amount = จน.ที่คนซื้อ
+                        updateProduct(route.params.productId, {
+                            name: productData.name,
+                            price: productData.price,
+                            detail: productData.detail,
+                            amount: productData.amount - data.amount,
+                            condition: productData.condition,
+                            category: productData.category,
+                            owner: productData.owner,
+                            image: productData.image,
+                            rating: productData.rating
+                        });
                         myDate = dayjs(new Date).format('DD/MM/YYYY')
                         myTime = dayjs(new Date).format('HH:mm')
                         console.log(myDate)
