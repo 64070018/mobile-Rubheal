@@ -38,8 +38,8 @@ const UpdateScreen = (props) => {
         });
 
         const source = { uri: result.assets[0].uri };
-        
-    
+
+
 
 
         const blob = await fetch(source.uri).then((response) => response.blob());
@@ -49,12 +49,12 @@ const UpdateScreen = (props) => {
         await uploadBytes(imageRef, blob);
 
         const downloadURL = await getDownloadURL(imageRef);
-    
+
 
         setImage(downloadURL)
         setFileImage(downloadURL)
 
-        
+
 
 
 
@@ -88,25 +88,13 @@ const UpdateScreen = (props) => {
 
     const productId = data.id;
     console.log(productId)
-    // const updatedData = {
-    //     name: name,
-    //     price: price,
-    //     detail: detail,
-    //     amount: amount,
-    //     condition: condition,
-    //     category: category,
-    //     owner: user.uid,
-    //     image: "https://picsum.photos/200"
-
-    // };
-
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('Name is required'),
         detail: Yup.string().required('Detail is required'),
         price: Yup.number().typeError('Price must be a number') // Custom type error message
-        .positive('Price must be a positive number').required("Please Enter your price"),
+            .positive('Price must be a positive number').required("Please Enter your price"),
         amount: Yup.number().typeError('Price must be a number') // Custom type error message
-        .positive('Price must be a positive number').required("Please Enter your price"),
+            .positive('Price must be a positive number').required("Please Enter your price"),
         condition: Yup.string().required('Condition is required'),
     });
 
@@ -117,7 +105,7 @@ const UpdateScreen = (props) => {
     return (
 
 
-        <ScrollView scrollVerticalIndicatorInsets={false} style={styles.container}>
+        <ScrollView scrollVerticalIndicatorInsets={false}>
             <Formik
                 initialValues={{
                     name: name,
@@ -131,12 +119,12 @@ const UpdateScreen = (props) => {
                     console.log("###IMAGE###")
                     console.log(fileImage)
 
-                    if(fileImage === null){
+                    if (fileImage === null) {
                         setFileImage(data.image)
                         console.log(fileImage)
                     }
 
-                    if(fileImage === null){
+                    if (fileImage === null) {
                         updateProduct(productId, {
                             name: values.name,
                             price: values.price,
@@ -146,11 +134,11 @@ const UpdateScreen = (props) => {
                             category: category,
                             owner: user.uid,
                             image: data.image,
-                            rating : rating
+                            rating: rating
                         });
                     }
 
-                    else{
+                    else {
                         updateProduct(productId, {
                             name: values.name,
                             price: values.price,
@@ -160,17 +148,17 @@ const UpdateScreen = (props) => {
                             category: category,
                             owner: user.uid,
                             image: fileImage,
-                            rating : rating
+                            rating: rating
                         });
                     }
 
                     // Handle form submission here, e.g., call the updateProduct function
-                   
+
                     setSubmitting(false);
                 }}
             >
                 {({ values, handleChange, handleSubmit, errors, touched, setFieldTouched, isValid }) => (
-                    <View style={styles.content}>
+                    <View style={styles.container}>
                         {/* <Text style={styles.title}> Update {'\n'}</Text> */}
 
                         <Text style={styles.label}>Name </Text>
@@ -193,17 +181,6 @@ const UpdateScreen = (props) => {
                             <Text style={{ color: 'red' }}>{errors.detail}</Text>
                         )}
 
-                        <Text style={styles.label}>Price</Text>
-                        <TextInput style={styles.input} value={values.price} keyboardType='numeric' onBlur={() => setFieldTouched('price')} onChangeText={handleChange('price')} />
-                        {touched.price && errors.price && (
-                            <Text style={{ color: 'red' }}>{errors.price}</Text>
-                        )}
-
-                        <Text style={styles.label}>Amount</Text>
-                        <TextInput style={styles.input} value={values.amount} keyboardType='numeric' onBlur={() => setFieldTouched('amount')} onChangeText={handleChange('amount')} />
-                        {touched.amount && errors.amount && (
-                            <Text style={{ color: 'red' }}>{errors.amount}</Text>
-                        )}
 
                         <Text style={styles.label}>Condition</Text>
                         <TextInput
@@ -218,7 +195,33 @@ const UpdateScreen = (props) => {
                         {touched.condition && errors.condition && (
                             <Text style={{ color: 'red' }}>{errors.condition}</Text>
                         )}
-                        <Text style={styles.label}>Catagory {category}</Text>
+
+                        <View style={{ flexDirection: 'row', width: '80%' }}>
+                            <View style={{ flex: 1 }}>
+
+                                <Text style={styles.label}>Price</Text>
+                                <TextInput style={styles.input} value={values.price} keyboardType='numeric' onBlur={() => setFieldTouched('price')} onChangeText={handleChange('price')} />
+                                {touched.price && errors.price && (
+                                    <Text style={{ color: 'red' }}>{errors.price}</Text>
+                                )}
+
+                            </View>
+                            <View style={{ flex: 1 }}>
+
+                                <Text style={styles.label}>Amount</Text>
+                                <TextInput style={styles.input} value={values.amount} keyboardType='numeric' onBlur={() => setFieldTouched('amount')} onChangeText={handleChange('amount')} />
+                                {touched.amount && errors.amount && (
+                                    <Text style={{ color: 'red' }}>{errors.amount}</Text>
+                                )}
+                            </View>
+                        </View>
+
+
+                        <Text style={styles.label}>Catagory </Text>
+                        <Text style={[styles.label, { color: '#aaa', textAlign: 'center', marginBottom: 10 }]}>{category}</Text>
+
+
+                        <Text style={styles.label}>Image Product {'\n'} </Text>
                         <ImageBackground
                             source={image ? { uri: image } : require('../assets/upload.png')}
                             style={styles.backgroundImage}
@@ -230,7 +233,7 @@ const UpdateScreen = (props) => {
                             </TouchableOpacity>
                         </ImageBackground>
 
-                        <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%', backgroundColor : !isValid ? '#666' : '#9276F2', }]} disabled={!isValid} onPress={handleSubmit}>
+                        <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%', backgroundColor: !isValid ? '#666' : '#9276F2', }]} disabled={!isValid} onPress={handleSubmit}>
                             <Text style={styles.buttonText}>CONFIRM</Text>
                         </TouchableOpacity>
                     </View>
@@ -246,9 +249,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        // alignItems: 'center',
-        // justifyContent: 'center',
-        marginLeft: '15%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingLeft: 10,
+        paddingBottom: 20
     },
     content: {
         marginVertical: '20%',
@@ -261,22 +265,34 @@ const styles = StyleSheet.create({
     },
     input: {
         fontSize: 16,
-        borderBottomColor: "#262B46",
-        backgroundColor: '#eee',
+        borderColor: "#262B46",
+        backgroundColor: '#fff',
         width: "80%",
-        borderBottomWidth: 2,
+        borderWidth: 1,
         borderRadius: 5,
         padding: 5,
+        paddingLeft: 10,
         marginBottom: 10,
         marginTop: 5,
-        fontFamily: 'Anuphan'
+        fontFamily: 'Anuphan',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
+
+        elevation: 2,
     },
     label: {
         fontSize: 18,
         textAlign: 'left',
         width: '80%',
         marginTop: 10,
-        fontFamily: 'Anuphan'
+        fontFamily: 'Anuphan',
+        marginBottom: 5,
+        marginTop: 20,
 
     },
     title: {
@@ -293,7 +309,7 @@ const styles = StyleSheet.create({
         padding: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: '20%',
+        // marginLeft: '20%',
         fontFamily: 'Anuphan'
     },
     buttonText: {
@@ -358,19 +374,17 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'Anuphan'
     },
+    selectImage: {
+        padding: 50,
+        marginBottom: 15,
+        justifyContent: "center",
+    },
     backgroundImage: {
         flex: 1,
         width: responsiveWidth(80),
         height: '100%',
         resizeMode: 'cover',
         justifyContent: 'center',
-    },
-    selectImage: {
-        // borderWidth: 2,
-        // borderRadius: 10,
-        padding: 50,
-        marginBottom: 15,
-        justifyContent: "center",
     },
 });
 

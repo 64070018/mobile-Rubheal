@@ -8,7 +8,17 @@ const History = (props) => {
             style={{
                 flexDirection: "row",
                 padding: 10,
-                margin: 10,
+                margin: 1,
+                backgroundColor: '#fff',
+                shadowColor: "#000",
+                shadowOffset: {
+                    width: 0,
+                    height: 1,
+                },
+                shadowOpacity: 0.20,
+                shadowRadius: 1.41,
+                
+                elevation: 2,
             }}
         >
             <Image
@@ -18,8 +28,8 @@ const History = (props) => {
 
             <View style={{ flex: 1, padding: 10 }}>
                 <Text style={styles.text}>{props.title}</Text>
-                <Text style={styles.text}>ราคาสินค้า :  {props.price} </Text>
-                <Text style={styles.text}>ซื้อเมื่อ :  {props.date} </Text>
+                <Text style={styles.text}>Total :  {props.price} </Text>
+                <Text style={styles.text}>Date :  {props.date} </Text>
             </View>
         </View>
 

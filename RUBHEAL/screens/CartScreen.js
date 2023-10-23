@@ -6,17 +6,19 @@ import { Feather } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { firebase, config, storage } from '../database';
-import { collection, query, where, getDocs, QuerySnapshot, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, getDocs, QuerySnapshot, onSnapshot, doc, getDoc } from 'firebase/firestore';
 import dayjs from "dayjs";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 // SplashScreen.preventAutoHideAsync();
 
 const CartScreen = ({ route, navigation }) => {
     //อย่าเอาไว้หลังconditionเด็ดขาดไม่งั้นพังแน่
     const [productAmount, setproductAmount] = useState(1);
     const user = firebase.auth().currentUser;
-    const [address, setAddress] = useState('')
-    const [addressName, setAddressName] = useState('')
-    const [phone, setPhone] = useState('')
+    const [address, setAddress] = useState('');
+    const [addressName, setAddressName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [amount, setAmount] = useState('');
 
     const data = {
         owner: route.params.owner,
@@ -30,7 +32,11 @@ const CartScreen = ({ route, navigation }) => {
 
     const getData = async () => {
         const users = await firebase.firestore().collection('users').where('email', '==', user.email).get();
-        // const user_id = await firebase.firestore().collection('users').where('email', '==', user.email).get();
+        const product = doc(firebase.firestore(), "products", route.params.productId)
+        const docProductSnapshot = await getDoc(product)
+        setAmount(docProductSnapshot.data().amount)
+
+
         console.log('aaaaaaaaaaaaaaaaaaaaaa')
         users.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
@@ -67,35 +73,46 @@ const CartScreen = ({ route, navigation }) => {
             Alert.alert('No Address!', 'Field your address in Settings', [
                 { text: 'OK', onPress: () => navigation.navigate('HomePage') }])
         } else {
-            myDate = dayjs(new Date).format('DD/MM/YYYY')
-            myTime = dayjs(new Date).format('HH:mm')
-            console.log(myDate)
-            firebase
-                .firestore()
-                .collection("purchased")
-                .add({
-                    date: myDate,
-                    time: myTime,
-                    title: data.title,
-                    total_price: total,
-                    amount: data.amount,
-                    owner: data.owner,
-                    customer: user.email,
-                    order_num: data.numOrder,
-                    address: address,
-                    addressName: addressName,
-                    phone: phone,
-                    pic: data.pic,
-                    productId: route.params.productId
-                })
-                .then(() => {
-                    navigation.navigate('OrderDetail', {
-                        date: myDate, time: myTime, title: route.params.title, pic: route.params.pic,
-                        price: route.params.price, amount: data.amount, total: total, numOrder: data.numOrder,
-                        address: address, addressName: addressName, phone: phone, id: data.id,
-                        productId: route.params.productId
-                    })
-                });
+            Alert.alert('Are You Sure?', 'If you press to order, you cannot cancel it.', [
+                {
+                    text: 'Cancel', // Cancel button
+                    style: 'cancel', // This makes it a cancel button on both Android and iOS
+                },
+                {
+                    text: 'OK', onPress: () => {
+                        myDate = dayjs(new Date).format('DD/MM/YYYY')
+                        myTime = dayjs(new Date).format('HH:mm')
+                        console.log(myDate)
+                        firebase
+                            .firestore()
+                            .collection("purchased")
+                            .add({
+                                date: myDate,
+                                time: myTime,
+                                title: data.title,
+                                total_price: total,
+                                amount: data.amount,
+                                owner: data.owner,
+                                customer: user.email,
+                                order_num: data.numOrder,
+                                address: address,
+                                addressName: addressName,
+                                phone: phone,
+                                pic: data.pic,
+                                productId: route.params.productId
+                            })
+                            .then(() => {
+                                navigation.navigate('OrderDetail', {
+                                    date: myDate, time: myTime, title: route.params.title, pic: route.params.pic,
+                                    price: route.params.price, amount: data.amount, total: total, numOrder: data.numOrder,
+                                    address: address, addressName: addressName, phone: phone, id: data.id,
+                                    productId: route.params.productId
+                                })
+                            });
+                    }
+                }])
+
+
         }
 
     }
@@ -113,7 +130,18 @@ const CartScreen = ({ route, navigation }) => {
         }
     }
     function plus() {
-        setproductAmount(productAmount + 1)
+        if (productAmount >= amount) {
+            setproductAmount(productAmount)
+            Alert.alert('Amount', 'There are not enough products in the warehouse.', [
+                {
+                    text: 'yes',
+                }
+            ])
+
+
+        } else {
+            setproductAmount(productAmount + 1)
+        }
     }
 
     return (

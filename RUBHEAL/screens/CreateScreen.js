@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Alert, Button, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Alert, Button, ScrollView, ImageBackground } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import * as ImagePicker from 'expo-image-picker';
+import { useFonts } from 'expo-font';
 
 import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
 // import DocumentPicker from 'react-native-document-picker';
@@ -112,10 +113,10 @@ const CreateScreen = ({ navigation, route }) => {
   const createProductSchema = Yup.object().shape({
     name: Yup.string().required("Please Enter your name"),
     detail: Yup.string().required("Please Enter your detail"),
-    price: Yup.number().typeError('Price must be a number') 
-    .positive('Price must be a positive number').required("Please Enter your price"),
-    amount: Yup.number("Please Enter your number").typeError('Price must be a number') 
-    .positive('Price must be a positive number').required("Please Enter your price"),
+    price: Yup.number().typeError('Price must be a number')
+      .positive('Price must be a positive number').required("Please Enter your price"),
+    amount: Yup.number("Please Enter your number").typeError('Price must be a number')
+      .positive('Price must be a positive number').required("Please Enter your price"),
     condition: Yup.string().required("Please Enter your condition"),
     category: Yup.string().required("Please selected your category")
 
@@ -127,6 +128,13 @@ const CreateScreen = ({ navigation, route }) => {
 
 
 
+
+  const [loaded] = useFonts({
+    Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
+  });
+  if (!loaded) {
+    return null;
+  }
 
   return (
 
@@ -141,7 +149,7 @@ const CreateScreen = ({ navigation, route }) => {
       }}
       validationSchema={createProductSchema}>
 
-      {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit, setFieldValue,handleBlur }) => (
+      {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit, setFieldValue, handleBlur }) => (
 
 
         <ScrollView>
@@ -152,7 +160,7 @@ const CreateScreen = ({ navigation, route }) => {
 
 
             {/* <Text style={styles.title}> Create </Text> */}
-            {/* <Text style={styles.label}>Name</Text> */}
+            <Text style={styles.label}>Name</Text>
             <TextInput style={styles.input} placeholder='Product Name'
               value={values.name}
               onChangeText={handleChange('name')}
@@ -179,26 +187,7 @@ const CreateScreen = ({ navigation, route }) => {
 
 
 
-            {/* <Text style={styles.label}>Address</Text> */}
-          
-            <TextInput style={styles.input} value={values.price}  keyboardType='numeric' onBlur={() => setFieldTouched('price')} onChangeText={handleChange('price')} placeholder='Price' />
-            {touched.price && errors.price && (
-              <Text style={{ color: 'red' }}>{errors.price}</Text>
-            )}
-
-
-            {/* <Text style={styles.label}>Name</Text> */}
-            <TextInput style={styles.input} placeholder='amount' keyboardType='numeric'
-              value={values.amount}
-              onChangeText={handleChange('amount')}
-              onBlur={() => setFieldTouched('amount')} />
-
-            {touched.amount && errors.amount && (
-              <Text style={{ color: 'red' }}>{errors.amount}</Text>
-            )}
-
-
-            <Text style={styles.label}>Description</Text>
+            <Text style={styles.label}>Condition</Text>
             <TextInput
               multiline
               numberOfLines={4}
@@ -212,6 +201,35 @@ const CreateScreen = ({ navigation, route }) => {
             )}
 
 
+
+
+            <View style={{ flexDirection: 'row', width: '80%' }}>
+              <View style={{flex:1}}>
+
+                <Text style={styles.label}>Price</Text>
+
+                <TextInput style={styles.input} value={values.price} keyboardType='numeric' onBlur={() => setFieldTouched('price')} onChangeText={handleChange('price')} placeholder='Price' />
+                {touched.price && errors.price && (
+                  <Text style={{ color: 'red' }}>{errors.price}</Text>
+                )}
+
+              </View>
+
+              <View style={{flex:1}}>
+
+                <Text style={styles.label}>Amount</Text>
+                <TextInput style={styles.input} placeholder='amount' keyboardType='numeric'
+                  value={values.amount}
+                  onChangeText={handleChange('amount')}
+                  onBlur={() => setFieldTouched('amount')} />
+
+                {touched.amount && errors.amount && (
+                  <Text style={{ color: 'red' }}>{errors.amount}</Text>
+                )}
+              </View>
+
+            </View>
+
             <Text style={styles.label}>Catagory</Text>
             <Dropdown
               style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
@@ -224,38 +242,33 @@ const CreateScreen = ({ navigation, route }) => {
               valueField="value"
               placeholder="select catagory"
               value={values.category}
-              // onFocus={() => setIsFocus(true)}
-              // onBlur={() => setIsFocus(false)}
-         
-            
+
+
 
               onChange={item => {
-                // setCategory(item.value);
                 setFieldValue("category", item.value)
-                // setFieldTouched('category', true);
-                // setIsFocus(false);
               }}
             />
-            {/* {touched.category && values.category === "" && errors.category && (
-              <Text style={{ color: 'red' }}>{errors.category}</Text>
-            )} */}
-{/* 
-            {values.category === "" && errors.category && isFocus &&(
-              <Text style={{ color: 'red' }}>{errors.category}</Text>
-            )} */}
-
-
 
             <Text style={styles.label}> Image </Text>
+            <ImageBackground
+              source={image ? { uri: image.uri } : require('../assets/upload.png')}
+              style={styles.backgroundImage}
+            >
+              <TouchableOpacity style={[styles.selectImage, { marginTop: 20, marginBottom: 10 }]}
+                onPress={pickImage}>
 
-            <Button title='Upload Image' onPress={pickImage} />
+              </TouchableOpacity>
+            </ImageBackground>
+
+            {/* <Button title='Upload Image' onPress={pickImage} />
             {image && <Image source={{ uri: image.uri }} style={{ width: 50, height: 50 }} />}
             {!image && isImageError && (
               <Text style={{ color: 'red' }}>กรุณาใส่รูป</Text>
 
-            )}
+            )} */}
 
-            <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%', backgroundColor:  !isValid  || values.name == "" || values.detail == "" || values.price == "" || values.amount == "" || values.condition  == "" || values.category == "" || image == null ? '#666' : '#9276F2', }]} disabled={!isValid  || values.name == "" || values.detail == "" || values.price == "" || values.condition == "" || values.category == "" || image == null} onPress={() => createProduct(values.name, values.detail, values.price, values.amount, values.condition, values.category)}>
+            <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%', backgroundColor: !isValid || values.name == "" || values.detail == "" || values.price == "" || values.amount == "" || values.condition == "" || values.category == "" || image == null ? '#666' : '#9276F2', }]} disabled={!isValid || values.name == "" || values.detail == "" || values.price == "" || values.condition == "" || values.category == "" || image == null} onPress={() => createProduct(values.name, values.detail, values.price, values.amount, values.condition, values.category)}>
               <Text style={styles.buttonText}>CONFIRM</Text>
             </TouchableOpacity>
           </View>
@@ -271,7 +284,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    // margin: 5,
+    paddingVertical: 20,
   },
   logo: {
     width: responsiveWidth(40),
@@ -280,31 +293,38 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 16,
-    borderBottomColor: "#262B46",
-    backgroundColor: '#eee',
+    borderColor: "#262B46",
+    backgroundColor: '#fff',
     width: "80%",
-    borderBottomWidth: 2,
+    borderWidth: 1,
     borderRadius: 5,
     padding: 5,
+    paddingLeft: 10,
     marginBottom: 10,
     marginTop: 5,
-  },
-  label: {
-    fontSize: 18,
-    textAlign: 'left',
-    width: '80%',
-    marginTop: 10
+    fontFamily: 'Anuphan',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
 
+    elevation: 2,
   },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
+    fontFamily: 'Anuphan',
   },
   label: {
     fontSize: 20,
     fontWeight: '600',
     width: '80%',
-    marginBottom: 10
+    marginBottom: 5,
+    marginTop: 20,
+    fontFamily: 'Anuphan',
   },
   button: {
     // backgroundColor: '#9276F2',
@@ -317,6 +337,15 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     letterSpacing: 1,
+    fontFamily: 'Anuphan',
+  },
+  dropdown: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    width: '80%'
   },
   dropdown: {
     height: 50,
@@ -331,9 +360,11 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    fontFamily: 'Anuphan',
   },
   selectedTextStyle: {
     fontSize: 16,
+    fontFamily: 'Anuphan',
   },
   iconStyle: {
     width: 20,
@@ -342,31 +373,21 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+    fontFamily: 'Anuphan',
   },
-  dropdown: {
-    height: 50,
-    borderColor: 'gray',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    width: '80%'
+  selectImage: {
+    padding: 50,
+    marginBottom: 15,
+    justifyContent: "center",
+    // width: responsiveWidth(30),
+    // height: responsiveHeight(30)
   },
-  icon: {
-    marginRight: 5,
-  },
-  placeholderStyle: {
-    fontSize: 16,
-  },
-  selectedTextStyle: {
-    fontSize: 16,
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
+  backgroundImage: {
+    flex: 1,
+    width: responsiveWidth(80),
+    height: '100%',
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
 });
 
