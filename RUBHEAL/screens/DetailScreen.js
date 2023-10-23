@@ -8,7 +8,7 @@ import { collection, query, where, getDocs, addDoc, onSnapshot, orderBy, doc, ge
 
 import comment from '../components/comment';
 import purchased from '../model/purchased';
-import { tuple } from 'yup';
+
 
 const DetailScreen = ({ navigation, route }) => {
 
@@ -17,6 +17,7 @@ const DetailScreen = ({ navigation, route }) => {
     const [getComments, setComments] = useState([]);
     const [productId, setProductId] = useState(route.params.id);
     const [store, setStore] = useState([]);
+    const [isSoldOut, setIsSoldOut] = useState(true); // Set isSoldOut to true when sold out
 
     const getStore = async () => {
         console.log("mail", route.params.mail)
@@ -112,6 +113,7 @@ const DetailScreen = ({ navigation, route }) => {
             meanRate = Math.floor(rate / num)
 
         }
+        const productRef = firebase.firestore().collection('products').doc(route.params.id);
         productRef.update({
             rating: meanRate,
         })
@@ -131,7 +133,7 @@ const DetailScreen = ({ navigation, route }) => {
         const q = query(collection(firebase.firestore(), 'users'), where('email', '==', userEmail));
 
 
-        // console.log(q)
+        console.log(q)
 
         const querySnapshot = await getDocs(q);
 
@@ -152,7 +154,8 @@ const DetailScreen = ({ navigation, route }) => {
             comment: addComment,
             time: formattedDate,
             ProductId: route.params.id,
-            rating: defaultRating
+            rating: defaultRating,
+            imageProfile: auth.currentUser.photoURL
 
             // Add other user data fields as needed
         };
@@ -212,6 +215,7 @@ const DetailScreen = ({ navigation, route }) => {
         console.log(route.params)
 
         const readRating = listenForRatingChanges();
+        // const readStore =  getStore();
         // fetchData()
         const commentsRef = query(collection(firebase.firestore(), 'comments'), orderBy('time', 'desc'));;
 
@@ -253,13 +257,14 @@ const DetailScreen = ({ navigation, route }) => {
         console.log("amount", amountDoc.data().amount)
 
 
-
+      
         getStore();
         return () => {
             // Unsubscribe from the real-time listener when the component unmounts
             readRating();
             unsubscribe();
             queryRating();
+            // readStore();
         };
 
     }, [])
@@ -306,7 +311,9 @@ const DetailScreen = ({ navigation, route }) => {
                     }}
                     disabled={purchasedAmount >= amount}
                 >
-                    <Text style={styles.buttonText}>Buy</Text>
+                    <Text style={styles.buttonText}>
+                        {purchasedAmount >= amount ? 'Sold Out' : 'Buy'}
+                    </Text>
                 </TouchableOpacity>
 
             </View>

@@ -43,7 +43,7 @@ const comment = (props) => {
         }}>
             <View style={{ paddingVertical: 7, flexDirection: 'row', alignItems: 'center', columnGap: 10, marginTop: 10 }}>
                 <Image
-                    source={{ uri: 'https://picsum.photos/200' }}
+                    source={props.item.imageProfile ? {uri : props.item.imageProfile} : { uri: 'https://picsum.photos/200' }}
                     style={[styles.account, { marginTop: 10 }]} />
                 <Text style={{
                     fontSize: 16, fontWeight: '400',
