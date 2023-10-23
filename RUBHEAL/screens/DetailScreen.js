@@ -271,7 +271,7 @@ const DetailScreen = ({ navigation, route }) => {
     // console.log(route)
     // console.log(props)
     return (
-        <ScrollView showsVerticalScrollIndicator={false} >
+        <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: 'white'}}>
             <Image source={{ uri: route.params.pic }} style={{ width: '100%', height: responsiveHeight(40) }} />
             <View style={{ margin: 10, }}>
                 <Text style={styles.title}>{route.params.title}</Text>
@@ -293,12 +293,13 @@ const DetailScreen = ({ navigation, route }) => {
             </View>
 
             {/* store account */}
-            <View style={{ borderBottomColor: '#aaa', borderBottomWidth: 1, paddingVertical: 7, flexDirection: 'row', alignItems: 'center', columnGap: 10, marginTop: 10 }}>
+            <View style={{ paddingVertical: 7, flexDirection: 'row', alignItems: 'center', columnGap: 10, marginTop: 10 }}>
                 <Image
                     source={{ uri: 'https://picsum.photos/200' }}
                     style={[styles.account, ]} />       
                 <Text style={{ fontSize: 20, fontWeight: '600', }}> Store Name </Text>
             </View>
+            <View style={styles.seperator}/>
 
             {/* Detail Product */}
 
@@ -309,7 +310,8 @@ const DetailScreen = ({ navigation, route }) => {
                     {route.params.detail}
                 </Text>
             </View>
-            <View style={{ borderTopWidth: 1, borderColor: 'gray', marginTop: 20 }}>
+            <View style={[styles.seperator, {marginTop: 30}]}/>
+            <View>
                 <Text style={[styles.header,]}>Policy</Text>
                 <Text style={[styles.content,]}>
 
@@ -422,7 +424,13 @@ const styles = StyleSheet.create({
         width : 40,
         height : 40,
         resizeMode : 'cover'
-    } 
+    } ,
+    seperator: {
+        alignSelf: 'center',
+        height: 1,
+        width: '95%',
+        backgroundColor: '#ddd'
+    }
 });
 
 
