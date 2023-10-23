@@ -44,8 +44,8 @@ function TabNavigator() {
 
     return (
         <Tab.Navigator initialRouteName="HOME" screenOptions={{
-            tabBarActiveTintColor: "darkblue",
-            tabBarStyle: { backgroundColor: "#6A988B" },
+            tabBarActiveTintColor: "white",
+            tabBarStyle: { backgroundColor: "#8667F2" },
             tabBarInactiveTintColor: "black"
         }}>
             <Tab.Screen name="HOME" component={Navigation} options={{
@@ -54,15 +54,14 @@ function TabNavigator() {
                     return <AntDesign name="home" size={26} color={color} />;
                 },
             }} />
-            <Tab.Screen name="Top" component={Rank} options={{
+            <Tab.Screen name="TOP" component={Rank} options={{
                 headerShown: false,
                 tabBarIcon: ({ color, size }) => {
                     return <AntDesign name="Trophy" size={26} color={color} />;
                 },
             }} />
-            <Tab.Screen name="ChatTab" component={MessageNavigator} options={{
+            <Tab.Screen name="CHAT" component={MessageNavigator} options={{
                 headerShown: false,
-                tabBarStyle: { display: 'none' },
                 tabBarIcon: ({ color, size }) => {
                     return <AntDesign name="wechat" size={26} color={color} />;
                 },
@@ -95,16 +94,8 @@ function AdminAndProductMangement() {
 function MessageNavigator() {
     return (
         <ChatNavigator.Navigator initialRouteName="Message">
-            <ChatNavigator.Screen name="Message" component={MessageScreen} options={({ route, navigation }) => ({
-                headerRight: () => (
-                    <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-                        <Item title="Tab_1" iconName="ios-pencil" onPress={() => { }} />
-                        <Item title="Tab_2" iconName="ios-home" onPress={() => { navigation.navigate('Home') }} />
-                    </HeaderButtons>),
-
-            })} />
+            <ChatNavigator.Screen name="Message" component={MessageScreen} options={{ title: "Messages" }}/>
             <ChatNavigator.Screen name="Chat" component={ChatScreen} options={{ title: "Chat Room" }} />
-
         </ChatNavigator.Navigator>
     )
 }
@@ -114,8 +105,8 @@ function Rank() {
     return (
         <CartNavigator.Navigator initialRouteName="Rank">
             <CartNavigator.Screen name="Rank" component={RankScreen} />
-            <CartNavigator.Screen name="Detail" component={DetailScreen} />
-            <CartNavigator.Screen name="Cart" component={CartScreen} />
+            {/* <CartNavigator.Screen name="Detail" component={DetailScreen} /> */}
+            {/* <CartNavigator.Screen name="Cart" component={CartScreen} /> */}
             <CartNavigator.Screen name="OrderDetail" component={OrderDetail} />
             <CartNavigator.Screen name="customerBuy" component={CustomerBuyProduct} />
         </CartNavigator.Navigator>
@@ -146,6 +137,7 @@ function LoginRegister() {
             <LoginNavigator.Screen name="HomePage" component={TabNavigator} options={{ headerShown: false }} />
             <LoginNavigator.Screen name="OrderDetail" component={OrderDetail} />
             <LoginNavigator.Screen name="Cart" component={CartScreen} />
+            <LoginNavigator.Screen name="Rank" component={RankScreen} />
         </LoginNavigator.Navigator>
     )
 

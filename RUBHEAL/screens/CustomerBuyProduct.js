@@ -27,7 +27,7 @@ const CustomerBuyProduct = ({ route }) => {
 
     // Iterate through the query results
     querySnapshot.forEach((doc) => {
-        productAll.push(doc.data())
+      productAll.push(doc.data())
     });
 
 
@@ -49,23 +49,26 @@ const CustomerBuyProduct = ({ route }) => {
       <View>
         <View
           style={{
-            flexDirection: "row",
+            // flexDirection: "row",
             margin: 20,
             borderBottomWidth: 1,
             padding: 10,
             borderBottomColor: "#ccc",
           }}
         >
-          <Image
-            source={{uri : itemData.item.pic}}
+          {/* <Image
+            source={{ uri: itemData.item.pic }}
             style={{ width: 150, height: 150, borderRadius: 10 }}
-          />
+          /> */}
           <View style={{ margin: 10 }}>
             <Text>ชื่อลูกค้า {itemData.item.addressName}</Text>
             <Text>จำนวน {itemData.item.amount} ชื้น</Text>
             <Text>นัดรับ เบอร์ติดต่อ {itemData.item.phone}</Text>
-            <Text></Text>
+            <Text>
+              ที่อยู่ {itemData.item.address}
+            </Text>
           </View>
+
         </View>
 
       </View>

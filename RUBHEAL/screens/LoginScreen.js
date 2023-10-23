@@ -67,7 +67,7 @@ const LoginScreen = () => {
             </TouchableOpacity>
 
 
-            <TouchableOpacity style={[styles.button, { margin: 10, width: '40%' }]} onPress={handleLogin}>
+            <TouchableOpacity style={[styles.button, { margin: 10, width: '40%',backgroundColor : email == "" || password == "" ? "#666" : "#9276F2" }]} disabled={email == "" || password == ""} onPress={handleLogin}>
                 <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
             <View style={{ flexDirection: 'row', fontSize: 12, }}>
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Anuphan'
     },
     button: {
-        backgroundColor: '#9276F2',
+        // backgroundColor: '#9276F2',
         borderRadius: 50,
         padding: 10,
         alignItems: 'center',

@@ -283,7 +283,7 @@ const HomeScreen = ({ navigation, route }, props) => {
       </View>
       <AntDesign style={{ position: 'absolute', right: 5, top: 15 }} name="notification" size={26} color={'gray'} />
       <ScrollView>
-        <Text style={styles.title}>Catagory</Text>
+        <Text style={styles.title}>Category</Text>
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ height: 100 }}>
           <View style={{ alignItems: 'center', flexDirection: 'row' }}>

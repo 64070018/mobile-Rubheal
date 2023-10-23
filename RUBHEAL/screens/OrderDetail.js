@@ -71,7 +71,7 @@ const OrderDetail = ({ route, navigate, navigation }, props) => {
                     <View style={styles.seperator}/>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Shipping Fee</Text>
-                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>24 Baht</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>50 Baht</Text>
                     </View>
                     <View style={styles.seperator}/>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>

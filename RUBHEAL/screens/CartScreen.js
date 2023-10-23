@@ -65,13 +65,14 @@ const CartScreen = ({ route, navigation }) => {
     }
 
     const cal_total = data.price * data.amount
-    const total = parseFloat(cal_total) + 24
+    const total = parseFloat(cal_total) + 50
 
     const purchased = () => {
         // console.log(data.owner)
         if (!address) {
             Alert.alert('No Address!', 'Field your address in Settings', [
-                { text: 'OK', onPress: () => navigation.navigate('HomePage') }])
+                { text: 'OK', onPress: () => navigation.navigate('HomePage') },
+            ])
         } else {
             Alert.alert('Are You Sure?', 'If you press to order, you cannot cancel it.', [
                 {
@@ -123,7 +124,12 @@ const CartScreen = ({ route, navigation }) => {
                 {
                     text: 'yes',
                     onPress: () => navigation.navigate('Home')
-                }
+                },
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                },
             ])
         } else {
             setproductAmount(data.amount - 1)
@@ -193,7 +199,7 @@ const CartScreen = ({ route, navigation }) => {
                     <View style={styles.seperator} />
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>Shipping Fee</Text>
-                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>24 Baht</Text>
+                        <Text style={{ fontSize: 18, fontFamily: 'Anuphan' }}>50 Baht</Text>
                     </View>
                     <View style={styles.seperator} />
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>

@@ -40,10 +40,11 @@ const RankScreen = ({ navigation, route }, props) => {
           price: productData.price,
           rating: productData.rating,
           condition: productData.condition,
+          owner: productData.owner,
         };
 
-          allProduct.push(dataAll);
-  
+        allProduct.push(dataAll);
+
       });
 
       setProduct(allProduct);
@@ -51,7 +52,7 @@ const RankScreen = ({ navigation, route }, props) => {
     });
 
 
-   
+
     return () => {
       // Unsubscribe from the real-time listener when the component unmounts
 
@@ -62,10 +63,10 @@ const RankScreen = ({ navigation, route }, props) => {
     };
 
   }, [])
-  const Top10Product =  products.slice(0, 10)
+  const Top10Product = products.slice(0, 10)
 
   const renderedItem = (itemData) => {
-
+    console.log(itemData.item)
     return (
 
       <TopTank
@@ -73,9 +74,9 @@ const RankScreen = ({ navigation, route }, props) => {
         pic={itemData.item.image}
         price={itemData.item.price}
         rating={itemData.item.rating}
-        
+        owner={itemData.item.owner}
         onSelectProduct={() => {
-          navigation.navigate("Detail", { title: itemData.item.name, pic: itemData.item.image, detail: itemData.item.detail, policy: itemData.item.condition, price: itemData.item.price, id: itemData.item.id,   rating : itemData.item.rating});
+          navigation.navigate("Detail", { title: itemData.item.name, pic: itemData.item.image, detail: itemData.item.detail, policy: itemData.item.condition, price: itemData.item.price, id: itemData.item.id, rating: itemData.item.rating, owner: itemData.item.owner });
         }}
       />
     );
