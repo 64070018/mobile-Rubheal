@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView,
 import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
 import * as ImagePicker from 'expo-image-picker';
 import { firebase, storage } from '../database';
+import { useFonts } from 'expo-font';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Timestamp } from 'firebase/firestore';
 
@@ -55,7 +56,12 @@ const IdentifyScreen = ({ navigation }) => {
         fetchData();
     }, []);
 
-
+    const [loaded] = useFonts({
+        Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
+    });
+    if (!loaded) {
+        return null;
+    }
     console.log("data", data)
 
 
@@ -157,7 +163,7 @@ const IdentifyScreen = ({ navigation }) => {
 
             {({ values, errors, touched, handleChange, setFieldTouched, isValid, handleSubmit, setFieldValue }) => (
 
-                <ScrollView>
+                <ScrollView style={{height: '100%', backgroundColor: 'white'}}>
                     <View style={styles.container}>
 
                         {/* <Text style={styles.title}> Saler {'\n'}</Text> */}
@@ -194,7 +200,7 @@ const IdentifyScreen = ({ navigation }) => {
                             <Text style={{ color: 'red' }}>{errors.phone}</Text>
                         )}
 
-                        <Text style={styles.label}> {'\n'} Certified True Copy </Text>
+                        <Text style={[styles.label, {marginBottom: 10}]}> {'\n'} Certified True Copy </Text>
 
                         <ImageBackground
                             source={image ? { uri: image.uri } : require('../assets/upload.png')}
@@ -257,9 +263,10 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: 20,
-        textAlign: 'left',
-        width: '80%'
-
+        fontWeight: '600',
+        width: '80%',
+        marginBottom: 5,
+        fontFamily: 'Anuphan'
     },
     title: {
         fontSize: 40,
@@ -276,7 +283,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontWeight: 'bold',
-        letterSpacing: 3,
+        letterSpacing: 1,
         fontSize: 20
     },
     backgroundImage: {

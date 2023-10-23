@@ -161,7 +161,7 @@ const AdminPage = ({ navigation }) => {
            {starIcons}
             {/* <Text style={{ fontSize: 16, bottom: 0 }}> props.item.rate (5.0) </Text> */}
           </View>
-          <Text>ราคาสินค้า : {data.item.price}</Text>
+          <Text>Price : {data.item.price}</Text>
           <View style={{ flexDirection: "row", marginTop: 20 }}>
             <View style={{ marginRight: 5 }}>
               <Button title="update" color="#FAB400" onPress={() => {

@@ -5,6 +5,7 @@ import { StyleSheet, Text, View, ImageBackground, TextInput, TouchableOpacity, A
 import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
 import { firebase, auth, storage } from '../database';
 import * as ImagePicker from 'expo-image-picker';
+import { useFonts } from 'expo-font';
 import { uploadBytesResumable, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { collection, query, where, doc, getDoc, updateDoc, deleteDoc, } from "firebase/firestore";
 
@@ -20,7 +21,6 @@ const SettingAccount = ({ navigation, route }) => {
     const [image, setImage] = useState(null);
     const [isImageError, setIsImageError] = useState(false);
     const user = firebase.auth().currentUser;
-
 
     const fetchData = () => {
         const collectionRef = firebase.firestore().collection("users");
@@ -59,6 +59,13 @@ const SettingAccount = ({ navigation, route }) => {
         fetchData();
     }, []);
 
+    const [loaded] = useFonts({
+        Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
+    });
+    if (!loaded) {
+        return null;
+    }
+    
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -139,10 +146,10 @@ const SettingAccount = ({ navigation, route }) => {
     };
     console.log(user.photoURL)
     return (
-        <ScrollView>
+        <ScrollView style={{height: '100%', backgroundColor: 'white'}}>
             <View style={styles.container}>
                 {/* <Text style={[styles.title, { marginBottom: 10 }]}> Setting </Text> */}
-
+                <Text style={[styles.label, { textAlign: 'center' }]}>Account</Text>
                 <TextInput style={styles.input} placeholder='Username'
                     value={name}
                     onChangeText={(val) => setName(val)} />
@@ -174,7 +181,7 @@ const SettingAccount = ({ navigation, route }) => {
                     value={address}
                     onChangeText={(val) => setAddress(val)} />
 
-                <Text style={styles.label}> Image Profile </Text>
+                <Text style={styles.label}> Profile Picture </Text>
                 <ImageBackground
                     source={image ? { uri: image.uri } : require('../assets/upload.png')}
                     style={styles.backgroundImage}
@@ -202,6 +209,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        height: '100%',
+        paddingVertical: responsiveHeight(5)
         // margin: 5,
     },
     logo: {
@@ -210,24 +219,15 @@ const styles = StyleSheet.create({
         borderRadius: 100,
     },
     input: {
-        fontSize: 16,
+        fontSize: 18,
         borderBottomColor: "#262B46",
-        backgroundColor: '#eee',
+        backgroundColor: '#F6F7F9',
         width: "80%",
         borderBottomWidth: 2,
         borderRadius: 5,
         padding: 5,
-        marginBottom: 10,
-        marginTop: 5,
-        fontFamily: 'Anuphan'
-    },
-    label: {
-        fontSize: 18,
-        textAlign: 'left',
-        width: '80%',
-        marginTop: 10,
-        fontFamily: 'Anuphan'
-
+        paddingVertical: 10,
+        marginBottom: 15,
     },
     title: {
         fontSize: 30,
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Anuphan'
     },
     button: {
-        backgroundColor: '#9276F2',
+        backgroundColor: '#8667F2',
         borderRadius: 50,
         padding: 10,
         alignItems: 'center',
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         letterSpacing: 1,
-        fontFamily: 'Anuphan'
+        fontSize: 20
     },
     dropdown: {
         height: 50,

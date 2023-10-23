@@ -63,18 +63,18 @@ const LoginScreen = () => {
 
 
             <TouchableOpacity onPress={() => navigation.replace("Forgot")}>
-                <Text style={{ color: 'blue', marginTop: 20 }}>Forget Password</Text>
+                <Text style={{ color: 'blue', marginTop: 20, fontSize: 16 }}>Forget Password</Text>
             </TouchableOpacity>
 
 
             <TouchableOpacity style={[styles.button, { margin: 10, width: '40%',backgroundColor : email == "" || password == "" ? "#666" : "#9276F2" }]} disabled={email == "" || password == ""} onPress={handleLogin}>
-                <Text style={styles.buttonText}>Login</Text>
+                <Text style={styles.buttonText}>LOGIN</Text>
             </TouchableOpacity>
-            <View style={{ flexDirection: 'row', fontSize: 12, }}>
+            <View style={{ flexDirection: 'row' }}>
 
-                <Text style={{ color: '#000' }}>Don't have an account?</Text>
+                <Text style={{ color: '#000', fontSize: 16, }}>Don't have an account?</Text>
                 <TouchableOpacity onPress={() => navigation.replace("Register")}>
-                    <Text style={{ color: 'blue' }}> Registration </Text>
+                    <Text style={{ color: 'blue', fontSize: 16, }}> Registration </Text>
 
                 </TouchableOpacity>
             </View>
@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
         // margin: 5,
     },
     logo: {
-        width: responsiveWidth(40),
-        height: responsiveHeight(20),
+        width: 180,
+        height: 180,
         marginBottom: 40,
         borderRadius: 100,
     },
@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     buttonText: {
+        fontSize: 16,
         color: 'white',
         fontWeight: 'bold',
         fontFamily: 'Anuphan'
