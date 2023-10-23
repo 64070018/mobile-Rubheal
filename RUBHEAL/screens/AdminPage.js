@@ -4,37 +4,38 @@ import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 
 import { firebase } from "../database";
+import {  onSnapshot } from 'firebase/firestore';
+
+
 
 
 const AdminPage = ({ navigation }) => {
   const [data, setData] = useState([]);
   const user = firebase.auth().currentUser;
 
+
+
+
+
+
   useEffect(() => {
     fetchData();
+   
+   
 
   }, []);
 
-
   const fetchData = () => {
-
-    // Create a reference to your Firestore collection
     const collectionRef = firebase.firestore().collection("products");
-
-    // Use the get() method to fetch the data
-    collectionRef.get()
-      .then((querySnapshot) => {
-        const items = [];
-        querySnapshot.forEach((res) => {
-          console.log(" INFORMATION ", res.data())
-          let info = res.data()
-
-          console.log("###INFORMATION###")
-          console.log(info)
-
-          if (info.owner == user.uid) {
-            items.push({
-              key: res.id,
+  
+    // Add a snapshot listener to receive real-time updates
+    collectionRef.onSnapshot((querySnapshot) => {
+      const items = [];
+      querySnapshot.forEach((res) => {
+        let info = res.data();
+        if (info.owner === user.uid) {
+          items.push({
+            key: res.id,
               name: info.name,
               price: info.price,
               name: info.name,
@@ -45,15 +46,59 @@ const AdminPage = ({ navigation }) => {
               image: info.image,
               category: info.category,
               rating: info.rating
-            });
-          }
-        });
-        setData(items);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
+          });
+        }
       });
-  }
+      setData(items);
+    }, (error) => {
+      console.error('Error fetching data:', error);
+    });
+  };
+  
+
+  
+
+
+  // const fetchData = () => {
+  //   // console.log("########DATA#########")
+  //   // console.log(data[0].rating)
+
+  //   // Create a reference to your Firestore collection
+  //   const collectionRef = firebase.firestore().collection("products");
+
+  //   // Use the get() method to fetch the data
+  //   collectionRef.get()
+  //     .then((querySnapshot) => {
+  //       const items = [];
+  //       querySnapshot.forEach((res) => {
+  //         // console.log(" INFORMATION ", res.data())
+  //         let info = res.data()
+
+  //         // console.log("###INFORMATION###")
+  //         // console.log(info)
+
+  //         if (info.owner == user.uid) {
+  //           items.push({
+  //             key: res.id,
+  //             name: info.name,
+  //             price: info.price,
+  //             name: info.name,
+  //             detail: info.detail,
+  //             price: info.price,
+  //             amount: info.amount,
+  //             condition: info.condition,
+  //             image: info.image,
+  //             category: info.category,
+  //             rating: info.rating
+  //           });
+  //         }
+  //       });
+  //       setData(items);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching data:', error);
+  //     });
+  // }
 
 
 
@@ -76,6 +121,27 @@ const AdminPage = ({ navigation }) => {
 
 
   const renderItem = (data) => {
+
+    const starIcons = [];
+  
+    // Use a for loop to generate the star icons
+    for (let i = 0; i < 5; i++) {
+
+        if(i < data.item.rating){
+            starIcons.push(
+              <AntDesign key={i} name="star" size={16} color="orange" /> 
+              
+            );
+
+        }
+
+        else{
+            starIcons.push(
+              <AntDesign key={i} name="star" size={16} color="grey" />
+
+            )
+        }
+    }
     console.log(data)
     return (
       <View style={styles.contentBox}>
@@ -92,11 +158,7 @@ const AdminPage = ({ navigation }) => {
               marginBottom: 5,
             }}
           >
-            <AntDesign name="star" size={25} color={"#FFC400"} />
-            <AntDesign name="star" size={25} color={"#FFC400"} />
-            <AntDesign name="star" size={25} color={"#FFC400"} />
-            <AntDesign name="star" size={25} color={"#FFC400"} />
-            <AntDesign name="star" size={25} color={"#FFC400"} />
+           {starIcons}
             {/* <Text style={{ fontSize: 16, bottom: 0 }}> props.item.rate (5.0) </Text> */}
           </View>
           <Text>ราคาสินค้า : {data.item.price}</Text>
