@@ -107,8 +107,8 @@ const ProfileScreen = ({ navigation }) => {
         <View style={{ alignItems: "center" }}>
           <Image
             source={
-              user.photoURL
-                ? { uri: user.photoURL }
+              data.photoURL
+                ? { uri: data.photoURL }
                 : require("../assets/profile.png")
             }
             style={{ width: 100, height: 100, borderRadius: 50 }}

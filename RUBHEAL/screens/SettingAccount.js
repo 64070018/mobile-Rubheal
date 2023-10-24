@@ -195,7 +195,7 @@ const SettingAccount = ({ navigation, route }) => {
                     <Text style={styles.buttonText}>CONFIRM</Text>
                 </TouchableOpacity>
 
-                <View style={{ width: "100%", bottom: 0 }}>
+                <View style={{ width: "100%", bottom: 0, position:'absolute' }}>
                     <Button title="LogOut" color={"#c8b8ff"} onPress={handleSignOut} />
                 </View>
             </View>

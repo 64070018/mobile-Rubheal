@@ -286,7 +286,7 @@ const HomeScreen = ({ navigation, route }, props) => {
         <AntDesign style={styles.searchIcon} name="search1" size={26} color={'gray'} onPress={() => SearchData(cate)} />
 
       </View>
-      <AntDesign style={{ position: 'absolute', right: 5, top: 15 }} name="notification" size={26} color={'gray'} />
+      {/* <AntDesign style={{ position: 'absolute', right: 5, top: 15 }} name="notification" size={26} color={'gray'} /> */}
       <ScrollView>
         <Text style={styles.title}>Category</Text>
 
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderColor: "gray",
-    width: "90%",
+    width: "100%",
     borderWidth: 1,
     borderRadius: 10,
     marginVertical: 10,
