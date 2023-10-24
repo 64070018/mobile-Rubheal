@@ -9,7 +9,7 @@ import { onSnapshot } from 'firebase/firestore';
 
 
 
-const AdminPage = ({ navigation }) => {
+const AdminPage = ({ navigation}) => {
   const [data, setData] = useState([]);
   const user = firebase.auth().currentUser;
 
@@ -186,6 +186,7 @@ const AdminPage = ({ navigation }) => {
 
   }
 
+  console.log("usersersser", user)
 
   return (
     <View style={styles.container}>
@@ -210,7 +211,7 @@ const AdminPage = ({ navigation }) => {
             style={{ width: 100, height: 100, borderRadius: 50 }}
           />
 
-          <Text style={{ fontSize: 20, fontWeight: "900" }}>User</Text>
+          <Text style={{ fontSize: 20, fontWeight: "700", marginTop: 10 }}>{user.email}</Text>
         </View>
 
 
