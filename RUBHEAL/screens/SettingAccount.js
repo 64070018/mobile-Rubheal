@@ -136,7 +136,7 @@ const SettingAccount = ({ navigation, route }) => {
                     {
                         text: "OK",
                         onPress: () => {
-                            navigation.navigate('Profile'); // Replace 'Admin' with the correct screen name
+                            navigation.navigate('Profilee'); // Replace 'Admin' with the correct screen name
                         },
                     },
                 ]

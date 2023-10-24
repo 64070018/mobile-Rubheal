@@ -226,7 +226,7 @@ const AdminPage = ({ navigation}) => {
           </View>
           <View style={{ width: "50%", borderColor: '#ddd', borderWidth: 1 }}>
             <TouchableOpacity style={styles.button} onPress={() => {
-              navigation.navigate('Profile', { name: "admin" })
+              navigation.navigate('Profilee', { name: "admin" })
             }} >
               <Text style={styles.textbutton}>HISTORY</Text>
             </TouchableOpacity>

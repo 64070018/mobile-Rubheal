@@ -119,7 +119,7 @@ const IdentifyScreen = ({ navigation }) => {
                         {
                             text: "OK",
                             onPress: () => {
-                                navigation.navigate('Profile');
+                                navigation.navigate('Profilee');
                             },
                         },
                     ]
