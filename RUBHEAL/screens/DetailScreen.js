@@ -28,7 +28,7 @@ const DetailScreen = ({ navigation, route }) => {
 
     };
 
-    console.log('store', store);
+    // console.log('store', store?.name);
 
 
     var purchasedAmount = 0;
