@@ -5,7 +5,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"; // Corrected the import statement
 import * as ImagePicker from 'expo-image-picker';
 import { responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
-
+import { useFonts } from 'expo-font';
 
 
 
@@ -143,6 +143,12 @@ const ChatScreen = (route) => {
   const [messages] = useCollectionData(query, { idField: 'id' });
   const [image, setImage] = useState({ "uri": undefined });
 
+  const [loaded] = useFonts({
+    Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
+  });
+  if (!loaded) {
+    return null;
+  }
 
   const pickImage = async () => {
     try {
@@ -319,7 +325,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   text: {
-    fontSize: 20
+    fontSize: 18,
+    fontFamily:'Anuphan'
   },
   senderBox: {
     justifyContent: "flex-end",

@@ -1,10 +1,10 @@
-import { View, Text, StyleSheet, Image, ScrollView, Button, FlatList } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, Button, FlatList, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 import React, { useEffect, useState } from "react";
 
 import { firebase } from "../database";
-import {  onSnapshot } from 'firebase/firestore';
+import { onSnapshot } from 'firebase/firestore';
 
 
 
@@ -20,14 +20,14 @@ const AdminPage = ({ navigation }) => {
 
   useEffect(() => {
     fetchData();
-   
-   
+
+
 
   }, []);
 
   const fetchData = () => {
     const collectionRef = firebase.firestore().collection("products");
-  
+
     // Add a snapshot listener to receive real-time updates
     collectionRef.onSnapshot((querySnapshot) => {
       const items = [];
@@ -36,16 +36,16 @@ const AdminPage = ({ navigation }) => {
         if (info.owner === user.uid) {
           items.push({
             key: res.id,
-              name: info.name,
-              price: info.price,
-              name: info.name,
-              detail: info.detail,
-              price: info.price,
-              amount: info.amount,
-              condition: info.condition,
-              image: info.image,
-              category: info.category,
-              rating: info.rating
+            name: info.name,
+            price: info.price,
+            name: info.name,
+            detail: info.detail,
+            price: info.price,
+            amount: info.amount,
+            condition: info.condition,
+            image: info.image,
+            category: info.category,
+            rating: info.rating
           });
         }
       });
@@ -54,9 +54,9 @@ const AdminPage = ({ navigation }) => {
       console.error('Error fetching data:', error);
     });
   };
-  
 
-  
+
+
 
 
   // const fetchData = () => {
@@ -123,24 +123,24 @@ const AdminPage = ({ navigation }) => {
   const renderItem = (data) => {
 
     const starIcons = [];
-  
+
     // Use a for loop to generate the star icons
     for (let i = 0; i < 5; i++) {
 
-        if(i < data.item.rating){
-            starIcons.push(
-              <AntDesign key={i} name="star" size={16} color="orange" /> 
-              
-            );
+      if (i < data.item.rating) {
+        starIcons.push(
+          <AntDesign key={i} name="star" size={16} color="orange" />
 
-        }
+        );
 
-        else{
-            starIcons.push(
-              <AntDesign key={i} name="star" size={16} color="grey" />
+      }
 
-            )
-        }
+      else {
+        starIcons.push(
+          <AntDesign key={i} name="star" size={16} color="grey" />
+
+        )
+      }
     }
     console.log(data)
     return (
@@ -150,7 +150,7 @@ const AdminPage = ({ navigation }) => {
           style={{ width: 100, height: 100 }}
         />
         <View style={{ flex: 1, padding: 10, alignItems: 'center' }}>
-          <Text> {data.item.name}</Text>
+          <Text style={{fontFamily: 'Anuphan'}}> {data.item.name}</Text>
           <View
             style={{
               flexDirection: "row",
@@ -158,10 +158,10 @@ const AdminPage = ({ navigation }) => {
               marginBottom: 5,
             }}
           >
-           {starIcons}
+            {starIcons}
             {/* <Text style={{ fontSize: 16, bottom: 0 }}> props.item.rate (5.0) </Text> */}
           </View>
-          <Text>Price : {data.item.price}</Text>
+          <Text style={{fontFamily: 'Anuphan'}}>Price : {data.item.price}</Text>
           <View style={{ flexDirection: "row", marginTop: 20 }}>
             <View style={{ marginRight: 5 }}>
               <Button title="update" color="#FAB400" onPress={() => {
@@ -216,16 +216,19 @@ const AdminPage = ({ navigation }) => {
 
         <View style={{ flexDirection: 'row', marginTop: 20, width: "100%" }}>
 
-          <View style={{ width: "50%" }}>
-            <Button title="Setting" color={"#8667F2"} onPress={() => {
+          <View style={{ width: "50%", borderColor: '#ddd', borderWidth: 1 }}>
+            <TouchableOpacity style={styles.button} onPress={() => {
               navigation.navigate('Setting', { name: "setting" })
-            }} />
+            }} >
+              <Text style={styles.textbutton}>SETTINGS</Text>
+            </TouchableOpacity>
           </View>
-
-          <View style={{ width: "50%" }}>
-            <Button title="History" color={"#8667F2"} onPress={() => {
+          <View style={{ width: "50%", borderColor: '#ddd', borderWidth: 1 }}>
+            <TouchableOpacity style={styles.button} onPress={() => {
               navigation.navigate('Profile', { name: "admin" })
-            }} />
+            }} >
+              <Text style={styles.textbutton}>HISTORY</Text>
+            </TouchableOpacity>
 
           </View>
 
@@ -243,7 +246,7 @@ const AdminPage = ({ navigation }) => {
               </Text> */}
         </View>
         <View style={{ padding: 10 }}>
-          <Button title="Orders" color={"#8667F2"} onPress={() => {
+          <Button title="Orders" color={"#9276F2"} onPress={() => {
             navigation.navigate('AdminProduct')
           }} />
         </View>
@@ -307,6 +310,20 @@ const styles = StyleSheet.create({
     margin: 10,
     flex: 1,
     alignItems: "center",
+  },
+  button: {
+    backgroundColor: "#9276F2",
+    width: "100%",
+    height: 35,
+    justifyContent: "center",
+    alignContent: "center"
+  },
+  textbutton: {
+    fontSize: 16,
+    // fontWeight: "700",
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'Anuphan'
   },
 });
 
