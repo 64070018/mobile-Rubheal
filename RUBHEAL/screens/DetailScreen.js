@@ -21,15 +21,14 @@ const DetailScreen = ({ navigation, route }) => {
 
     const getStore = async () => {
         console.log("mail", route.params.mail)
-        const q = query(collection(firebase.firestore(), 'users'), where('email', '==', route.params.mail));
+        const q = query(collection(firebase.firestore(), 'users'), where('email', '==', route.params?.mail));
         const querySnapshot = await getDocs(q);
         const userData = querySnapshot.docs[0].data();
         setStore(userData)
 
     };
 
-    console.log('store', store)
-
+    console.log('store', store);
 
 
     var purchasedAmount = 0;
@@ -123,7 +122,7 @@ const DetailScreen = ({ navigation, route }) => {
     //addComment
     const AddComment = async () => {
         // console.log(auth.currentUser)
-        const userEmail = auth.currentUser.email;
+        const userEmail = auth.currentUser?.email;
         const q = query(collection(firebase.firestore(), 'users'), where('email', '==', userEmail));
 
 
@@ -204,64 +203,76 @@ const DetailScreen = ({ navigation, route }) => {
         return unsubscribe; // To stop listening when the component unmounts
     };
 
-
-    useEffect(async () => {
-        console.log(route.params)
-
-        const readRating = listenForRatingChanges();
-        // const readStore =  getStore();
-        // fetchData()
-        const commentsRef = query(collection(firebase.firestore(), 'comments'), orderBy('time', 'desc'));;
-
-        // Set up a real-time listener to listen for new comments in Firestore
-        const unsubscribe = onSnapshot(commentsRef, (querySnapshot) => {
-            const allProduct = [];
-
-            querySnapshot.forEach((doc) => {
-                const commentData = doc.data();
-
-                if (commentData.ProductId === route.params.id) {
-                    allProduct.push(commentData);
-                }
+    useEffect(() => {
+        const fetchData = async () => {
+            console.log(route.params);
+    
+            const readRating = listenForRatingChanges();
+            // const readStore =  getStore();
+            // fetchData()
+            const commentsRef = query(collection(firebase.firestore(), 'comments'), orderBy('time', 'desc'));;
+    
+            // Set up a real-time listener to listen for new comments in Firestore
+            const unsubscribe = onSnapshot(commentsRef, (querySnapshot) => {
+                const allProduct = [];
+    
+                querySnapshot.forEach((doc) => {
+                    const commentData = doc.data();
+    
+                    if (commentData.ProductId === route.params.id) {
+                        allProduct.push(commentData);
+                    }
+                });
+                setComments(allProduct);
             });
-            setComments(allProduct);
-        });
-
-        const productRef = firebase.firestore().collection('products').doc(route.params.id);
-
-        const q = query(collection(firebase.firestore(), 'purchased'), where('productId', '==', route.params.id));
-        const querySnapshot = await getDocs(q);
-
-        const purchased = querySnapshot.docs;
-        console.log("userData", purchased)
-        for (let purData of purchased) {
-            console.log("each purchease", purData.data().amount)
-            purchasedAmount += purData.data().amount
-            // setPurchasedAmount(purchasedAmount+purData.data().amount)
-            console.log("purchasedAmount", purchasedAmount)
-            if (purchasedAmount >= amount) {
-                setBuy(false)
+    
+            const productRef = firebase.firestore().collection('products').doc(route.params.id);
+    
+            const q = query(collection(firebase.firestore(), 'purchased'), where('productId', '==', route.params?.id));
+            const querySnapshot = await getDocs(q);
+    
+            let purchasedAmount = 0; // Initialize purchasedAmount
+    
+            const purchased = querySnapshot.docs;
+            console.log("userData", purchased);
+            for (let purData of purchased) {
+                console.log("each purchase", purData.data().amount);
+                purchasedAmount += purData.data().amount;
+                console.log("purchasedAmount", purchasedAmount);
+                if (purchasedAmount >= amount) {
+                    setBuy(false);
+                }
             }
-        }
-
-        const amountDoc = await getDoc(productRef)
-        // const amount = amountDoc.data().amount
-        console.log("test set set")
-        setAmount(amountDoc.data().amount)
-        console.log("amount", amountDoc.data().amount)
-
-
-      
-        getStore();
-        return () => {
-            // Unsubscribe from the real-time listener when the component unmounts
-            queryRating();
-            readRating();
-            unsubscribe();
-            // readStore();
+    
+            const amountDoc = await getDoc(productRef);
+            // const amount = amountDoc.data().amount
+            console.log("test set set");
+            setAmount(amountDoc.data().amount);
+            console.log("amount", amountDoc.data().amount);
+    
+            getStore();
+            return () => {
+                // Unsubscribe from the real-time listener when the component unmounts
+                queryRating();
+                if(readRating){
+                    readRating()
+                }
+                if(unsubscribe){
+                    unsubscribe()
+                }
+               
+                // readRating();
+                // unsubscribe();
+                // readStore();
+            };
         };
-
-    }, [])
+    
+        fetchData(); // Call the async function
+    
+      
+    
+    }, []);
+    
     // getStore()
 
 
@@ -391,7 +402,8 @@ const DetailScreen = ({ navigation, route }) => {
                 data={getComments}
                 renderItem={comment}
                 numColumns={1}
-                keyExtractor={item => `${item.ProductId}`}
+                keyExtractor={(item, index) => `${item.ProductId}_${index}`}
+
                 style={{ marginBottom: 20 }}
             />
 

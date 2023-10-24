@@ -51,7 +51,7 @@ const MessageScreen = ({ navigation }) => {
 
   const realUsers = users.filter((user) => user.email !== currentUserEmail);
   console.log("real user", realUsers)
-  const search = realUsers.filter((user) => user.name.includes(searchText))
+  const search = realUsers.filter((user) => user.name && user.name.includes(searchText))
   console.log("search", search)
 
 

@@ -83,7 +83,7 @@ const IdentifyScreen = ({ navigation }) => {
 
     const timestamp = Timestamp.now();
 
-    const regisToSaler = async () => {
+    const regisToSaler = async (name, phone, address, idCard) => {
 
         const blob = await fetch(image.uri).then((response) => response.blob());
         const filename = Date.now() + '.jpg';
@@ -219,7 +219,7 @@ const IdentifyScreen = ({ navigation }) => {
 
 
                         <TouchableOpacity style={[styles.button, { marginTop: 20, marginBottom: 10, width: '40%', backgroundColor : !isValid || values.name == "" || values.idCard == "" || values.address == "" || values.phone == "" ? "#666" : "#8667F2" }]}
-                            onPress={regisToSaler} disabled={!isValid || values.name == "" || values.idCard == "" || values.address == "" || values.phone == ""}>
+                            onPress={() => regisToSaler(values.name, values.phone, values.address, values.idCard)} disabled={!isValid || values.name == "" || values.idCard == "" || values.address == "" || values.phone == ""}>
                             <Text style={styles.buttonText}>CONFIRM</Text>
                         </TouchableOpacity>
                     </View>
