@@ -36,14 +36,16 @@ const SettingAccount = ({ navigation, route }) => {
                             phone: info.phone,
                             address: info.address,
                             email: info.email,
-                            addressName: info.addressName
+                            addressName: info.addressName,
+                            photoURL: info.photoURL
                         });
                         setid(res.id)
                         setName(info.name)
-                        setPhone(info.phone),
-                            setAddress(info.address),
-                            setEmail(info.email),
-                            setAddressName(info.addressName)
+                        setPhone(info.phone)
+                        setAddress(info.address)
+                        setEmail(info.email)
+                        setAddressName(info.addressName)
+                        setImage({ uri: info.photoURL })
                     }
                 });
                 setData(items);
@@ -65,7 +67,7 @@ const SettingAccount = ({ navigation, route }) => {
     if (!loaded) {
         return null;
     }
-    
+
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -82,8 +84,8 @@ const SettingAccount = ({ navigation, route }) => {
         const source = { uri: result.assets[0].uri };
 
         setImage(source);
-        if(source == ""){
-          setIsImageError(true)
+        if (source == "") {
+            setIsImageError(true)
         }
 
 
@@ -112,7 +114,6 @@ const SettingAccount = ({ navigation, route }) => {
         await uploadBytes(imageRef, blob);
 
         const downloadURL = await getDownloadURL(imageRef);
-
         try {
             const userRef = doc(firebase.firestore(), "users", id);
             await updateDoc(userRef, {
@@ -146,7 +147,7 @@ const SettingAccount = ({ navigation, route }) => {
     };
     console.log(user.photoURL)
     return (
-        <ScrollView style={{height: '100%', backgroundColor: 'white'}}>
+        <ScrollView style={{ height: '100%', backgroundColor: 'white' }}>
             <View style={styles.container}>
                 {/* <Text style={[styles.title, { marginBottom: 10 }]}> Setting </Text> */}
                 <Text style={[styles.label, { textAlign: 'center' }]}>Account</Text>
@@ -195,7 +196,7 @@ const SettingAccount = ({ navigation, route }) => {
                     <Text style={styles.buttonText}>CONFIRM</Text>
                 </TouchableOpacity>
 
-                <View style={{ width: "100%", bottom: 0, position:'absolute' }}>
+                <View style={{ width: "100%", bottom: 0, position: 'absolute' }}>
                     <Button title="LogOut" color={"#c8b8ff"} onPress={handleSignOut} />
                 </View>
             </View>
