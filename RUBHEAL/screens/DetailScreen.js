@@ -87,44 +87,38 @@ const DetailScreen = ({ navigation, route }) => {
         )
     }
 
-    const queryRating = async () => {
+    const queryRating = () => {
         const qComments = query(collection(firebase.firestore(), "comments"));
-
-        const querySnapshotComments = await getDocs(qComments);
-        var i = 0;
-        var rate = 0;
-        var num = 0;
-        var meanRate = 0;
-
-        for (i; i < querySnapshotComments.size; i++) {
-            const commentId = querySnapshotComments.docs[i].data().ProductId;
-            if (route.params.id == commentId) {
-                rate += querySnapshotComments.docs[i].data().rating;
-                num += 1;
-            }
-        }
-        console.log(Math.floor(rate / num));
-
-        if (rate == 0) {
-            meanRate = 0
-        }
-
-        else {
-            meanRate = Math.floor(rate / num)
-
-        }
-        const productRef = firebase.firestore().collection('products').doc(route.params.id);
-        productRef.update({
-            rating: meanRate,
-        })
+    
+        const unsubscribe = onSnapshot(qComments, (querySnapshotComments) => {
+            let rate = 0;
+            let num = 0;
+    
+            querySnapshotComments.forEach((doc) => {
+                const commentData = doc.data();
+                if (commentData.ProductId === route.params.id) {
+                    rate += commentData.rating;
+                    num += 1;
+                }
+            });
+    
+            const meanRate = num > 0 ? Math.floor(rate / num) : 0;
+    
+            const productRef = firebase.firestore().collection('products').doc(route.params.id);
+            productRef.update({
+                rating: meanRate,
+            })
             .then(() => {
                 console.log('Document updated successfully.');
             })
             .catch(error => {
                 console.error('Error updating document:', error);
             });
-
-    }
+        });
+    
+        return unsubscribe; // To stop listening when the component unmounts
+    };
+    
 
     //addComment
     const AddComment = async () => {
@@ -261,9 +255,9 @@ const DetailScreen = ({ navigation, route }) => {
         getStore();
         return () => {
             // Unsubscribe from the real-time listener when the component unmounts
+            queryRating();
             readRating();
             unsubscribe();
-            queryRating();
             // readStore();
         };
 
