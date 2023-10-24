@@ -76,7 +76,7 @@ const RegistrationScreen = () => {
       .max(50, 'Too Long!')
       .required('Please Enter your name'),
     email: Yup.string().email('Invalid email').required('Please Enter your email address'),
-    password: Yup.string().min(6).required('Please enter your password').matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, "Must contain minimum 8 char"),
+    password: Yup.string().min(6).required('Please enter your password').matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%_^&~*-]).{8,}$/, "Must contain minimum 8 char"),
     ConfirmPassword: Yup.string().min(8).oneOf([Yup.ref('password')], "Your Password do not match").required("Confrim Password is required"),
     phone: Yup.string().min(10, "Must be exactly 10 digits").max(10, "Must be exactly 10 digits").matches(/^[0-9]+$/, "Must be only digits").required("Please Enter your phone number")
   });
