@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { USERBUY } from "../data/data";
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { firebase, auth, firestore } from '../database';
+import { useFonts } from 'expo-font';
 
 
 
@@ -41,6 +42,12 @@ const CustomerBuyProduct = ({ route }) => {
 
   }, [])
 
+  const [loaded] = useFonts({
+    Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
+  });
+  if (!loaded) {
+    return null;
+  }
 
 
   const renderItem = (itemData) => {
@@ -61,11 +68,11 @@ const CustomerBuyProduct = ({ route }) => {
             style={{ width: 150, height: 150, borderRadius: 10 }}
           /> */}
           <View style={{ margin: 10 }}>
-            <Text>ชื่อลูกค้า {itemData.item.addressName}</Text>
-            <Text>จำนวน {itemData.item.amount} ชื้น</Text>
-            <Text>นัดรับ เบอร์ติดต่อ {itemData.item.phone}</Text>
-            <Text>
-              ที่อยู่ {itemData.item.address}
+            <Text style={{fontFamily:'Anuphan', fontSize: 18}}>ชื่อลูกค้า: {itemData.item.addressName}</Text>
+            <Text style={{fontFamily:'Anuphan', fontSize: 18}}>จำนวน: {itemData.item.amount} ชื้น</Text>
+            <Text style={{fontFamily:'Anuphan', fontSize: 18}}>นัดรับ: เบอร์ติดต่อ {itemData.item.phone}</Text>
+            <Text style={{fontFamily:'Anuphan', fontSize: 18}}>
+              ที่อยู่: {itemData.item.address}
             </Text>
           </View>
 

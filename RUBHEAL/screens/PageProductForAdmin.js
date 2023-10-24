@@ -5,12 +5,13 @@ import React, { useState, useEffect } from 'react';
 import { firebase, auth, firestore } from '../database';
 import { collection, query, where, getDocs, QuerySnapshot, onSnapshot } from 'firebase/firestore';
 import purchased from "../model/purchased";
+import { useFonts } from 'expo-font';
 
 
 
 const PageProductForAdmin = ({ navigation }) => {
 
-   const [purchasedData, setProductData] = useState([])
+  const [purchasedData, setProductData] = useState([])
 
 
 
@@ -38,7 +39,7 @@ const PageProductForAdmin = ({ navigation }) => {
     }
 
     console.log(purchasedData)
-   
+
     const countByProductId = {};
     const saleTotalPrice = {};
 
@@ -73,18 +74,18 @@ const PageProductForAdmin = ({ navigation }) => {
 
     const saleArray = Object.keys(saleTotalPrice).map((productId) => ({
       productId,
-      sale : saleTotalPrice[productId],
+      sale: saleTotalPrice[productId],
     }));
 
-  
 
-    
+
+
     console.log(countArray);
-    
+
     console.log(saleArray)
 
     const uniqueProducts = {};
-  
+
 
     // Filter the data to keep only the unique products
     const filteredData = purchasedData.filter((item) => {
@@ -105,16 +106,16 @@ const PageProductForAdmin = ({ navigation }) => {
 
     // console.log("####Data###")
     // console.log(filteredData[0].count)
- 
 
-   for(var i = 0; i < filteredData.length; i++){
+
+    for (var i = 0; i < filteredData.length; i++) {
       filteredData[i].allcount = countArray[i].count
       filteredData[i].sale_total = saleArray[i].sale
-   }
-  //  console.log("###filter##")
-  //  console.log(filteredData)
+    }
+    //  console.log("###filter##")
+    //  console.log(filteredData)
 
-   setProductData(filteredData)
+    setProductData(filteredData)
   }
 
 
@@ -125,7 +126,12 @@ const PageProductForAdmin = ({ navigation }) => {
 
   }, [])
 
-
+  const [loaded] = useFonts({
+    Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
+  });
+  if (!loaded) {
+    return null;
+  }
 
 
   // console.log(PURCHASED)
@@ -133,7 +139,7 @@ const PageProductForAdmin = ({ navigation }) => {
     return (
 
       <TouchableOpacity onPress={() => {
-        navigation.navigate('CustomerProduct', { productId: itemData.item.productId, owner : itemData.item.owner })
+        navigation.navigate('CustomerProduct', { productId: itemData.item.productId, owner: itemData.item.owner })
       }}>
         <View
           style={{
@@ -145,13 +151,13 @@ const PageProductForAdmin = ({ navigation }) => {
           }}
         >
           <Image
-            source={{uri : itemData.item.pic}}
+            source={{ uri: itemData.item.pic }}
             style={{ width: 150, height: 150, borderRadius: 10 }}
           />
           <View style={{ margin: 10 }}>
-            <Text>{itemData.item.title}</Text>
-            <Text>ยอดฝากซื้อ : {itemData.item.allcount} </Text>
-            <Text>ยอดขาย : {itemData.item.sale_total} </Text>
+            <Text style={{fontFamily:'Anuphan', fontSize: 18}}>{itemData.item.title}</Text>
+            <Text style={{fontFamily:'Anuphan', fontSize: 16}}>ยอดฝากซื้อ : {itemData.item.allcount} </Text>
+            <Text style={{fontFamily:'Anuphan', fontSize: 16}}>ยอดขาย : {itemData.item.sale_total} </Text>
           </View>
         </View>
 
