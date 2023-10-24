@@ -10,7 +10,7 @@ import { collection, query, where, getDocs, addDoc, onSnapshot, orderBy } from '
 
 const RankScreen = ({ navigation, route }, props) => {
 
-  const [products, setProduct] = useState('');
+  const [products, setProduct] = useState([]);
 
 
 
@@ -29,6 +29,8 @@ const RankScreen = ({ navigation, route }, props) => {
 
       querySnapshot.forEach((doc) => {
         const productData = doc.data();
+        console.log("###DATA###")
+        console.log(productData.mail)
 
         const dataAll = {
           name: productData.name,
@@ -41,6 +43,7 @@ const RankScreen = ({ navigation, route }, props) => {
           rating: productData.rating,
           condition: productData.condition,
           owner: productData.owner,
+          mail : productData.mail
         };
 
         allProduct.push(dataAll);
@@ -65,35 +68,52 @@ const RankScreen = ({ navigation, route }, props) => {
   }, [])
   const Top10Product = products.slice(0, 10)
 
-  const renderedItem = (itemData) => {
-    console.log(itemData.item)
-    return (
+  // const renderedItem = (itemData) => {
+  //   console.log(itemData.item)
+  //   return (
 
-      <TopTank
-        title={itemData.item.name}
-        pic={itemData.item.image}
-        price={itemData.item.price}
-        rating={itemData.item.rating}
-        owner={itemData.item.owner}
-        onSelectProduct={() => {
-          navigation.navigate("Detail", { title: itemData.item.name, pic: itemData.item.image, detail: itemData.item.detail, policy: itemData.item.condition, price: itemData.item.price, id: itemData.item.id, rating: itemData.item.rating, owner: itemData.item.owner });
-        }}
-      />
-    );
-  }
+  //     <TopTank
+  //       title={itemData.item.name}
+  //       pic={itemData.item.image}
+  //       price={itemData.item.price}
+  //       rating={itemData.item.rating}
+  //       owner={itemData.item.owner}
+  //       onSelectProduct={() => {
+  //         navigation.navigate("Detail", { title: itemData.item.name, pic: itemData.item.image, detail: itemData.item.detail, policy: itemData.item.condition, price: itemData.item.price, id: itemData.item.id, rating: itemData.item.rating, owner: itemData.item.owner, mail : itemData.item.mail });
+  //       }}
+  //     />
+  //   );
+  // }
 
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>TOP 10 NOW!! {'\n'}</Text>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <FlatList
-          data={Top10Product}
-          renderItem={renderedItem}
-          numColumns={1}
-          keyExtractor={item => `${item.id}`}
-        />
-
+      {Top10Product.map((item) => (
+          <TopTank
+            key={item.id}
+            title={item.name}
+            pic={item.image}
+            price={item.price}
+            rating={item.rating}
+            owner={item.owner}
+            onSelectProduct={() => {
+              navigation.navigate('Detail', {
+                title: item.name,
+                pic: item.image,
+                detail: item.detail,
+                policy: item.condition,
+                price: item.price,
+                id: item.id,
+                rating: item.rating,
+                owner: item.owner,
+                mail : item.mail
+              });
+            }}
+          />
+        ))}
+   
       </ScrollView>
     </View>
   );
@@ -135,3 +155,7 @@ const styles = StyleSheet.create({
 
 
 export default RankScreen;
+
+
+
+

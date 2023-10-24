@@ -124,7 +124,7 @@ const ProfileScreen = ({ navigation }) => {
               if (data.position == 'user') {
                 navigation.navigate('Saler', { name: "Saler" })
               } else {
-                navigation.navigate('Admin', { name: "admin" })
+                navigation.navigate('Adminn', { name: "admin" })
               }
             }} >
               <Text style={styles.textbutton}>SALER</Text>

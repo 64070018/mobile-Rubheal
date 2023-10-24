@@ -145,9 +145,9 @@ function LoginRegister() {
 
 function UserNavigator() {
     return (
-        <ProfileNavigator.Navigator initialRouteName="Profile">
-            <ProfileNavigator.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
-            <ProfileNavigator.Screen name="Admin" component={AdminNavigation} options={{ headerShown: false }} />
+        <ProfileNavigator.Navigator initialRouteName="Profilee">
+            <ProfileNavigator.Screen name="Profilee" component={ProfileScreen} options={{ headerShown: false }} />
+            <ProfileNavigator.Screen name="Adminn" component={AdminNavigation} options={{ headerShown: false }} />
             <ProfileNavigator.Screen name="Setting" component={SettingAccount} options={{ headerShown: true }} />
             <ProfileNavigator.Screen name="Saler" component={IdentifyScreen} options={{ headerShown: true }} />
 
