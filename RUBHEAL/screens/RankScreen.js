@@ -10,7 +10,7 @@ import { collection, query, where, getDocs, addDoc, onSnapshot, orderBy } from '
 
 const RankScreen = ({ navigation, route }, props) => {
 
-  const [products, setProduct] = useState('');
+  const [products, setProduct] = useState([]);
 
 
 
@@ -87,13 +87,29 @@ const RankScreen = ({ navigation, route }, props) => {
     <View style={styles.container}>
       <Text style={styles.title}>TOP 10 NOW!! {'\n'}</Text>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <FlatList
-          data={Top10Product}
-          renderItem={renderedItem}
-          numColumns={1}
-          keyExtractor={item => `${item.id}`}
-        />
-
+      {Top10Product.map((item) => (
+          <TopTank
+            key={item.id}
+            title={item.name}
+            pic={item.image}
+            price={item.price}
+            rating={item.rating}
+            owner={item.owner}
+            onSelectProduct={() => {
+              navigation.navigate('Detail', {
+                title: item.name,
+                pic: item.image,
+                detail: item.detail,
+                policy: item.condition,
+                price: item.price,
+                id: item.id,
+                rating: item.rating,
+                owner: item.owner,
+              });
+            }}
+          />
+        ))}
+   
       </ScrollView>
     </View>
   );
@@ -135,3 +151,7 @@ const styles = StyleSheet.create({
 
 
 export default RankScreen;
+
+
+
+
