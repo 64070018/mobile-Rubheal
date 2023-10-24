@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   FlatList,
   SafeAreaView,
+  TextInput,
+  AntDesign
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { CHAT } from "../data/data.js";
@@ -21,6 +23,7 @@ import { getDoc, query, where } from "firebase/firestore";
 
 const MessageScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
+  const [searchText, setSearchText] = useState("")
   const UID = firebase.auth().currentUser.uid;
   // console.log(UID);
 
@@ -34,45 +37,11 @@ const MessageScreen = ({ navigation }) => {
       const message = await firebase.firestore().collection('messages').where('reciever', '==', user.email).get()
       console.log('user', '=>', user)
       console.log('mes', '=>', message.docs)
-      // message.forEach((mes) => {
-      //   console.log('mes', '=>', mes)
-      // })
-      // const q = query(messagesRef, where('email', '==', user.email))
-      // const result = await getDoc(q)
-      // console.log(user)
     })
   }
   useEffect(() => {
     getMessage()
   })
-
-//   const getData = async () => {
-//     const users = await firebase.firestore().collection('users').where('email', '==', user.email).get();
-//     // const user_id = await firebase.firestore().collection('users').where('email', '==', user.email).get();
-//     console.log('aaaaaaaaaaaaaaaaaaaaaa')
-//     users.forEach((doc) => {
-//         // doc.data() is never undefined for query doc snapshots
-//         setAddress(doc.data().address)
-//         setAddressName(doc.data().addressName)
-//         setPhone(doc.data().phone)
-//         console.log(doc.id, " => ", docs.data());
-//     });
-// }
-
-  // const real_user = users.filter((item) => item.email != firebase.auth().currentUser.email)
-  // console.log(real_user)
-  // console.log("real_user")
-  // console.log(users)
-
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     const userSnapshot = await userRef.get();
-  //     const userData = userSnapshot.docs.map((doc) => doc.data());
-  //     setUsers(userData);
-  //   };
-
-  //   fetchUsers();
-  // }, []); // Empty dependency array ensures that this effect runs once after the component mounts.
   if (users === undefined) {
     return <Text>Loading...</Text>; // You can return a loading indicator while waiting for data
   }
@@ -81,6 +50,10 @@ const MessageScreen = ({ navigation }) => {
   const currentUserEmail = firebase.auth().currentUser.email;
 
   const realUsers = users.filter((user) => user.email !== currentUserEmail);
+  console.log("real user", realUsers)
+  const search = realUsers.filter((user) => user.name.includes(searchText))
+  console.log("search", search)
+
 
 
 
@@ -129,12 +102,14 @@ const MessageScreen = ({ navigation }) => {
     //   <Text>Folk</Text>
     // </View>
     <SafeAreaView style={{ flex: 1, paddingVertical: 10, backgroundColor: 'white' }}>
+
       <View style={styles.container}>
-        {/* <View style={styles.nav}>
-        <Text style={styles.navText}>Message</Text>
-      </View> */}
+        {/* <View style={styles.input}> */}
+          <TextInput style={styles.input} placeholder="Search" onChangeText={text => setSearchText(text)} value={searchText} />
+        {/* </View> */}
+
         <View style={styles.backgroundMessage}>
-          <FlatList data={realUsers} renderItem={renderItem} />
+          <FlatList data={search} renderItem={renderItem} />
         </View>
       </View>
 
@@ -188,6 +163,23 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 10,
+  },
+  input: {
+    borderColor: "gray",
+    width: "95%",
+    borderWidth: 1,
+    borderRadius: 10,
+    marginVertical: 10,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  searchIcon: {
+    padding: 5,
+    position: 'absolute',
+    top: 0,
+    right: 5,
   },
 });
 

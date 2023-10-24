@@ -281,7 +281,7 @@ const HomeScreen = ({ navigation, route }, props) => {
   return (
     <View style={styles.container}>
       <View style={styles.input} >
-        <TextInput placeholder="Search" onChangeText={text => setSearchText(text)} value={searchText} />
+        <TextInput style={{width: '100%'}} placeholder="Search" onChangeText={text => setSearchText(text)} value={searchText} />
 
         <AntDesign style={styles.searchIcon} name="search1" size={26} color={'gray'} onPress={() => SearchData(cate)} />
 
