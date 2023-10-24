@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image, TextInput, FlatList, ScrollView, Touchab
 
 import { AntDesign } from "@expo/vector-icons";
 import React, { useState, useEffect } from 'react';
+import { useFonts } from 'expo-font';
 import { firebase, auth, firestore } from '../database';
 import { collection, query, where, getDocs, QuerySnapshot, onSnapshot } from 'firebase/firestore';
 
@@ -11,15 +12,29 @@ import ShowProduct from '../components/ShowProduct';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 
+const fontWeights = [
+  'normal',
+  'bold',
+  '100',
+  '200',
+  '300',
+  '400',
+  '500',
+  '600',
+  '700',
+  '800',
+  '900',
+];
 const HomeScreen = ({ navigation, route }, props) => {
 
   // const [productData, setProductData] = useState([]);
   const [categoryData, setCategoryData] = useState("");
   const [cate, setCate] = useState("");
   const [searchText, setSearchText] = useState('');
+  const [fontWeightIdx, setFontWeightIdx] = useState(0);
 
   console.log("zxcv", categoryData)
-  
+
 
 
   //search
@@ -174,7 +189,7 @@ const HomeScreen = ({ navigation, route }, props) => {
 
 
   //   if (productAll.length == querySnapshot.size) {
-   
+
   //     setCategoryData(productAll)
   //     return productAll
   //   }
@@ -187,7 +202,7 @@ const HomeScreen = ({ navigation, route }, props) => {
   // }
 
 
- 
+
 
 
 
@@ -197,10 +212,10 @@ const HomeScreen = ({ navigation, route }, props) => {
 
 
   useEffect(() => {
-      
 
 
-    
+
+
     const q = query(collection(firebase.firestore(), 'products'));
 
     // Create a real-time listener to fetch and update data
@@ -242,7 +257,7 @@ const HomeScreen = ({ navigation, route }, props) => {
       unsubscribe();
     };
 
-  
+
 
 
 
@@ -259,7 +274,12 @@ const HomeScreen = ({ navigation, route }, props) => {
     // return () => clearInterval(intervalId);
 
   }, [cate])
-
+  const [loaded] = useFonts({
+    Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
+  });
+  if (!loaded) {
+    return null;
+  }
 
   const renderedItem = (itemData) => {
 
@@ -270,10 +290,10 @@ const HomeScreen = ({ navigation, route }, props) => {
         pic={itemData.item.image}
         price={itemData.item.price}
         rating={itemData.item.rating}
-        
+
         onSelectProduct={() => {
           // console.log(itemData.item)
-          navigation.navigate("Detail", { title: itemData.item.name, pic: itemData.item.image, detail: itemData.item.detail, policy: itemData.item.condition, price: itemData.item.price, id: itemData.item.id, rating : itemData.item.rating, owner: itemData.item.owner, mail: itemData.item.mail}, setCate(""));
+          navigation.navigate("Detail", { title: itemData.item.name, pic: itemData.item.image, detail: itemData.item.detail, policy: itemData.item.condition, price: itemData.item.price, id: itemData.item.id, rating: itemData.item.rating, owner: itemData.item.owner, mail: itemData.item.mail }, setCate(""));
         }}
       />
     );
@@ -281,20 +301,20 @@ const HomeScreen = ({ navigation, route }, props) => {
   return (
     <View style={styles.container}>
       <View style={styles.input} >
-        <TextInput style={{width: '100%'}} placeholder="Search" onChangeText={text => setSearchText(text)} value={searchText} />
+        <TextInput style={{ width: '100%' }} placeholder="Search" onChangeText={text => setSearchText(text)} value={searchText} />
 
         <AntDesign style={styles.searchIcon} name="search1" size={26} color={'gray'} onPress={() => SearchData(cate)} />
 
       </View>
       {/* <AntDesign style={{ position: 'absolute', right: 5, top: 15 }} name="notification" size={26} color={'gray'} /> */}
       <ScrollView>
-        <Text style={styles.title}>Category</Text>
+        <Text style={[styles.title, { fontWeight: fontWeights[8] }]}>Categories</Text>
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ height: 100 }}>
           <View style={{ alignItems: 'center', flexDirection: 'row' }}>
             <TouchableOpacity style={styles.cat} onPress={() => setCate("")}>
               <Image source={require('../assets/all-2.png')} style={[styles.catagory,]} />
-              <Text style={styles.catTitle}>All</Text>
+              <Text style={styles.catTitle}>ALL</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.cat} onPress={() => setCate("food")}>
               <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2819/2819194.png' }} style={[styles.catagory,]} />
@@ -319,7 +339,7 @@ const HomeScreen = ({ navigation, route }, props) => {
           </View>
         </ScrollView>
 
-        <Text style={styles.title}>recommend</Text>
+        <Text style={[styles.title, { fontWeight: fontWeights[8] }]}>Recommend</Text>
 
 
         <FlatList
@@ -362,8 +382,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'left'
+    // fontWeight: 'bold',
+    textAlign: 'left',
+    fontFamily: 'Anuphan'
   },
   catagory: {
     width: 40,
@@ -375,7 +396,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'light',
     marginHorizontal: 10,
-    marginTop: 5
+    marginTop: 5,
+    fontFamily: 'Anuphan'
   },
 });
 

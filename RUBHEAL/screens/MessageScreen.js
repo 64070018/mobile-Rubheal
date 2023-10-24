@@ -14,12 +14,25 @@ import { CHAT } from "../data/data.js";
 import { firebase } from "../database.js";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getDoc, query, where } from "firebase/firestore";
+import { useFonts } from 'expo-font';
 
 
 
 
 
-
+const fontWeights = [
+  'normal',
+  'bold',
+  '100',
+  '200',
+  '300',
+  '400',
+  '500',
+  '600',
+  '700',
+  '800',
+  '900',
+];
 
 const MessageScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
@@ -42,6 +55,14 @@ const MessageScreen = ({ navigation }) => {
   useEffect(() => {
     getMessage()
   })
+
+  const [loaded] = useFonts({
+    Anuphan: require("../assets/fonts/Anuphan/static/Anuphan-Medium.ttf")
+  });
+  if (!loaded) {
+    return null;
+  }
+
   if (users === undefined) {
     return <Text>Loading...</Text>; // You can return a loading indicator while waiting for data
   }
@@ -75,7 +96,7 @@ const MessageScreen = ({ navigation }) => {
             />
           </View>
           <View style={{ flex: 3, padding: 10 }}>
-            <Text style={{ marginBottom: 10, fontWeight: "700", fontSize: 16 }}>{itemData.item.name}</Text>
+            <Text style={{ marginBottom: 10, fontSize: 16, fontFamily: 'Anuphan', fontWeight: fontWeights[1] }}>{itemData.item.name}</Text>
             {/* <Text style={{ marginBottom: 10, color: "#242424" }}>{getMessage(itemData.item.email)}</Text> */}
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
@@ -174,6 +195,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
+    fontFamily: 'Anuphan'
   },
   searchIcon: {
     padding: 5,

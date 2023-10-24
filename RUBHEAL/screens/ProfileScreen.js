@@ -127,7 +127,7 @@ const ProfileScreen = ({ navigation }) => {
                 navigation.navigate('Admin', { name: "admin" })
               }
             }} >
-              <Text style={styles.textbutton}>Saler</Text>
+              <Text style={styles.textbutton}>SALER</Text>
             </TouchableOpacity>
           </View>
 
@@ -135,7 +135,7 @@ const ProfileScreen = ({ navigation }) => {
             <TouchableOpacity style={styles.button} onPress={() => {
               navigation.navigate('Setting', { name: "setting" })
             }} >
-              <Text style={styles.textbutton}>Setting</Text>
+              <Text style={styles.textbutton}>SETTINGS</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -207,15 +207,17 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#9276F2",
     width: "100%",
-    height: 45,
+    height: 40,
     justifyContent: "center",
-    alignContent: "center"
+    alignContent: "center",
+    borderColor: '#ddd', borderWidth: 1
   },
   textbutton: {
     fontSize: 16,
-    fontWeight: "700",
-    color: 'black',
-    textAlign: 'center'
+    // fontWeight: "700",
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'Anuphan'
   },
 });
 
